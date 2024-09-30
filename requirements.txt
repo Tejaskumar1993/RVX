@@ -1,0 +1,12 @@
+parameterized==0.9.0
+playwright~=1.46.0
+py==1.11.0
+pytest~=8.3.2
+pytest-html==4.1.1
+pytest-parallel==0.1.1
+pytest-playwright==0.5.1
+pytest-rerunfailures==14.0
+requests==2.32.0
+pylint==3.2.6
+python-dotenv==1.0.1
+black==24.8.0
