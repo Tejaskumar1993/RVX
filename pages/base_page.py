@@ -1,3 +1,7 @@
+"""
+base page methods
+"""
+
 import os
 from playwright.sync_api import Page, expect
 from data.constant_data import TestData

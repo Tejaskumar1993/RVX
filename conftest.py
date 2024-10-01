@@ -27,6 +27,7 @@ def ontrack_login_page(page: Page) -> OntrackLoginPage:
     """
     return OntrackLoginPage(page)
 
+
 @pytest.fixture
 def get_page(page: Page):
     """
@@ -59,6 +60,13 @@ def pytest_addoption(parser):
         help="password",
         default=os.getenv("ONTRACK__PASSWORD"),
     )
+    parser.addoption(
+        "--env",
+        action="store",
+        help="Environment to run the script(staging, pilot, prod)",
+        default=os.getenv("ENVIRONMENT"),
+    )
+
 
 def dictionary_parametrize(data, **kwargs):
     """
@@ -72,3 +80,13 @@ def dictionary_parametrize(data, **kwargs):
     formatted_data = [[item[a] for a in args] for item in data.values()]
     ids = list(data.keys())
     return pytest.mark.parametrize(args, formatted_data, ids=ids, **kwargs)
+
+
+@pytest.fixture
+def environment_to_run(request):
+    """
+    Argument for environment to run the scripts
+    :param request: staging-qa, staging-qa-2, staging-qa-3, pilot, prod
+    :return:
+    """
+    return request.config.getoption("--env")
