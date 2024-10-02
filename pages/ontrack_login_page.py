@@ -14,7 +14,7 @@ from utilities.decorators import qase_screenshot
 
 class OntrackLoginPage(BasePage):
     """
-    Module containing objects and methods related to booking form's home page
+    Module containing objects and methods related to login page
     """
 
     def __init__(self, page: Page):
