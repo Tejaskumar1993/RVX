@@ -21,7 +21,7 @@ page: Page
 @pytest.fixture
 def ontrack_login_page(page: Page) -> OntrackLoginPage:
     """
-    Initialize booking form home page objects and methods
+    Initialize login page objects and methods
     :param page:
     :return:
     """
@@ -86,7 +86,7 @@ def dictionary_parametrize(data, **kwargs):
 def environment_to_run(request):
     """
     Argument for environment to run the scripts
-    :param request: staging-qa, staging-qa-2, staging-qa-3, pilot, prod
+    :param request: staging, test, prod, dev
     :return:
     """
     return request.config.getoption("--env")

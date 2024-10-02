@@ -1,0 +1,40 @@
+{
+    "environment": "local",
+    "execution": {
+        "cumulative_duration": 22335,
+        "duration": 22366,
+        "end_time": 1727864873.4129915,
+        "start_time": 1727864851.0466132
+    },
+    "host_data": {
+        "machine": "AMD64",
+        "node": "HP-2",
+        "pip": "24.2",
+        "python": "3.12.6.final.0",
+        "release": "11",
+        "system": "Windows",
+        "version": "10.0.22631"
+    },
+    "results": [
+        {
+            "duration": 22335,
+            "id": "ad39c288-6c13-40c3-9140-7fad607c4560",
+            "status": "invalid",
+            "thread": "25328-MainThread",
+            "title": "User should be able see all the required elements on login page"
+        }
+    ],
+    "stats": {
+        "broken": 0,
+        "failed": 0,
+        "muted": 0,
+        "passed": 0,
+        "skipped": 0,
+        "total": 1
+    },
+    "suites": [],
+    "threads": [
+        "25328-MainThread"
+    ],
+    "title": "Test run"
+}
