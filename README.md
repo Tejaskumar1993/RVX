@@ -28,8 +28,8 @@ git clone git@gitlab.pgprint.com:ontrack-applications/ontrack-send/qa-automation
 cd qa-automation-scripts
 
 # Create a virtual environment
-python3 -m venv venv
-source env/bin/activate  # On Windows, use `env\Scripts\activate`
+python -m venv venv
+source env/bin/activate  # On Windows, use `.venv\Scripts\activate`
 
 # Install the dependencies
 pip install -r requirements.txt
