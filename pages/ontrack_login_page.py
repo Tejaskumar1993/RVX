@@ -24,6 +24,9 @@ class OntrackLoginPage(BasePage):
         # login page locators
         self.logo_image = page.locator('//img[@class="ots-Logo"]')
         self.welcome_greetings = page.locator('[id="greetingBox"]')
+        self.username_input = page.locator('[id="userName"]')
+        self.password_input = page.locator('[id="password"]')
+        self.login_button = page.locator('[id="loginButton"]')
 
     def _verify_response_and_reload_page_if_needed(self, response):
         """
@@ -68,7 +71,7 @@ class OntrackLoginPage(BasePage):
         title="Navigate to ontrack login page",
         expected="open and verify login page elements",
     )
-    def open_and_verify_ontrack_login_page(self, environment_to_run):
+    def open_and_verify_ontrack_login_page(self, environment_to_run, ontrack_username, ontrack_password):
         """
         open and verify ontrack login page elements
         :return:
@@ -77,8 +80,20 @@ class OntrackLoginPage(BasePage):
         self.verify_element(self.logo_image)
         self.verify_element(self.welcome_greetings)
         welcome_message = self.welcome_greetings.text_content()
-        print("welcome_message-->", welcome_message)
+        print("welcome_message -->", welcome_message)
+        # Verify if the welcome message matches the expected message
         if welcome_message != TestData.greeting_message:
             raise AssertionError(
                 f"Expected greeting message '{TestData.greeting_message}', but got '{welcome_message}'"
             )
+        # Fill in username and password and perform login
+        self.username_input.fill(ontrack_username)
+        self.password_input.fill(ontrack_password)
+        self.login_button.click()
+        # Wait until the username input is no longer visible (indicating successful login)
+        self.username_input.wait_for(state="hidden")
+        # Verify the URL of the dashboard page after login
+        dashboard_page_url = self.page.url
+        assert 'dashboard/admin' in dashboard_page_url, "The dashboard URL is incorrect."
+        # Print a welcome message indicating successful login
+        print(f"Welcome '{ontrack_username}' on OnTrack, and the dashboard page is visible.")

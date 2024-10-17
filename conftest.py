@@ -55,10 +55,10 @@ def pytest_addoption(parser):
         default=os.getenv("ONTRACK_USER"),
     )
     parser.addoption(
-        "--ontrack-pw",
+        "--ontrack-password",
         action="store",
         help="password",
-        default=os.getenv("ONTRACK__PASSWORD"),
+        default=os.getenv("ONTRACK_PASSWORD"),
     )
     parser.addoption(
         "--env",
@@ -90,3 +90,22 @@ def environment_to_run(request):
     :return:
     """
     return request.config.getoption("--env")
+
+@pytest.fixture
+def ontrack_username(request):
+    """
+    Argument for ontrack user name
+    :param request:
+    :return:
+    """
+    return request.config.getoption("--ontrack-user")
+
+
+@pytest.fixture
+def ontrack_password(request):
+    """
+    Argument for ontrack user password
+    :param request:
+    :return:
+    """
+    return request.config.getoption("--ontrack-password")
