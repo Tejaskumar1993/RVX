@@ -10,8 +10,9 @@ from dotenv import load_dotenv
 from playwright.sync_api import Page
 
 from pages.ontrack_login_page import (
-    OntrackLoginPage,
+    OntrackLoginPage
 )
+from pages.system_admin_users_page import SystemAdminUsersPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -26,6 +27,15 @@ def ontrack_login_page(page: Page) -> OntrackLoginPage:
     :return:
     """
     return OntrackLoginPage(page)
+
+@pytest.fixture
+def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
+    """
+    Initialize login page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminUsersPage(page)
 
 
 @pytest.fixture
