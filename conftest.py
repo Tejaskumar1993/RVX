@@ -12,6 +12,7 @@ from playwright.sync_api import Page
 from pages.ontrack_login_page import (
     OntrackLoginPage
 )
+from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
 
 # Handle display of output log when using xdist
@@ -36,6 +37,15 @@ def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
     :return:
     """
     return SystemAdminUsersPage(page)
+
+@pytest.fixture
+def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
+    """
+    Initialize login page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDeploymentsPage(page)
 
 
 @pytest.fixture

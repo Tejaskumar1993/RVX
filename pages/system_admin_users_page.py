@@ -3,7 +3,6 @@ System Admin Users page modules
 """
 import re
 import time
-from dataclasses import replace
 
 from playwright.sync_api import Page, expect
 from qase.pytest import qase
