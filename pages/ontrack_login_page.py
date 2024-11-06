@@ -71,7 +71,9 @@ class OntrackLoginPage(BasePage):
         title="Navigate to ontrack login page",
         expected="open and verify login page elements",
     )
-    def open_and_verify_ontrack_login_page(self, environment_to_run, ontrack_username, ontrack_password):
+    def open_and_verify_ontrack_login_page(
+        self, environment_to_run, ontrack_username, ontrack_password
+    ):
         """
         open and verify ontrack login page elements
         :return:
@@ -94,6 +96,10 @@ class OntrackLoginPage(BasePage):
         self.username_input.wait_for(state="hidden")
         # Verify the URL of the dashboard page after login
         dashboard_page_url = self.page.url
-        assert 'dashboard/admin' in dashboard_page_url, "The dashboard URL is incorrect."
+        assert (
+            "dashboard/admin" in dashboard_page_url
+        ), "The dashboard URL is incorrect."
         # Print a welcome message indicating successful login
-        print(f"Welcome '{ontrack_username}' on OnTrack, and the dashboard page is visible.")
+        print(
+            f"Welcome '{ontrack_username}' on OnTrack, and the dashboard page is visible."
+        )
