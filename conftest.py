@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
+from pages.deployment_admin_account_balance import DeploymentAdminAccountBalancePage
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
@@ -50,13 +51,15 @@ def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
 
 
 @pytest.fixture
-def deployment_admin_items_list_page(page: Page) -> DeploymentAdminitemsListPage:
+def deployment_admin_account_balance_page(
+    page: Page,
+) -> DeploymentAdminAccountBalancePage:
     """
     Initialize login page objects and methods
     :param page:
     :return:
     """
-    return DeploymentAdminitemsListPage(page)
+    return DeploymentAdminAccountBalancePage(page)
 
 
 @pytest.fixture

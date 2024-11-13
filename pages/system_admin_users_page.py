@@ -1,6 +1,7 @@
 """
 System Admin Users page modules
 """
+
 import re
 import time
 
@@ -8,10 +9,12 @@ from playwright.sync_api import Page, expect
 from qase.pytest import qase
 from utilities.decorators import qase_screenshot
 
+
 class SystemAdminUsersPage:
     """
     Module containing objects and methods related to System Admin Users Page
     """
+
     def __init__(self, page: Page):
         super().__init__()
         self.page = page
@@ -23,17 +26,23 @@ class SystemAdminUsersPage:
         # Users list Filters locators
         self.filter_title = page.locator('//label[text()="Filter:"]')
         self.filter_drop_down = '//select[@class="form-select form-select-sm"]//option'
-        self.dropdown = page.locator('//div[@class="d-flex align-items-center justify-content-between"]//select')
+        self.dropdown = page.locator(
+            '//div[@class="d-flex align-items-center justify-content-between"]//select'
+        )
         self.all_users_status = '//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")]'
         self.batch_action_title = page.locator('//label[text()="Batch Action"]')
         self.user_checkbox = page.locator('(//tr//input[@type="checkbox"])[2]')
-        self.batch_action_dropdown = page.locator('//div[@class="d-flex align-items-center"]//select')
+        self.batch_action_dropdown = page.locator(
+            '//div[@class="d-flex align-items-center"]//select'
+        )
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
         self.invite_button = page.locator('//button[text()="Invite"]')
         self.user_page_header_component = page.locator('//div[@class="mb-2 card"]')
         self.user_page_list_component = page.locator('//div[@class="card"]')
         self.user_list_headers = page.locator('//tr[@class="text-center"]')
-        self.user_page_footer = page.locator('//div[@class="table-footer-border-top card-footer"]')
+        self.user_page_footer = page.locator(
+            '//div[@class="table-footer-border-top card-footer"]'
+        )
 
         # invite user locators
         self.invite_user_header = page.locator('//div[text()="Invite User"]')
@@ -48,21 +57,34 @@ class SystemAdminUsersPage:
         self.send_invite_button = page.locator('//button[text()="Send Invite"]')
         self.cancel_button = page.locator('//button[text()="Cancel"]')
         self.close_button = page.locator('//button[@class="btn-close"]')
-        self.success_message = page.locator('//div[@class="ant-message-notice-content"]')
-        self.warning_message = page.locator('//div[@class="ant-message-custom-content ant-message-warning"]')
-        self.vendor_select_dropdown = page.locator('(//div[@class="col-lg-12"]//select)[2]')
-        self.deployment_dropdown = page.locator('//span[@class="ant-select-selection-item"]')
+        self.success_message = page.locator(
+            '//div[@class="ant-message-notice-content"]'
+        )
+        self.warning_message = page.locator(
+            '//div[@class="ant-message-custom-content ant-message-warning"]'
+        )
+        self.vendor_select_dropdown = page.locator(
+            '(//div[@class="col-lg-12"]//select)[2]'
+        )
+        self.deployment_dropdown = page.locator(
+            '//span[@class="ant-select-selection-item"]'
+        )
         self.select_deployment_admin = '//div[text()="<<deployment_name>>"]'
-        self.button_to_change_action = page.locator('(//div[@class="d-flex justify-content-center align-items-center"]//button)[1]')
-        self.user_id = page.locator('(//td)[3]')
-        self.more_actions_button = page.locator('(//div[@class="font-sans-serif btn-reveal-trigger dropend"])[1]')
+        self.button_to_change_action = page.locator(
+            '(//div[@class="d-flex justify-content-center align-items-center"]//button)[1]'
+        )
+        self.user_id = page.locator("(//td)[3]")
+        self.more_actions_button = page.locator(
+            '(//div[@class="font-sans-serif btn-reveal-trigger dropend"])[1]'
+        )
         self.delete_button = page.locator('//a[text()="Delete"]')
         self.confirm_button = page.locator('//button[text()="Confirm"]')
         self.confirm_message = page.locator('//div[@class="modal-body"]')
-        self.user_infomation_box = page.locator('//tr[@class="align-middle white-space-nowrap hover-actions-trigger btn-reveal-trigger hover-bg-100  undefined"][1]')
-        self.user_name = page.locator('(//td)[4]')
+        self.user_infomation_box = page.locator(
+            '//tr[@class="align-middle white-space-nowrap hover-actions-trigger btn-reveal-trigger hover-bg-100  undefined"][1]'
+        )
+        self.user_name = page.locator("(//td)[4]")
         self.edit_button = page.locator('//button[text()="Edit User"]')
-
 
     @qase_screenshot
     @qase.step(
@@ -81,28 +103,30 @@ class SystemAdminUsersPage:
             self.invite_button,
             self.apply_batch_action_button,
             self.batch_action_dropdown,
-            self.dropdown
+            self.dropdown,
         ]
         for element in elements_to_check:
             expect(element).to_be_visible()
         # Extract headers from the UI
         headers_title = self.user_list_headers.inner_text()
         # Clean up and split header_title
-        cleaned_headers_title = re.sub(r'\s+', ' ', headers_title).strip()
-        headers_title_list = cleaned_headers_title.split(' ')
+        cleaned_headers_title = re.sub(r"\s+", " ", headers_title).strip()
+        headers_title_list = cleaned_headers_title.split(" ")
         # Combine split header parts (like 'Profile Image', 'Phone Number') into single elements
         headers_title_combined = [
-            ' '.join(headers_title_list[0:2]),
+            " ".join(headers_title_list[0:2]),
             headers_title_list[2],
-            ' '.join(headers_title_list[3:5]),
+            " ".join(headers_title_list[3:5]),
             headers_title_list[5],
             headers_title_list[6],
-            ' '.join(headers_title_list[7:9]),
+            " ".join(headers_title_list[7:9]),
             headers_title_list[9],
-            headers_title_list[10]
+            headers_title_list[10],
         ]
         # Assert the headers match the expected values
-        assert headers_title_combined == [item.strip() for item in headers_text], "Headers do not match"
+        assert headers_title_combined == [
+            item.strip() for item in headers_text
+        ], "Headers do not match"
         print("all element verified")
 
     @qase_screenshot
@@ -117,12 +141,14 @@ class SystemAdminUsersPage:
         # verify icon availability
         expect(self.users_icon).to_be_visible()
         # clicking on users tab
-        self.page.click(self.users_tab.replace("<<side_navigation_tabs>>", side_navigation_item))
+        self.page.click(
+            self.users_tab.replace("<<side_navigation_tabs>>", side_navigation_item)
+        )
         print(f"successfully able to click on {side_navigation_item} tab")
 
     @qase_screenshot
     @qase.step(
-        title = "Verify filter field title and available filters options",
+        title="Verify filter field title and available filters options",
         expected="Filter option should be visible with all available options",
     )
     def verify_filters_field_and_filter_options(self, available_filter_options):
@@ -136,14 +162,18 @@ class SystemAdminUsersPage:
         filter_options_text = [option.inner_text() for option in filter_options]
         print(f"Available filter options are: {filter_options_text}")
         # Assert that the extracted text matches the expected filter options
-        assert filter_options_text == available_filter_options, f"Expected: {available_filter_options}, but got: {filter_options_text}"
+        assert (
+            filter_options_text == available_filter_options
+        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
 
     @qase_screenshot
     @qase.step(
         title="Verify User is able to se only filtered data",
         expected="User should be able to see data according to applied filters",
     )
-    def apply_filters_and_verify_filtered_data(self, available_filter_options, expected_statuses):
+    def apply_filters_and_verify_filtered_data(
+        self, available_filter_options, expected_statuses
+    ):
         """
         Verify data visible based on the applied filter
         """
@@ -154,16 +184,22 @@ class SystemAdminUsersPage:
             all_users_status = self.page.query_selector_all(self.all_users_status)
             all_users_status_text = [status.inner_text() for status in all_users_status]
             # Print the text of each status
-            print(f"Users status after applying '{filter_option}': {all_users_status_text}")
+            print(
+                f"Users status after applying '{filter_option}': {all_users_status_text}"
+            )
             # Assertion to verify the expected statuses are present
             if filter_option in expected_statuses:
                 expected = expected_statuses[filter_option]
                 if expected:
                     for expected_status in expected:
-                        assert expected_status in all_users_status_text, f"'{expected_status}' not found in the status text for filter '{filter_option}'"
+                        assert (
+                            expected_status in all_users_status_text
+                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
                 else:
                     # If there are no expected statuses, assert that the status list is empty
-                    assert not all_users_status_text, f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
+                    assert (
+                        not all_users_status_text
+                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
 
     @qase_screenshot
     @qase.step(
@@ -181,13 +217,15 @@ class SystemAdminUsersPage:
         current_status = user_status_element.text_content()
         print(f"Current status is: {current_status}")
         # Verify the status is either 'Active' or 'Suspected'
-        if 'Active' in current_status:
+        if "Active" in current_status:
             self.user_checkbox.click()
             self.batch_action_dropdown.select_option("Suspend")
             self.apply_batch_action_button.click()
             time.sleep(2)
             new_status = user_status_element.text_content()
-            assert 'Suspected' in new_status, f"Expected status to be 'Suspected', but got {new_status}"
+            assert (
+                "Suspected" in new_status
+            ), f"Expected status to be 'Suspected', but got {new_status}"
             print("Status changed to 'Suspected' successfully.")
             # Now change the status back to 'Active'
             self.user_checkbox.click()
@@ -196,15 +234,19 @@ class SystemAdminUsersPage:
             # Wait for the status to revert to 'Active' and verify
             time.sleep(2)
             reverted_status = user_status_element.text_content()
-            assert 'Active' in reverted_status, f"Expected status to be 'Active', but got {reverted_status}"
+            assert (
+                "Active" in reverted_status
+            ), f"Expected status to be 'Active', but got {reverted_status}"
             print("Status reverted to 'Active' successfully.")
-        elif 'Suspended' in current_status:
+        elif "Suspended" in current_status:
             self.user_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_batch_action_button.click()
             time.sleep(2)
             reverted_status = user_status_element.text_content()
-            assert 'Active' in reverted_status, f"Expected status to be 'Active', but got {reverted_status}"
+            assert (
+                "Active" in reverted_status
+            ), f"Expected status to be 'Active', but got {reverted_status}"
             print("Status changed back to 'Active' successfully.")
         else:
             raise ValueError(f"Unexpected user status: {current_status}")
@@ -214,9 +256,11 @@ class SystemAdminUsersPage:
         title="Verify Invite users functionality",
         expected="system admin should be able to invite all other users",
     )
-    def verify_and_invite_system_admin_and_sender_functionality(self, first_name, last_name, email, user_types):
+    def verify_and_invite_system_admin_and_sender_functionality(
+        self, first_name, last_name, email, user_types
+    ):
         """
-            Verify invite user functionality
+        Verify invite user functionality
         """
         invite_form_element_to_check = [
             self.first_name_text,
@@ -225,7 +269,7 @@ class SystemAdminUsersPage:
             self.user_type_text,
             self.send_invite_button,
             self.cancel_button,
-            self.close_button
+            self.close_button,
         ]
         # Loop through user types and fill the invite form for each type
         for user_type in user_types:
@@ -252,9 +296,11 @@ class SystemAdminUsersPage:
         title="Verify & Invite deployment admin",
         expected="system admin should be able to invite deployment admin",
     )
-    def invite_deployment_admin(self, first_name, last_name, email, user_type, deployment_name):
+    def invite_deployment_admin(
+        self, first_name, last_name, email, user_type, deployment_name
+    ):
         """
-         Verify  and invite deployment admin
+        Verify  and invite deployment admin
         """
         self.invite_button.click()
         invite_form_element_to_check = [
@@ -264,7 +310,7 @@ class SystemAdminUsersPage:
             self.user_type_text,
             self.send_invite_button,
             self.cancel_button,
-            self.close_button
+            self.close_button,
         ]
         # Verify all elements are visible after clicking the invite button
         for element in invite_form_element_to_check:
@@ -278,7 +324,9 @@ class SystemAdminUsersPage:
         print(f"Invited user's email: {email}")
         self.user_type_dropdown.select_option(user_type)
         self.deployment_dropdown.click()
-        self.page.click(self.select_deployment_admin.replace("<<deployment_name>>", deployment_name))
+        self.page.click(
+            self.select_deployment_admin.replace("<<deployment_name>>", deployment_name)
+        )
         self.send_invite_button.click()
         # Verify the success message is visible
         self.success_message.wait_for(state="visible")
@@ -293,7 +341,7 @@ class SystemAdminUsersPage:
     )
     def invite_vendor(self, first_name, last_name, email, user_type_select, vendor):
         """
-         Verify  and invite vendor
+        Verify  and invite vendor
         """
         self.invite_button.click()
         invite_form_element_to_check = [
@@ -303,7 +351,7 @@ class SystemAdminUsersPage:
             self.user_type_text,
             self.send_invite_button,
             self.cancel_button,
-            self.close_button
+            self.close_button,
         ]
         for element in invite_form_element_to_check:
             expect(element).to_be_visible()
@@ -337,22 +385,26 @@ class SystemAdminUsersPage:
         )
         current_status = user_status_element.text_content()
         print(f"Current status is: {current_status}")
-        if 'Active' in current_status:
+        if "Active" in current_status:
             self.button_to_change_action.click()
             time.sleep(2)
             new_status = user_status_element.text_content()
-            assert 'Suspended' in new_status, f"Expected status to be 'Suspended', but got {new_status}"
+            assert (
+                "Suspended" in new_status
+            ), f"Expected status to be 'Suspended', but got {new_status}"
             print("Status changed to 'Suspected' successfully.")
             self.success_message.wait_for(state="visible")
             expect(self.success_message).to_be_visible()
             success_message = self.success_message.text_content()
             print(success_message)
             assert success_message == "User Suspended"
-        if 'Suspended' in current_status:
+        if "Suspended" in current_status:
             self.button_to_change_action.click()
             time.sleep(2)
             new_status = user_status_element.text_content()
-            assert 'Active' in new_status, f"Expected status to be 'Active', but got {new_status}"
+            assert (
+                "Active" in new_status
+            ), f"Expected status to be 'Active', but got {new_status}"
             print("Status changed back to 'Active' successfully.")
             self.success_message.wait_for(state="visible")
             expect(self.success_message).to_be_visible()
@@ -385,4 +437,3 @@ class SystemAdminUsersPage:
         warning_message = self.warning_message.text_content()
         print(warning_message)
         assert warning_message == "User Deleted"
-
