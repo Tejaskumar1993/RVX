@@ -2,6 +2,7 @@
 Deployment Admin Account Balance page modules
 """
 
+import re
 import time
 
 from playwright.sync_api import Page, expect
@@ -175,9 +176,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         self.current_auto_refill_confirm_message = page.locator(
             '//div[@class="modal-body"]'
         )
-        self.current_auto_refill_confirm_button = page.locator(
-            '//button[text()="Confirm"]'
-        )
+        self.generic_update_button = page.locator('//button[text()="Confirm"]')
         self.current_auto_refill_cancel_button = page.locator(
             '//button[text()="Cancel"]'
         )
@@ -194,10 +193,6 @@ class DeploymentAdminAccountBalancePage(BasePage):
         self.success_message = page.locator(
             '//div[@class="ant-message-custom-content ant-message-success"]'
         )
-
-        # payment method page elements
-
-        self.saved_card_header = page.locator()
 
         # card details
         self.card_details_header = page.locator('//h3[text()="Card Details"]')
@@ -232,6 +227,22 @@ class DeploymentAdminAccountBalancePage(BasePage):
         self.save_button = page.locator('//button[text()="Save"]')
         self.clear_button = page.locator(
             '//button[@class="my-3 px-4 cancel-btn btn"][text()="Clear"]'
+        )
+        self.alert_message = page.locator('//div[@class="ant-message-notice-content"]')
+
+        # deposit funds locators
+        self.deposit_funds_header = page.locator('//div[text()="Deposit Funds"]')
+        self.select_card_label = page.locator('//label[@title="Select Card"]')
+        self.select_card_dropdown = page.locator(
+            '//div[@class="modal-content"]//div[@class="ant-select-selector"]'
+        )
+        self.deposit_amount_label = page.locator('//label[@title="Deposit Amount"]')
+        self.deposit_amount_input = page.locator('//input[@id="amount"]')
+        self.deposit_funds_save_button = page.locator(
+            '//div[@class="modal-content"]//button[text()="Save"]'
+        )
+        self.deposit_funds_clear_button = page.locator(
+            '//div[@class="modal-content"]//button[text()="Clear"]'
         )
 
     @qase_screenshot
@@ -316,6 +327,63 @@ class DeploymentAdminAccountBalancePage(BasePage):
         time.sleep(2)
         balance_amount = self.account_balance_amount.text_content()
         print(f"available balance {balance_amount}")
+
+    @qase_screenshot
+    @qase.step(
+        title="Verify deposit funds functionality",
+        expected="deposit funds functionality should be working as expected and added funds get reflected in balance",
+    )
+    def verify_deposit_funds_functionality(self, select_card, amount_to_add):
+        """
+        verify deposit funds functionality of balance page
+        """
+        time.sleep(5)
+        # Get current account balance and extract numerical value using regex
+        current_amount_str = self.account_balance_amount.text_content()
+        current_amount = float(
+            re.sub(r"[^\d.]", "", current_amount_str)
+        )  # Remove any non-numeric characters
+        # Ensure amount_to_add is a numeric type (float or int)
+        amount_to_add = float(
+            amount_to_add
+        )  # Convert to float in case it's passed as a string
+        # Click on the deposit funds button
+        self.deposit_funds_button.click()
+        elements_to_check = [
+            self.select_card_label,
+            self.deposit_amount_label,
+            self.deposit_amount_input,
+            self.select_card_dropdown,
+            self.deposit_funds_save_button,
+            self.deposit_funds_clear_button,
+        ]
+        # Ensure all required elements are visible
+        for elements in elements_to_check:
+            expect(elements).to_be_visible()
+        # Select the card and fill in the deposit amount
+        self.select_card_dropdown.click()
+        time.sleep(2)
+        self.page.locator(f'(//div[text()="{select_card}"])[1]').click()
+        self.deposit_amount_input.fill(
+            str(amount_to_add)
+        )  # Convert amount_to_add to string if necessary
+        # Click the save button to deposit funds
+        self.deposit_funds_save_button.click()
+        time.sleep(10)
+        # Get updated account balance and convert to float
+        updated_amount_str = self.account_balance_amount.text_content()
+        updated_amount = float(
+            re.sub(r"[^\d.]", "", updated_amount_str)
+        )  # Remove any non-numeric characters
+        # Print debug information
+        print(f"Current Amount: {current_amount}")
+        print(f"Amount to Add: {amount_to_add}")
+        expected_amount = current_amount + amount_to_add
+        print(f"Expected Amount: {expected_amount}")
+        # Assert that the updated balance is the current balance plus the added amount
+        assert (
+            expected_amount == updated_amount
+        ), f"Expected {expected_amount}, but got {updated_amount}"
 
     @qase_screenshot
     @qase.step(
@@ -452,7 +520,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Fill the below amount and auto fund amount inputs
         print(
@@ -477,7 +545,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Verify the success message and the added amount
         print("Expecting success message and verifying added amount.")
@@ -510,7 +578,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Verify success message and the edited amount
         print("Expecting success message for edited amount.")
@@ -536,7 +604,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text_1 = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text for deletion: {confirm_message_text_1}")
         assert confirm_message_text_1 == confirm_message_of_auto_refill_deletion
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Final click on the auto refill switch to complete the process
         self.current_auto_refill_switch.click()
@@ -565,7 +633,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Fill the below amount and auto fund amount inputs
         print(f"Filling below amount: {below_amount}")
@@ -589,7 +657,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Verify the success message and the added amount
         print("Expecting success message and verifying added amount.")
@@ -619,7 +687,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text is: {confirm_message_text}")
         assert confirm_message_text == confirm_message
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Verify success message and the edited amount
         print("Expecting success message for edited amount.")
@@ -642,12 +710,85 @@ class DeploymentAdminAccountBalancePage(BasePage):
         confirm_message_text_1 = self.current_auto_refill_confirm_message.text_content()
         print(f"Confirm message text for deletion: {confirm_message_text_1}")
         assert confirm_message_text_1 == confirm_message_of_auto_refill_deletion
-        self.current_auto_refill_confirm_button.click()
+        self.generic_update_button.click()
 
         # Final click on the auto refill switch to complete the process
         self.current_auto_refill_switch.click()
 
-    def verify_payment_method_page_elements(self):
+    @qase_screenshot
+    @qase.step(
+        title="Verify Payment Method Elements and Add New Card Functionality",
+        expected="Payment Method Elements:All elements are displayed correctly and are functional."
+        "Add New Card Functionality:User can successfully add a valid card.Appropriate error messages "
+        "are shown for invalid inputs.Newly added card appears in the list of payment methods.",
+    )
+    def verify_payment_method_page_elements(
+        self,
+        tab_to_navigate,
+        card_number,
+        cvv,
+        expiry_date,
+        name_on_card,
+        name,
+        addressline1,
+        city,
+        zip,
+        success_message_text,
+        state_to_select,
+        delete_message_text,
+    ):
         """
-        Verify payment method page elements
+        Verify payment method page elements and add new card
         """
+        self.page.click(
+            self.account_balance_tabs.replace("<<tab_to_navigate>>", tab_to_navigate)
+        )
+        elements_to_verify = [
+            self.card_details_header,
+            self.name_on_card_label,
+            self.card_number_label,
+            self.expiry_date_label,
+            self.cvv_label,
+            self.billing_address_header,
+            self.name_label,
+            self.address_line_1_label,
+            self.address_line_2_label,
+            self.city_label,
+            self.zip_label,
+            self.save_button,
+            self.clear_button,
+            self.cards_we_accept_image,
+        ]
+        for elements in elements_to_verify:
+            expect(elements).to_be_visible()
+        self.name_on_card_input.fill(name_on_card)
+        self.card_number_input.fill(card_number)
+        self.expiry_date_input.fill(expiry_date)
+        self.name_input.fill(name)
+        self.address_line_1_input.fill(addressline1)
+        self.city_input.fill(city)
+        self.zip_input.fill(zip)
+        self.save_button.click()
+        self.cvv_input.fill(cvv)
+        self.select_state_dropdown.click()
+        self.select_state_dropdown.fill("Te")
+        # Replace <<state_to_select>> in the XPath with the selected state
+        xpath = f'//div[@class="ant-select-item-option-content"][text()="{state_to_select}"]'
+        time.sleep(5)
+        # Find and click the element matching the state name
+        self.page.locator(xpath).click()
+        self.save_button.click()
+        time.sleep(5)
+        expect(self.alert_message).to_be_visible()
+        success_card_message = self.alert_message.text_content()
+        print(f"success message : {success_card_message}")
+        assert success_card_message == success_message_text
+        self.page.locator(
+            f'//div//label[text()="{name_on_card}"]//..//button[text()="Delete Card"]'
+        ).click()
+        time.sleep(3)
+        self.generic_update_button.click()
+        expect(self.alert_message).to_be_visible()
+        delete_card_message = self.alert_message.text_content()
+        print(f"delete message : {delete_card_message}")
+        assert delete_card_message == delete_message_text

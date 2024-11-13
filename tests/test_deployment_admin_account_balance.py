@@ -211,7 +211,7 @@ def test_add_minium_account_balance_and_verify_it_in_current_auto_refills(
 
 @dictionary_parametrize(
     {
-        "Test_4": DeploymentAdminAccountBalanceParams.Test_5,
+        "Test_5": DeploymentAdminAccountBalanceParams.Test_5,
     }
 )
 @qase.title("Verify set up new auto refill functionality on schedule deposits page")
@@ -265,4 +265,121 @@ def test_add_set_up_new_auto_refill_and_verify_it_in_current_auto_refills(
         confirm_message_of_auto_refill_deletion=confirm_message_of_auto_refill_deletion,
         new_auto_fund_amount=new_auto_fund_amount,
         select_occurence=select_occurence,
+    )
+
+
+@dictionary_parametrize(
+    {
+        "Test_6": DeploymentAdminAccountBalanceParams.Test_6,
+    }
+)
+@qase.title(
+    "Verify add new card feature inside the payment method tab of account balance"
+)
+# @qase.id(2)
+@qase.fields(
+    ("severity", "major"),
+    ("priority", "high"),
+    (
+        "description",
+        "Verify and add add new card feature inside the payment method tab of account balance",
+    ),
+)
+def test_add_new_card_functionality(
+    environment_to_run,
+    ontrack_username,
+    select_role,
+    deployment_admin_account_balance_page,
+    ontrack_password,
+    tab_to_navigate,
+    ontrack_login_page,
+    account_balance_page_tab,
+    card_number,
+    cvv,
+    expiry_date,
+    name_on_card,
+    name,
+    addressline1,
+    city,
+    zip,
+    delete_message_text,
+    success_message_text,
+    state_to_select,
+):
+    """
+    Verify and test add new card feature inside the payment method
+    """
+    # 1. Navigate to ontrack login page and verify all element of login page
+    ontrack_login_page.open_and_verify_ontrack_login_page(
+        environment_to_run, ontrack_username, ontrack_password
+    )
+    # 2. Change user role to deployment admin
+    deployment_admin_account_balance_page.verify_and_change_user_role(
+        select_role=select_role
+    )
+    # 3. Navigate to account balance tab
+    deployment_admin_account_balance_page.verify_and_click_on_account_balance_tab(
+        tab_to_navigate=tab_to_navigate
+    )
+    # 4. Verify and add new card inside payment method tab of account balance
+    deployment_admin_account_balance_page.verify_payment_method_page_elements(
+        tab_to_navigate=account_balance_page_tab,
+        card_number=card_number,
+        cvv=cvv,
+        expiry_date=expiry_date,
+        name_on_card=name_on_card,
+        name=name,
+        addressline1=addressline1,
+        city=city,
+        zip=zip,
+        state_to_select=state_to_select,
+        success_message_text=success_message_text,
+        delete_message_text=delete_message_text,
+    )
+
+
+@dictionary_parametrize(
+    {
+        "Test_7": DeploymentAdminAccountBalanceParams.Test_7,
+    }
+)
+@qase.title("Verify deposit funds functionality")
+# @qase.id(2)
+@qase.fields(
+    ("severity", "major"),
+    ("priority", "high"),
+    (
+        "description",
+        "deposit funds functionality should be working as expected and added funds get reflected in balance",
+    ),
+)
+def test_deposit_funds_functionality(
+    environment_to_run,
+    ontrack_username,
+    select_role,
+    deployment_admin_account_balance_page,
+    ontrack_password,
+    ontrack_login_page,
+    select_card,
+    tab_to_navigate,
+    amount_to_add,
+):
+    """
+    Verify and test deposit funds functionality
+    """
+    # 1. Navigate to ontrack login page and verify all element of login page
+    ontrack_login_page.open_and_verify_ontrack_login_page(
+        environment_to_run, ontrack_username, ontrack_password
+    )
+    # 2. Change user role to deployment admin
+    deployment_admin_account_balance_page.verify_and_change_user_role(
+        select_role=select_role
+    )
+    # 3. Navigate to account balance tab
+    deployment_admin_account_balance_page.verify_and_click_on_account_balance_tab(
+        tab_to_navigate=tab_to_navigate
+    )
+    # 4. Add and verify deposit funds
+    deployment_admin_account_balance_page.verify_deposit_funds_functionality(
+        select_card=select_card, amount_to_add=amount_to_add
     )
