@@ -13,6 +13,7 @@ from pages.deployment_admin_account_balance import DeploymentAdminAccountBalance
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
+from pages.deployment_admin_items_list_page import DeploymentAdminitemsListPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
