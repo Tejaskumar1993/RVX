@@ -14,6 +14,7 @@ from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminitemsListPage
+from pages.deployment_admin_message_templates_page import DeploymentAdminMessageTemplatesPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -33,7 +34,7 @@ def ontrack_login_page(page: Page) -> OntrackLoginPage:
 @pytest.fixture
 def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
     """
-    Initialize login page objects and methods
+    Initialize users list page objects and methods
     :param page:
     :return:
     """
@@ -43,7 +44,7 @@ def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
 @pytest.fixture
 def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
     """
-    Initialize login page objects and methods
+    Initialize deployments page objects and methods
     :param page:
     :return:
     """
@@ -55,12 +56,33 @@ def deployment_admin_account_balance_page(
     page: Page,
 ) -> DeploymentAdminAccountBalancePage:
     """
-    Initialize login page objects and methods
+    Initialize account balance page objects and methods
     :param page:
     :return:
     """
     return DeploymentAdminAccountBalancePage(page)
 
+@pytest.fixture
+def deployment_admin_message_templates_page(
+    page: Page,
+) -> DeploymentAdminMessageTemplatesPage:
+    """
+    Initialize message templates page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminMessageTemplatesPage(page)
+
+@pytest.fixture
+def deployment_admin_items_list_page(
+    page: Page,
+) -> DeploymentAdminitemsListPage:
+    """
+    Initialize items list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminitemsListPage(page)
 
 @pytest.fixture
 def get_page(page: Page):

@@ -256,7 +256,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
         """
         # verify icon availability
         expect(self.account_balance_icon).to_be_visible()
-        # clicking on deployments tab
+        # clicking on account balance
         self.page.click(
             self.account_balance_tab.replace("<<tab_to_navigate>>", tab_to_navigate)
         )
@@ -264,7 +264,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
 
     @qase_screenshot
     @qase.step(
-        title="Verify logged in user is sable to change role to deployment admin",
+        title="Verify logged in user is able to change role to deployment admin",
         expected="Logged in user should be able to change role",
     )
     def verify_and_change_user_role(self, select_role):
