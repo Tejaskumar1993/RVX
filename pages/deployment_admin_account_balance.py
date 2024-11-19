@@ -416,14 +416,11 @@ class DeploymentAdminAccountBalancePage(BasePage):
                 date_range = get_quarter_date_range(3)
             elif option == "Quarter-4 : October-December":
                 date_range = get_quarter_date_range(4)
-
             # Retrieve all timestamps
             time_stamps = self.page.query_selector_all(self.time_stamp)
-
             # If date_range is set, proceed with validation; otherwise, handle "All Items" case
             if date_range:
                 start_date, end_date = date_range
-
                 # Parse dates within date range if they are strings
                 start_date = (
                     datetime.strptime(start_date, "%m/%d/%Y").date()
@@ -435,9 +432,7 @@ class DeploymentAdminAccountBalancePage(BasePage):
                     if isinstance(end_date, str)
                     else end_date
                 )
-
                 print(f"Expected date range for '{option}': {start_date} to {end_date}")
-
                 # Validate timestamps against the date range
                 for timestamp in time_stamps:
                     # Parsing each timestamp date

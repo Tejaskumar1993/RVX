@@ -178,11 +178,11 @@ class DeploymentAdminitemsListPage:
     )
     def verify_and_click_on_items_list_tab(self, side_navigation_item):
         """
-        Verify Users and click on deployments tab
+        Verify Users and click on items list tab
         """
         # verify icon availability
         expect(self.items_list_icon).to_be_visible()
-        # clicking on deployments tab
+        # clicking on  items list tab
         self.page.click(
             self.select_tab_from_side_navigation.replace(
                 "<<tab_to_navigate>>", side_navigation_item
