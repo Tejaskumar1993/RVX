@@ -14,6 +14,7 @@ from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminitemsListPage
+from pages.vendor_company_information_page import VendorCompanyInformationPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -60,6 +61,30 @@ def deployment_admin_account_balance_page(
     :return:
     """
     return DeploymentAdminAccountBalancePage(page)
+
+
+@pytest.fixture
+def deployment_admin_items_list_page(
+    page: Page,
+) -> DeploymentAdminitemsListPage:
+    """
+    Initialize  deployment admin item list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminitemsListPage(page)
+
+
+@pytest.fixture
+def vendor_company_information_page(
+    page: Page,
+) -> VendorCompanyInformationPage:
+    """
+    Initialize login page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorCompanyInformationPage(page)
 
 
 @pytest.fixture
