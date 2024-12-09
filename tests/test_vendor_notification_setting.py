@@ -3,12 +3,15 @@ from conftest import dictionary_parametrize
 from conftest import vendor_notification_settings_page
 from data.vendor_notification_settings import VendorNotificationParams
 
+
 @dictionary_parametrize(
     {
         "Test_1": VendorNotificationParams.test_1,
     }
 )
-@qase.title("Verify vendor notification page elements and checked and unchecked functionality ")
+@qase.title(
+    "Verify vendor notification page elements and checked and unchecked functionality "
+)
 # @qase.id(1)
 @qase.fields(
     ("severity", "major"),
@@ -16,16 +19,16 @@ from data.vendor_notification_settings import VendorNotificationParams
     (
         "description",
         "Verify all available fields on vendor notification page",
-    )
+    ),
 )
-
 def test_verify_vendor_notification_page_elements(
     environment_to_run,
     ontrack_username,
     ontrack_password,
     ontrack_login_page,
     vendor_notification_settings_page,
-    select_role, success_message_text,
+    select_role,
+    success_message_text,
     change_to_notification,
 ):
     """
@@ -45,14 +48,8 @@ def test_verify_vendor_notification_page_elements(
         change_to_notification=change_to_notification
     )
     # 4. Navigate to vendor notification page and verify all element of notification page
-    vendor_notification_settings_page.verify_vendor_notification_page_elements(
-
-    )
-    # 5. Navigate to vendor notification page and checked and unchecked checkbox
-    vendor_notification_settings_page.verify_vendor_notification_page_checkbox(
-
-    )
-    # 6. Navigate to vendor notification page and verify alert message
+    vendor_notification_settings_page.verify_vendor_notification_page_elements()
+    # 5. Navigate to vendor notification page and verify alert message
     vendor_notification_settings_page.verify_vendor_notification_page_alert_message(
         success_message_text=success_message_text
     )

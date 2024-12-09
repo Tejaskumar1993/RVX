@@ -10,9 +10,10 @@ from qase.pytest import qase
 from pages.base_page import BasePage
 from utilities.decorators import qase_screenshot
 
+
 class VendorNotificationPage(BasePage):
     """
-       Module containing objects and methods related to Vendor Notification page
+    Module containing objects and methods related to Vendor Notification page
     """
 
     def __init__(self, page: Page):
@@ -30,14 +31,24 @@ class VendorNotificationPage(BasePage):
         self.email = page.locator('//th[text()="Email"]')
         self.sms = page.locator('//th[text()="SMS"]')
         self.select_all = page.locator('//td[text()="Select All"]')
-        self.unacknowledged_orders = page.locator('//td[text()="Unacknowledged orders"]')
+        self.unacknowledged_orders = page.locator(
+            '//td[text()="Unacknowledged orders"]'
+        )
         self.orders_created = page.locator('//td[text()="Orders created"]')
         self.orders_not_sent = page.locator('//td[text()="Orders not sent"]')
-        self.sms_text = page.locator('//p[text()="SMS alerts are sent to the phone number on file. Standard message & data rates may apply."]')
+        self.sms_text = page.locator(
+            '//p[text()="SMS alerts are sent to the phone number on file. Standard message & data rates may apply."]'
+        )
         self.update_button = page.locator('//button[text()="Update"]')
-        self.email_checkbox = page.locator('(//tr[td[text()="Select All"]]//input[@type="checkbox"])[1]')
-        self.sms_checkbox = page.locator('(//tr[td[text()="Select All"]]//input[@type="checkbox"])[2]')
-        self.alert_message = page.locator('//div[@class="ant-message-custom-content ant-message-success"]')
+        self.email_checkbox = page.locator(
+            '(//tr[td[text()="Select All"]]//input[@type="checkbox"])[1]'
+        )
+        self.sms_checkbox = page.locator(
+            '(//tr[td[text()="Select All"]]//input[@type="checkbox"])[2]'
+        )
+        self.alert_message = page.locator(
+            '//div[@class="ant-message-custom-content ant-message-success"]'
+        )
 
     @qase_screenshot
     @qase.step(
@@ -60,7 +71,7 @@ class VendorNotificationPage(BasePage):
     @qase.step(
         title="click on user profile dropdown and select notification setting option",
         expected="User should be able to select notification setting successfully",
-        )
+    )
     def click_on_profile_and_click_on_notification(self, change_to_notification):
         """
         navigate to notification page
@@ -68,9 +79,11 @@ class VendorNotificationPage(BasePage):
         self.page.wait_for_selector("//a[@href='/dashboard/admin#!']")
         self.profile_image.click()
         self.page.locator(
-            self.notification_setting_dropdown.replace("<<Notification Settings>>", change_to_notification)).click()
+            self.notification_setting_dropdown.replace(
+                "<<Notification Settings>>", change_to_notification
+            )
+        ).click()
         print(f"User role changed to {change_to_notification}")
-
 
     @qase_screenshot
     @qase.step(
@@ -95,28 +108,14 @@ class VendorNotificationPage(BasePage):
             self.sms_text,
             self.update_button,
         ]
-
         for elements in elements_to_check:
             expect(elements).to_be_visible()
         print("items list page elements verified")
 
     @qase_screenshot
     @qase.step(
-        title="Verify notification setting page checkbox checked and unchecked ",
-        expected="User should be able to checked and unchecked checkbox of notification setting page",
-    )
-    def verify_vendor_notification_page_checkbox(self):
-        """
-        Verify and check of notification setting page checkbox and function
-        """
-        self.email_checkbox.click()
-        self.sms_checkbox.click()
-        self.update_button.click()
-
-    @qase_screenshot
-    @qase.step(
-        title="Verify alert message",
-        expected="User should be able see alert message",
+        title="Verify alert message and set vendor notification",
+        expected="User should be able see alert message after updating notifications for the vendor",
     )
     def verify_vendor_notification_page_alert_message(self, success_message_text):
         """
@@ -146,5 +145,3 @@ class VendorNotificationPage(BasePage):
         success_message = self.alert_message.text_content()
         assert success_message == success_message_text
         print("Notification updated successfully")
-
-
