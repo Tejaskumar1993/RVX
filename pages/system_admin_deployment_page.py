@@ -7,16 +7,17 @@ import time
 
 from playwright.sync_api import Page, expect
 from qase.pytest import qase
+from pages.base_page import BasePage
 from utilities.decorators import qase_screenshot
 
 
-class SystemAdminDeploymentsPage:
+class SystemAdminDeploymentsPage(BasePage):
     """
     Module containing objects and methods related to System Admin deployments Page
     """
 
     def __init__(self, page: Page):
-        super().__init__()
+        super().__init__(page)
         self.page = page
 
         # System admin Deployments page locators

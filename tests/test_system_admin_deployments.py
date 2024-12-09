@@ -33,17 +33,17 @@ def test_verify_deployments_page_elements(
     headers_text,
 ):
     """
-    Regression test for users page fields verification
+    Regression test for deployments page fields verification
     """
     # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Click and Verify users tab
+    # 2. Click and Verify deployments tab
     system_admin_deployments_page.verify_and_click_on_deployments_tab(
         side_navigation_item=tab_to_navigate
     )
-    # 3. Verify users page elements availability
+    # 3. Verify deployments page elements availability
     system_admin_deployments_page.verify_deployments_page_elements(
         headers_text=headers_text
     )
