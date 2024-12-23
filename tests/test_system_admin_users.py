@@ -98,7 +98,7 @@ def test_users_list_filters(
         "Test_3": SystemAdminUsersParams.Test_3,
     }
 )
-@qase.title("system admin should be able performe batch action on users list")
+@qase.title("system admin should be able perform batch action on users list")
 # @qase.id(2)
 @qase.fields(
     ("severity", "major"),
