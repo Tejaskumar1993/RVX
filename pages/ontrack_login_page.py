@@ -50,7 +50,7 @@ class OntrackLoginPage(BasePage):
                 f"Response from booking form after reloading {max_reloads} times",
             )
 
-    def open_booking_form(self, environment_to_run):
+    def open_ontracksend(self, environment_to_run):
         """.open login page
         :param environment_to_run:
         Navigates to the ontrack login page URL.
@@ -78,7 +78,7 @@ class OntrackLoginPage(BasePage):
         open and verify ontrack login page elements
         :return:
         """
-        self.open_booking_form(environment_to_run)
+        self.open_ontracksend(environment_to_run)
         self.verify_element(self.logo_image)
         self.verify_element(self.welcome_greetings)
         welcome_message = self.welcome_greetings.text_content()
