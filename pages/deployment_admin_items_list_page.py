@@ -10,7 +10,7 @@ from qase.pytest import qase
 from utilities.decorators import qase_screenshot
 
 
-class DeploymentAdminitemsListPage:
+class DeploymentAdminItemsListPage:
     """
     Module containing objects and methods related to Deployment Admin items list Page
     """
