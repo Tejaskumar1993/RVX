@@ -4,6 +4,7 @@ Root conftest that will be used for all projects
 
 import os
 import sys
+
 import pytest
 from dotenv import load_dotenv
 
@@ -25,6 +26,7 @@ from pages.vendor_notification_settings_page import VendorNotificationPage
 from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
 )
+from pages.sender_account_balance_page import SenderAccountBalancePage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -119,6 +121,18 @@ def vendor_notification_settings_page(
     :return:
     """
     return VendorNotificationPage(page)
+
+
+@pytest.fixture
+def sender_account_balance_page(
+    page: Page,
+) -> SenderAccountBalancePage:
+    """
+    Initialize vendor notification page objects and methods
+    :param page:
+    :return:
+    """
+    return SenderAccountBalancePage(page)
 
 
 @pytest.fixture
