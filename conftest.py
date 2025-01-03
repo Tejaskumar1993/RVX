@@ -9,7 +9,9 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
-from pages.deployment_admin_account_balance_page import DeploymentAdminAccountBalancePage
+from pages.deployment_admin_account_balance_page import (
+    DeploymentAdminAccountBalancePage,
+)
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
