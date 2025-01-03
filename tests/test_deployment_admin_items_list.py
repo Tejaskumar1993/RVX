@@ -314,7 +314,7 @@ def test_actions_on_the_items_list(
     headers_text,
 ):
     """
-    Regression test for filter functionality of add item page
+    Regression test for actions functionality of add item page
     """
     # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
