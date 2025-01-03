@@ -38,9 +38,7 @@ class OntrackLoginPage(BasePage):
         """
         max_reloads = 5
         for reload_counter in range(max_reloads):
-            print(
-                f"Reload {reload_counter}: Booking form responded as {response.status}"
-            )
+            print(f"Reload {reload_counter}:  responded as {response.status}")
             self.page.reload()
             if response.status == 200:
                 break
@@ -50,7 +48,7 @@ class OntrackLoginPage(BasePage):
                 f"Response from booking form after reloading {max_reloads} times",
             )
 
-    def open_booking_form(self, environment_to_run):
+    def open_ontracksend(self, environment_to_run):
         """.open login page
         :param environment_to_run:
         Navigates to the ontrack login page URL.
@@ -59,7 +57,7 @@ class OntrackLoginPage(BasePage):
         # base url of the ontrack login page
         base_url = f"https://send-{env}.ontrackworkflow.com"
         response = self.page.goto(base_url)
-        print("Booking form response:", response.status)
+        print("ontracksend response:", response.status)
         if "ontrackworkflow" not in base_url:
             raise ValueError("Base URL does not contain 'ontrackworkflow'")
         print("Navigating to:", base_url)
@@ -78,7 +76,7 @@ class OntrackLoginPage(BasePage):
         open and verify ontrack login page elements
         :return:
         """
-        self.open_booking_form(environment_to_run)
+        self.open_ontracksend(environment_to_run)
         self.verify_element(self.logo_image)
         self.verify_element(self.welcome_greetings)
         welcome_message = self.welcome_greetings.text_content()
@@ -98,7 +96,9 @@ class OntrackLoginPage(BasePage):
         dashboard_page_url = self.page.url
         assert (
             "dashboard/admin" in dashboard_page_url
+            or "dashboard/sender" in dashboard_page_url
         ), "The dashboard URL is incorrect."
+
         # Print a welcome message indicating successful login
         print(
             f"Welcome '{ontrack_username}' on OnTrack, and the dashboard page is visible."
