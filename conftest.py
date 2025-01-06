@@ -9,9 +9,11 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
+from data.vendor_orders_list import VendorOrdersListParams
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
@@ -25,6 +27,8 @@ from pages.vendor_notification_settings_page import VendorNotificationPage
 from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
 )
+from pages.vendor_orders_list_page import VendorOrdersListPage
+
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -98,6 +102,18 @@ def deployment_admin_items_list_page(
 
 
 @pytest.fixture
+def deployment_admin_send_order_list_page(
+    page: Page,
+) -> DeploymentAdminSendOrderList:
+    """
+    Initialize items list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminSendOrderList(page)
+
+
+@pytest.fixture
 def system_admin_items_list_page(
     page: Page,
 ) -> SystemAdminItemsListPage:
@@ -119,6 +135,18 @@ def vendor_notification_settings_page(
     :return:
     """
     return VendorNotificationPage(page)
+
+
+@pytest.fixture
+def vendor_orders_list_page(
+    page: Page,
+) -> VendorOrdersListPage:
+    """
+    Initialize vendor order list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorOrdersListPage(page)
 
 
 @pytest.fixture
@@ -186,13 +214,7 @@ def pytest_addoption(parser):
 
 
 def dictionary_parametrize(data, **kwargs):
-    """
-
-    Dictionary parametrize
-
-    :param data:
-    :return:
-    """
+    """Dictionary parametrize    :param data:    :return:"""
     args = list(list(data.values())[0].keys())
     formatted_data = [[item[a] for a in args] for item in data.values()]
     ids = list(data.keys())
