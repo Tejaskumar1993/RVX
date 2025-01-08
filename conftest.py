@@ -13,7 +13,9 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
+from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminItemsListPage
@@ -136,6 +138,18 @@ def sender_account_balance_page(
 
 
 @pytest.fixture
+def sender_connection_list_page(
+    page: Page,
+) -> SenderConnectionListPage:
+    """
+    Initialize Sender Connection List page objects and methods
+    :param page:
+    :return:
+    """
+    return SenderConnectionListPage(page)
+
+
+@pytest.fixture
 def deployment_admin_users_and_groups_page(
     page: Page,
 ) -> DeploymentAdminUsersAndGroupsPage:
@@ -145,6 +159,18 @@ def deployment_admin_users_and_groups_page(
     :return:
     """
     return DeploymentAdminUsersAndGroupsPage(page)
+
+
+@pytest.fixture
+def deployment_admin_send_order_list_page(
+    page: Page,
+) -> DeploymentAdminSendOrderList:
+    """
+    Initialize users & groups page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminSendOrderList(page)
 
 
 @pytest.fixture
