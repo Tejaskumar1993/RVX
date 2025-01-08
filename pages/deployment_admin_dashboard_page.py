@@ -159,12 +159,8 @@ class DeploymentAdminDashboardPage:
         ), f"Headers do not match: {headers_list} != {item_data_table_headers}"
         header_text = self.newest_sends_headers.inner_text()
         print(f"Raw header text: '{header_text}'")
-        header_text = re.sub(
-            r"\s+", " ", header_text
-        ).strip()
-        header_text = header_text.replace(
-            "\u00A0", " "
-        )
+        header_text = re.sub(r"\s+", " ", header_text).strip()
+        header_text = header_text.replace("\u00A0", " ")
         print(f"Normalized header text: '{header_text}'")
         headers = re.findall(r"[A-Z][a-z]+(?: [A-Z][a-z]+)*", header_text)
         print(f"Extracted Headers: {headers}")
