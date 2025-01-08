@@ -78,6 +78,18 @@ def deployment_admin_account_balance_page(
 
 
 @pytest.fixture
+def system_admin_items_list_page(
+    page: Page,
+) -> SystemAdminItemsListPage:
+    """
+    Initialize system admin items list page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminItemsListPage(page)
+
+
+@pytest.fixture
 def deployment_admin_message_templates_page(
     page: Page,
 ) -> DeploymentAdminMessageTemplatesPage:
@@ -102,15 +114,15 @@ def deployment_admin_items_list_page(
 
 
 @pytest.fixture
-def system_admin_items_list_page(
+def system_admin_vendors_page(
     page: Page,
-) -> SystemAdminItemsListPage:
+) -> SystemAdminVendorsPage:
     """
-    Initialize items list page objects and methods
+    Initialize  system admin vendors list page objects and methods
     :param page:
     :return:
     """
-    return SystemAdminItemsListPage(page)
+    return SystemAdminVendorsPage(page)
 
 
 @pytest.fixture
