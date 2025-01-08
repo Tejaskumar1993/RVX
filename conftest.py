@@ -27,6 +27,7 @@ from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
 )
 from pages.sender_account_balance_page import SenderAccountBalancePage
+from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -145,6 +146,18 @@ def deployment_admin_users_and_groups_page(
     :return:
     """
     return DeploymentAdminUsersAndGroupsPage(page)
+
+
+@pytest.fixture
+def deployment_admin_dashboard_page(
+    page: Page,
+) -> DeploymentAdminDashboardPage:
+    """
+    Initialize dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminDashboardPage(page)
 
 
 @pytest.fixture
