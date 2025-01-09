@@ -685,12 +685,8 @@ class SystemAdminItemsListPage(BasePage):
         self.vendor_info_button.click()
         expect(self.vendor_information_header).to_be_visible()
         expect(self.vendor_info_body).to_be_visible()
-        # vendor_company = self.vendor_company_name.text_content()
-        # assert company_name == vendor_company
         vendor_phone_number = self.vendor_phone_number.text_content()
         assert vendor_phone_number == phone_number
-        # vendor_email = self.vendor_email.text_content()
-        # assert vendor_email == email
         elements_to_check = [
             self.vendor_controls,
             self.suspend_vendor_button,

@@ -29,7 +29,7 @@ from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
 )
 from pages.sender_account_balance_page import SenderAccountBalancePage
-from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
+from pages.deployment_admin_token_control_page import DeploymentAdminTokenControlPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -175,15 +175,15 @@ def deployment_admin_users_and_groups_page(
 
 
 @pytest.fixture
-def deployment_admin_dashboard_page(
+def deployment_admin_token_control(
     page: Page,
-) -> DeploymentAdminDashboardPage:
+) -> DeploymentAdminTokenControlPage:
     """
-    Initialize dashboard page objects and methods
+    Initialize token control page objects and methods
     :param page:
     :return:
     """
-    return DeploymentAdminDashboardPage(page)
+    return DeploymentAdminTokenControlPage(page)
 
 
 @pytest.fixture
