@@ -13,7 +13,9 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
+from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminItemsListPage
@@ -77,6 +79,18 @@ def deployment_admin_account_balance_page(
 
 
 @pytest.fixture
+def system_admin_items_list_page(
+    page: Page,
+) -> SystemAdminItemsListPage:
+    """
+    Initialize system admin items list page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminItemsListPage(page)
+
+
+@pytest.fixture
 def deployment_admin_message_templates_page(
     page: Page,
 ) -> DeploymentAdminMessageTemplatesPage:
@@ -101,15 +115,15 @@ def deployment_admin_items_list_page(
 
 
 @pytest.fixture
-def system_admin_items_list_page(
+def system_admin_vendors_page(
     page: Page,
-) -> SystemAdminItemsListPage:
+) -> SystemAdminVendorsPage:
     """
-    Initialize items list page objects and methods
+    Initialize  system admin vendors list page objects and methods
     :param page:
     :return:
     """
-    return SystemAdminItemsListPage(page)
+    return SystemAdminVendorsPage(page)
 
 
 @pytest.fixture
@@ -134,6 +148,18 @@ def sender_account_balance_page(
     :return:
     """
     return SenderAccountBalancePage(page)
+
+
+@pytest.fixture
+def sender_connection_list_page(
+    page: Page,
+) -> SenderConnectionListPage:
+    """
+    Initialize Sender Connection List page objects and methods
+    :param page:
+    :return:
+    """
+    return SenderConnectionListPage(page)
 
 
 @pytest.fixture
