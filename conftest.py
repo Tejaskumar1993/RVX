@@ -24,7 +24,7 @@ from pages.vendor_company_information_page import VendorCompanyInformationPage
 from pages.deployment_admin_message_templates_page import (
     DeploymentAdminMessageTemplatesPage,
 )
-from pages.system_admin_items_list_page import SystemAdminItemsListPage
+from pages.sender_connects_page import SenderConnectsPage
 from pages.vendor_notification_settings_page import VendorNotificationPage
 from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
@@ -195,9 +195,9 @@ def sender_connection_list_page(
 @pytest.fixture
 def deployment_admin_users_and_groups_page(
     page: Page,
-) -> DeploymentAdminUsersAndGroupsPage:
+) -> SystemAdminItemsListPage:
     """
-    Initialize users & groups page objects and methods
+    Initialize system admin items list page objects and methods
     :param page:
     :return:
     """
