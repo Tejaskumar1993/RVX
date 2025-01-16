@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
+from data.vendor_orders_list import VendorOrdersListParams
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
@@ -269,13 +270,7 @@ def pytest_addoption(parser):
 
 
 def dictionary_parametrize(data, **kwargs):
-    """
-
-    Dictionary parametrize
-
-    :param data:
-    :return:
-    """
+    """Dictionary parametrize    :param data:    :return:"""
     args = list(list(data.values())[0].keys())
     formatted_data = [[item[a] for a in args] for item in data.values()]
     ids = list(data.keys())
