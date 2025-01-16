@@ -24,16 +24,16 @@ class SystemAdminUsersPage:
         self.users_tab = '//span[text()="<<side_navigation_tabs>>"]'
 
         # Users list Filters locators
-        self.filter_title = page.locator('//label[text()="Filter:"]')
-        self.filter_drop_down = '//select[@class="form-select form-select-sm"]//option'
+        self.filter_title = page.locator('//div[text()="Filter:"]')
+        self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]//option'
         self.dropdown = page.locator(
-            '//div[@class="d-flex align-items-center justify-content-between"]//select'
+            '(//div[@class="d-flex align-items-center"][1]//select)[1]'
         )
         self.all_users_status = '//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")]'
         self.batch_action_title = page.locator('//label[text()="Batch Action"]')
         self.user_checkbox = page.locator('(//tr//input[@type="checkbox"])[2]')
         self.batch_action_dropdown = page.locator(
-            '//div[@class="d-flex align-items-center"]//select'
+            '(//div[@class="d-flex align-items-center"]//select)[2]'
         )
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
         self.invite_button = page.locator('//button[text()="Invite"]')
@@ -88,14 +88,14 @@ class SystemAdminUsersPage:
 
     @qase_screenshot
     @qase.step(
-        title="Verify available elements of users page",
-        expected="All expected element should be visible on users page",
+        title="Verify available elements of vendors page",
+        expected="All expected element should be visible on vendors page",
     )
     def verify_user_page_elements(self, headers_text):
         """
-        Verify user page elements
+        Verify vendors page elements
         """
-        # Verify visibility of various components on the user page
+        # Verify visibility of various components on the vendors page
         elements_to_check = [
             self.user_page_header_component,
             self.user_page_footer,
