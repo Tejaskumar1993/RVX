@@ -53,12 +53,12 @@ def test_system_admin_notification_settings_page_elements(
         success_message_text=success_message_text,
         deployment_admin_notification=deployment_admin_notification,
     )
-    # 4. Navigate to system admin notification settings page and verify alert message
+    # 5. Navigate to system admin notification settings page and verify alert message
     system_admin_notification_settings_page.verify_sender_notification_page_alert_message(
         success_message_text=success_message_text,
         sender_notification=sender_notification,
     )
-    # 4. Navigate to system admin notification settings page and verify alert message
+    # 6. Navigate to system admin notification settings page and verify alert message
     system_admin_notification_settings_page.verify_vendor_notification_page_alert_message(
         success_message_text=success_message_text,
         vendor_notification=vendor_notification,
