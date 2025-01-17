@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
-from data.vendor_orders_list import VendorOrdersListParams
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
@@ -37,6 +36,11 @@ from pages.system_admin_notification_settings_page import (
 )
 from pages.system_admin_vendors_page import SystemAdminVendorsPage
 from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
+from pages.system_admin_items_list_page import SystemAdminItemsListPage
+from pages.deployment_admin_notification_settings_page import (
+    DeploymentAdminNotificationSettingsPage,
+)
+from pages.vendor_orders_list_page import VendorOrdersListPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -64,6 +68,30 @@ def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
 
 
 @pytest.fixture
+def deployment_admin_notification_settings_page(
+    page: Page,
+) -> DeploymentAdminNotificationSettingsPage:
+    """
+    Initialize notification settings page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminNotificationSettingsPage(page)
+
+
+@pytest.fixture
+def vendor_orders_list_page(
+    page: Page,
+) -> VendorOrdersListPage:
+    """
+    Initialize order list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorOrdersListPage(page)
+
+
+@pytest.fixture
 def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
     """
     Initialize deployments page objects and methods
@@ -71,6 +99,16 @@ def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
     :return:
     """
     return SystemAdminDeploymentsPage(page)
+
+
+@pytest.fixture
+def sender_connects_page(page: Page) -> SenderConnectsPage:
+    """
+    Initialize connects page objects and methods
+    :param page:
+    :return:
+    """
+    return SenderConnectsPage(page)
 
 
 @pytest.fixture
@@ -196,7 +234,7 @@ def sender_connection_list_page(
 @pytest.fixture
 def deployment_admin_users_and_groups_page(
     page: Page,
-) -> SystemAdminItemsListPage:
+) -> DeploymentAdminUsersAndGroupsPage:
     """
     Initialize system admin items list page objects and methods
     :param page:
