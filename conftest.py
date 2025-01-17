@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from playwright.sync_api import Page
 
+from data.vendor_orders_list import VendorOrdersListParams
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
@@ -24,7 +25,7 @@ from pages.vendor_company_information_page import VendorCompanyInformationPage
 from pages.deployment_admin_message_templates_page import (
     DeploymentAdminMessageTemplatesPage,
 )
-from pages.system_admin_items_list_page import SystemAdminItemsListPage
+from pages.sender_connects_page import SenderConnectsPage
 from pages.vendor_notification_settings_page import VendorNotificationPage
 from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
@@ -119,6 +120,18 @@ def deployment_admin_account_balance_page(
 
 
 @pytest.fixture
+def deployment_admin_dashboard_page(
+    page: Page,
+) -> DeploymentAdminDashboardPage:
+    """
+    Initialize dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminDashboardPage(page)
+
+
+@pytest.fixture
 def system_admin_items_list_page(
     page: Page,
 ) -> SystemAdminItemsListPage:
@@ -152,6 +165,18 @@ def deployment_admin_items_list_page(
     :return:
     """
     return DeploymentAdminItemsListPage(page)
+
+
+@pytest.fixture
+def system_admin_notification_settings_page(
+    page: Page,
+) -> SystemAdminNotificationSettingsPage:
+    """
+    Initialize notification settings page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminNotificationSettingsPage(page)
 
 
 @pytest.fixture
@@ -217,9 +242,9 @@ def system_admin_dashboard_page(
 @pytest.fixture
 def deployment_admin_users_and_groups_page(
     page: Page,
-) -> DeploymentAdminUsersAndGroupsPage:
+) -> SystemAdminItemsListPage:
     """
-    Initialize users & groups page objects and methods
+    Initialize system admin items list page objects and methods
     :param page:
     :return:
     """
@@ -291,13 +316,7 @@ def pytest_addoption(parser):
 
 
 def dictionary_parametrize(data, **kwargs):
-    """
-
-    Dictionary parametrize
-
-    :param data:
-    :return:
-    """
+    """Dictionary parametrize    :param data:    :return:"""
     args = list(list(data.values())[0].keys())
     formatted_data = [[item[a] for a in args] for item in data.values()]
     ids = list(data.keys())
