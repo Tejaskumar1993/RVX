@@ -13,6 +13,7 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
+from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
@@ -30,6 +31,9 @@ from pages.deployment_admin_users_and_groups_page import (
 )
 from pages.sender_account_balance_page import SenderAccountBalancePage
 from pages.deployment_admin_token_control_page import DeploymentAdminTokenControlPage
+from pages.system_admin_vendors_page import SystemAdminVendorsPage
+from pages.system_admin_dashboard_page import SystemAdminDashboardPage
+
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -54,6 +58,42 @@ def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
     :return:
     """
     return SystemAdminUsersPage(page)
+
+
+@pytest.fixture
+def deployment_admin_account_balance_page(
+    page: Page,
+) -> DeploymentAdminAccountBalancePage:
+    """
+    Initialize users list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminAccountBalancePage(page)
+
+
+@pytest.fixture
+def deployment_admin_dashboard_page(
+    page: Page,
+) -> DeploymentAdminDashboardPage:
+    """
+    Initialize users list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminDashboardPage(page)
+
+
+@pytest.fixture
+def deployment_admin_send_order_list_page(
+    page: Page,
+) -> DeploymentAdminSendOrderList:
+    """
+    Initialize users list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminSendOrderList(page)
 
 
 @pytest.fixture
@@ -160,6 +200,18 @@ def sender_connection_list_page(
     :return:
     """
     return SenderConnectionListPage(page)
+
+
+@pytest.fixture
+def system_admin_dashboard_page(
+    page: Page,
+) -> SystemAdminDashboardPage:
+    """
+    Initialize system admin dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDashboardPage(page)
 
 
 @pytest.fixture
