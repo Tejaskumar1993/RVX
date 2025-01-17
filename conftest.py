@@ -13,8 +13,8 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
-
-# from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
+from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
@@ -31,9 +31,6 @@ from pages.deployment_admin_users_and_groups_page import (
 )
 from pages.sender_account_balance_page import SenderAccountBalancePage
 from pages.deployment_admin_token_control_page import DeploymentAdminTokenControlPage
-from pages.system_admin_notification_settings_page import (
-    SystemAdminNotificationSettingsPage,
-)
 from pages.system_admin_vendors_page import SystemAdminVendorsPage
 from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 from pages.system_admin_items_list_page import SystemAdminItemsListPage
@@ -229,6 +226,18 @@ def sender_connection_list_page(
     :return:
     """
     return SenderConnectionListPage(page)
+
+
+@pytest.fixture
+def system_admin_dashboard_page(
+    page: Page,
+) -> SystemAdminDashboardPage:
+    """
+    Initialize system admin dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDashboardPage(page)
 
 
 @pytest.fixture
