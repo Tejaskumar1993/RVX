@@ -14,7 +14,6 @@ from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
 from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
-from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
@@ -38,6 +37,9 @@ from pages.deployment_admin_notification_settings_page import (
     DeploymentAdminNotificationSettingsPage,
 )
 from pages.vendor_orders_list_page import VendorOrdersListPage
+from pages.system_admin_notification_settings_page import SystemAdminNotificationSettingsPage
+from pages.system_admin_dashboard_page import SystemAdminDashboardPage
+from pages.vendor_users_page import VendorUsersListPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -66,7 +68,7 @@ def system_admin_users_page(page: Page) -> SystemAdminUsersPage:
 
 @pytest.fixture
 def deployment_admin_notification_settings_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminNotificationSettingsPage:
     """
     Initialize notification settings page objects and methods
@@ -78,7 +80,7 @@ def deployment_admin_notification_settings_page(
 
 @pytest.fixture
 def vendor_orders_list_page(
-    page: Page,
+        page: Page,
 ) -> VendorOrdersListPage:
     """
     Initialize order list page objects and methods
@@ -86,6 +88,18 @@ def vendor_orders_list_page(
     :return:
     """
     return VendorOrdersListPage(page)
+
+
+@pytest.fixture
+def vendor_users_list_page(
+        page: Page,
+) -> VendorUsersListPage:
+    """
+    Initialize users list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorUsersListPage(page)
 
 
 @pytest.fixture
@@ -110,7 +124,7 @@ def sender_connects_page(page: Page) -> SenderConnectsPage:
 
 @pytest.fixture
 def deployment_admin_account_balance_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminAccountBalancePage:
     """
     Initialize account balance page objects and methods
@@ -122,7 +136,7 @@ def deployment_admin_account_balance_page(
 
 @pytest.fixture
 def deployment_admin_dashboard_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminDashboardPage:
     """
     Initialize dashboard page objects and methods
@@ -134,7 +148,7 @@ def deployment_admin_dashboard_page(
 
 @pytest.fixture
 def system_admin_items_list_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminItemsListPage:
     """
     Initialize system admin items list page objects and methods
@@ -146,7 +160,7 @@ def system_admin_items_list_page(
 
 @pytest.fixture
 def deployment_admin_message_templates_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminMessageTemplatesPage:
     """
     Initialize message templates page objects and methods
@@ -158,7 +172,7 @@ def deployment_admin_message_templates_page(
 
 @pytest.fixture
 def deployment_admin_items_list_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminItemsListPage:
     """
     Initialize items list page objects and methods
@@ -170,7 +184,7 @@ def deployment_admin_items_list_page(
 
 @pytest.fixture
 def system_admin_notification_settings_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminNotificationSettingsPage:
     """
     Initialize notification settings page objects and methods
@@ -182,7 +196,7 @@ def system_admin_notification_settings_page(
 
 @pytest.fixture
 def system_admin_vendors_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminVendorsPage:
     """
     Initialize  system admin vendors list page objects and methods
@@ -194,7 +208,7 @@ def system_admin_vendors_page(
 
 @pytest.fixture
 def vendor_notification_settings_page(
-    page: Page,
+        page: Page,
 ) -> VendorNotificationPage:
     """
     Initialize vendor notification page objects and methods
@@ -206,7 +220,7 @@ def vendor_notification_settings_page(
 
 @pytest.fixture
 def sender_account_balance_page(
-    page: Page,
+        page: Page,
 ) -> SenderAccountBalancePage:
     """
     Initialize vendor notification page objects and methods
@@ -218,7 +232,7 @@ def sender_account_balance_page(
 
 @pytest.fixture
 def sender_connection_list_page(
-    page: Page,
+        page: Page,
 ) -> SenderConnectionListPage:
     """
     Initialize Sender Connection List page objects and methods
@@ -230,7 +244,7 @@ def sender_connection_list_page(
 
 @pytest.fixture
 def system_admin_dashboard_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminDashboardPage:
     """
     Initialize system admin dashboard page objects and methods
@@ -242,7 +256,7 @@ def system_admin_dashboard_page(
 
 @pytest.fixture
 def deployment_admin_users_and_groups_page(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminUsersAndGroupsPage:
     """
     Initialize system admin items list page objects and methods
@@ -254,7 +268,7 @@ def deployment_admin_users_and_groups_page(
 
 @pytest.fixture
 def deployment_admin_token_control(
-    page: Page,
+        page: Page,
 ) -> DeploymentAdminTokenControlPage:
     """
     Initialize token control page objects and methods
@@ -266,7 +280,7 @@ def deployment_admin_token_control(
 
 @pytest.fixture
 def vendor_company_information_page(
-    page: Page,
+        page: Page,
 ) -> VendorCompanyInformationPage:
     """
     Initialize login page objects and methods
