@@ -16,7 +16,11 @@ from pages.deployment_admin_account_balance_page import (
 from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
+from pages.system_admin_dashboard_page import SystemAdminDashboardPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
+from pages.system_admin_notification_settings_page import (
+    SystemAdminNotificationSettingsPage,
+)
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminItemsListPage
 from pages.vendor_company_information_page import VendorCompanyInformationPage
@@ -37,9 +41,7 @@ from pages.deployment_admin_notification_settings_page import (
     DeploymentAdminNotificationSettingsPage,
 )
 from pages.vendor_orders_list_page import VendorOrdersListPage
-from pages.vendor_dashboard_page import VendorDashboardPage
-from pages.system_admin_notification_settings_page import SystemAdminNotificationSettingsPage
-from pages.system_admin_dashboard_page import SystemAdminDashboardPage
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -101,6 +103,30 @@ def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
 
 
 @pytest.fixture
+def system_admin_notification_settings_page(
+    page: Page,
+) -> SystemAdminNotificationSettingsPage:
+    """
+    Initialize deployments page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminNotificationSettingsPage(page)
+
+
+@pytest.fixture
+def system_admin_dashboard_page(
+    page: Page,
+) -> SystemAdminDashboardPage:
+    """
+    Initialize deployments page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDashboardPage(page)
+
+
+@pytest.fixture
 def sender_connects_page(page: Page) -> SenderConnectsPage:
     """
     Initialize connects page objects and methods
@@ -144,6 +170,18 @@ def system_admin_items_list_page(
     :return:
     """
     return SystemAdminItemsListPage(page)
+
+
+@pytest.fixture
+def deployment_admin_send_order_list_page(
+    page: Page,
+) -> DeploymentAdminSendOrderList:
+    """
+    Initialize deployment admin send order list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminSendOrderList(page)
 
 
 @pytest.fixture
