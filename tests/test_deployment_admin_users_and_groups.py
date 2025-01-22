@@ -21,19 +21,19 @@ from conftest import deployment_admin_users_and_groups_page
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify all available fields on email templates page",
+            "description",
+            "Verify all available fields on email templates page",
     ),
 )
 def test_verify_users_and_groups_page_elements(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
-    users_table_headers,
-    select_role,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
+        users_table_headers,
+        select_role,
 ):
     """
     Regression test for users & groups page elements verification
@@ -67,20 +67,20 @@ def test_verify_users_and_groups_page_elements(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Apply filter on users list data and verify filtered data on users list",
+            "description",
+            "Apply filter on users list data and verify filtered data on users list",
     ),
 )
 def test_apply_filter_on_users_data(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    select_role,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
-    available_filter_options,
-    expected_statuses,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        select_role,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
+        available_filter_options,
+        expected_statuses,
 ):
     """
     Regression test for users list filter functionality
@@ -97,7 +97,7 @@ def test_apply_filter_on_users_data(
     deployment_admin_users_and_groups_page.verify_and_click_on_account_balance_tab(
         tab_to_navigate=tab_to_navigate
     )
-    # 4. Apply filter on items list and verify filtered item list
+    # 4. Apply filter on items list and verify filtered users list
     deployment_admin_users_and_groups_page.apply_filter_on_users_list_and_verify_filtered_data(
         available_filter_options=available_filter_options,
         expected_statuses=expected_statuses,
@@ -115,18 +115,18 @@ def test_apply_filter_on_users_data(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "apply batch action on multiple users at time to change status",
+            "description",
+            "apply batch action on multiple users at time to change status",
     ),
 )
 def test_apply_batch_action_on_users_to_changes_current_status_in_bulk(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    select_role,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        select_role,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
 ):
     """
     Regression test for batch action functionality
@@ -158,23 +158,23 @@ def test_apply_batch_action_on_users_to_changes_current_status_in_bulk(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "using invite user functionality, invite user ",
+            "description",
+            "using invite user functionality, invite user ",
     ),
 )
 def test_invite_user_flow(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    select_role,
-    user_email,
-    available_filter_options,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
-    user_name,
-    success_message,
-    user_type_to_select,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        select_role,
+        user_email,
+        available_filter_options,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
+        user_name,
+        success_message,
+        user_type_to_select,
 ):
     """
     Regression test for invite user functionality
@@ -212,18 +212,18 @@ def test_invite_user_flow(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify and perform suspend and delete actions functionality on users list",
+            "description",
+            "Verify and perform suspend and delete actions functionality on users list",
     ),
 )
 def test_suspend_and_delete_action_of_users_list(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    select_role,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        select_role,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
 ):
     """
     Regression test for suspend and delete action functionality on users list
@@ -255,20 +255,20 @@ def test_suspend_and_delete_action_of_users_list(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify and perform manage user group and nudge action functionality on users list",
+            "description",
+            "Verify and perform manage user group and nudge action functionality on users list",
     ),
 )
 def test_manage_user_group_and_nudge_action_of_users_list(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    select_role,
-    headers,
-    deployment_admin_users_and_groups_page,
-    tab_to_navigate,
-    success_message,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        select_role,
+        headers,
+        deployment_admin_users_and_groups_page,
+        tab_to_navigate,
+        success_message,
 ):
     """
     Regression test for manage user group and nudge action functionality on users list

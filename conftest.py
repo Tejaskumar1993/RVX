@@ -41,7 +41,9 @@ from pages.deployment_admin_notification_settings_page import (
     DeploymentAdminNotificationSettingsPage,
 )
 from pages.vendor_orders_list_page import VendorOrdersListPage
-from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
+from pages.system_admin_notification_settings_page import SystemAdminNotificationSettingsPage
+from pages.system_admin_dashboard_page import SystemAdminDashboardPage
+from pages.vendor_users_page import VendorUsersListPage
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -90,6 +92,18 @@ def vendor_orders_list_page(
     :return:
     """
     return VendorOrdersListPage(page)
+
+
+@pytest.fixture
+def vendor_users_list_page(
+        page: Page,
+) -> VendorUsersListPage:
+    """
+    Initialize users list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorUsersListPage(page)
 
 
 @pytest.fixture
@@ -170,18 +184,6 @@ def system_admin_items_list_page(
     :return:
     """
     return SystemAdminItemsListPage(page)
-
-
-@pytest.fixture
-def deployment_admin_send_order_list_page(
-    page: Page,
-) -> DeploymentAdminSendOrderList:
-    """
-    Initialize deployment admin send order list page objects and methods
-    :param page:
-    :return:
-    """
-    return DeploymentAdminSendOrderList(page)
 
 
 @pytest.fixture
