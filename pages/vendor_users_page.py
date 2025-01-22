@@ -366,6 +366,9 @@ class VendorUsersListPage(BasePage):
         """
         Verify user information component
         """
+        time.sleep(3)
+        self.select_user.click()
+        time.sleep(4)
         elements_to_check = [
             self.user_information_component,
             self.user_information_title,

@@ -150,19 +150,17 @@ def test_apply_batch_action_on_vendor_users_to_changes_current_status_in_bulk(
             "using invite user functionality, invite user ",
     ),
 )
-def test_invite_user_flow(
+def test_vendor_invite_user_flow(
         environment_to_run,
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
         select_role,
         user_email,
-        available_filter_options,
         vendor_users_list_page,
         tab_to_navigate,
         user_name,
         success_message,
-        user_type_to_select,
         user_last_name
 ):
     """
@@ -185,9 +183,7 @@ def test_invite_user_flow(
         user_name=user_name,
         user_email=user_email,
         user_last_name=user_last_name,
-        available_filter_options=available_filter_options,
         success_message=success_message,
-        user_type_to_select=user_type_to_select,
     )
 
 

@@ -49,7 +49,5 @@ class VendorUsersListParams:
         "user_name": first_name,
         "user_last_name": last_name,
         "user_email": user_email,
-        "available_filter_options": ["Deployment Admin", "Sender"],
-        "user_type_to_select": "Deployment Admin",
-        "success_message": "Invitation sent successfully",
+        "success_message": "Invitation Sent Successfully",
     }
