@@ -16,7 +16,11 @@ from pages.deployment_admin_account_balance_page import (
 from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
+from pages.system_admin_dashboard_page import SystemAdminDashboardPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
+from pages.system_admin_notification_settings_page import (
+    SystemAdminNotificationSettingsPage,
+)
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminItemsListPage
 from pages.vendor_company_information_page import VendorCompanyInformationPage
@@ -110,6 +114,30 @@ def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
     :return:
     """
     return SystemAdminDeploymentsPage(page)
+
+
+@pytest.fixture
+def system_admin_notification_settings_page(
+    page: Page,
+) -> SystemAdminNotificationSettingsPage:
+    """
+    Initialize deployments page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminNotificationSettingsPage(page)
+
+
+@pytest.fixture
+def system_admin_dashboard_page(
+    page: Page,
+) -> SystemAdminDashboardPage:
+    """
+    Initialize deployments page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDashboardPage(page)
 
 
 @pytest.fixture
@@ -252,6 +280,18 @@ def system_admin_dashboard_page(
     :return:
     """
     return SystemAdminDashboardPage(page)
+
+
+@pytest.fixture
+def vendor_dashboard_page(
+        page: Page,
+) -> VendorDashboardPage:
+    """
+    Initialize vendor dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorDashboardPage(page)
 
 
 @pytest.fixture
