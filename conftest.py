@@ -13,7 +13,7 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
-from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
+from pages.vendor_product_list_page import VendorProductListPage
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
@@ -252,6 +252,18 @@ def vendor_dashboard_page(
     :return:
     """
     return VendorDashboardPage(page)
+
+
+@pytest.fixture
+def vendor_product_list_page(
+        page: Page,
+) -> VendorProductListPage:
+    """
+    Initialize vendor product list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorProductListPage(page)
 
 
 @pytest.fixture
