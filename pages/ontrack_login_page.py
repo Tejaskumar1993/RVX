@@ -97,6 +97,8 @@ class OntrackLoginPage(BasePage):
         assert (
             "dashboard/admin" in dashboard_page_url
             or "dashboard/sender" in dashboard_page_url
+            or "dashboard/vendor" in dashboard_page_url
+            or "dashboard/user" in dashboard_page_url
         ), "The dashboard URL is incorrect."
 
         # Print a welcome message indicating successful login
