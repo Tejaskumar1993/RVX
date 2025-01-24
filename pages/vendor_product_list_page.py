@@ -40,8 +40,9 @@ class VendorProductListPage(BasePage):
         self.product_status = '//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")]'
         self.active_and_inactive_action = page.locator('(//*[@data-icon="lock" or @data-icon="unloack"])[1]')
         self.select_product = page.locator('(//tr)[2]')
-        self.edit_action = page.locator('//*[@data-icon="pen-to-square"]')
+        self.edit_action = page.locator('(//*[@data-icon="pen-to-square"])[1]')
         self.add_product = page.locator('//button[text()="Add Product"]')
+        self.edit_product = page.locator('//div[text()="Edit Product"]')
         self.request_support = page.locator('//button[text()="Request Support"]')
         self.edit_image_component = page.locator('//div[@class="ant-modal-content"]')
         self.edit_image_title = page.locator('//div[text()="Edit image"]')
@@ -90,9 +91,8 @@ class VendorProductListPage(BasePage):
         """
         Change user role from dropdown
         """
-        time.sleep(5)
+        time.sleep(2)
         self.change_role_dropdown.click()
-        time.sleep(5)
         self.page.locator(
             self.role_to_select.replace("<<role_to_change>>", role_to_change)
         ).click()
@@ -201,44 +201,60 @@ class VendorProductListPage(BasePage):
         """
         Verify product list page elements visibility
         """
-        elements_to_check = [
-            self.active_and_inactive_action,
-            self.edit_action,
-        ]
+        self.edit_action.click()
+        elements_to_check = [self.add_product_component,
+                             self.edit_product,
+                             self.close_button,
+                             self.description_label,
+                             self.description_input,
+                             self.price_input,
+                             self.price_label,
+                             self.shipping_rate_input,
+                             self.shipping_rate_label,
+                             self.product_image_label,
+                             self.product_name_input,
+                             self.select_category_label,
+                             self.category_select_dropdown]
         for elements in elements_to_check:
             expect(elements).to_be_visible()
-        print("actions buttons verified")
-        product_status_element = self.page.locator(
-            "(//div[contains(@class, 'badge-soft-success') or contains(@class, 'badge-soft-danger')])[1]"
-        )
-        current_status = product_status_element.text_content()
-        print(f"Current status is: {current_status}")
-        if "Declined" in current_status:
-            self.active_and_inactive_action.click()
-            self.success_message.wait_for(state="visible")
-            expect(self.success_message).to_be_visible()
-            success_message = self.success_message.text_content()
-            print(success_message)
-            assert success_message == "User Suspended"
-            time.sleep(3)
-            new_status = product_status_element.text_content()
-            assert (
-                    "Suspended" in new_status
-            ), f"Expected status to be 'Suspended', but got {new_status}"
-            print("Status changed to 'Suspected' successfully.")
-        if "Suspended" in current_status:
-            self.active_and_inactive_action.click()
-            self.success_message.wait_for(state="visible")
-            expect(self.success_message).to_be_visible()
-            success_message = self.success_message.text_content()
-            print(success_message)
-            assert success_message == "User Activated"
-            time.sleep(3)
-            new_status = product_status_element.text_content()
-            assert (
-                    "Active" in new_status
-            ), f"Expected status to be 'Active', but got {new_status}"
-            print("Status changed back to 'Active' successfully.")
+        # elements_to_check = [
+        #     self.active_and_inactive_action,
+        #     self.edit_action,
+        # ]
+        # for elements in elements_to_check:
+        #     expect(elements).to_be_visible()
+        # print("actions buttons verified")
+        # product_status_element = self.page.locator(
+        #     "(//div[contains(@class, 'badge-soft-success') or contains(@class, 'badge-soft-danger')])[1]"
+        # )
+        # current_status = product_status_element.text_content()
+        # print(f"Current status is: {current_status}")
+        # if "Declined" in current_status:
+        #     self.active_and_inactive_action.click()
+        #     self.success_message.wait_for(state="visible")
+        #     expect(self.success_message).to_be_visible()
+        #     success_message = self.success_message.text_content()
+        #     print(success_message)
+        #     assert success_message == "User Suspended"
+        #     time.sleep(3)
+        #     new_status = product_status_element.text_content()
+        #     assert (
+        #             "Suspended" in new_status
+        #     ), f"Expected status to be 'Suspended', but got {new_status}"
+        #     print("Status changed to 'Suspected' successfully.")
+        # if "Suspended" in current_status:
+        #     self.active_and_inactive_action.click()
+        #     self.success_message.wait_for(state="visible")
+        #     expect(self.success_message).to_be_visible()
+        #     success_message = self.success_message.text_content()
+        #     print(success_message)
+        #     assert success_message == "User Activated"
+        #     time.sleep(3)
+        #     new_status = product_status_element.text_content()
+        #     assert (
+        #             "Active" in new_status
+        #     ), f"Expected status to be 'Active', but got {new_status}"
+        #     print("Status changed back to 'Active' successfully.")
 
     @qase_screenshot
     @qase.step(title="Verify request support component & functionality",

@@ -77,3 +77,7 @@ class VendorProductListParams:
         "request_subject": subject,
         "success_message_text": "Your request for support from the system administrators has been sent successfully"
     }
+    Test_5 = {
+        "select_role": "Vendor",
+        "tab_to_navigate": "Product List",
+    }

@@ -39,24 +39,8 @@ class DeploymentAdminSendOrderList(BasePage):
         self.filter_main = page.locator(
             "//div[@class='d-flex align-items-center mb-2']"
         )
-        self.filter_option = page.locator(
-            "//select[@class='generic-filter-select ms-2 form-select form-select-sm']"
-        )
-        self.filter_option_all_orders = page.locator("//option[text()='All Orders']")
-        self.filter_option_created_orders = page.locator(
-            "//option[text()='Created Orders']"
-        )
-        self.filter_option_acknowledged_orders = page.locator(
-            "//option[text()='Acknowledged Orders']"
-        )
-        self.filter_option_shipped_orders = page.locator(
-            "//option[text()='Shipped Orders']"
-        )
-        self.filter_option_completed_orders = page.locator(
-            "//option[text()='Completed Orders']"
-        )
-        self.filter_option_custom = page.locator("//option[text()='Custom']")
-        self.filter_option_custom_id = page.locator("//option[text()='ID']")
+        self.filter_dropdown = page.locator('//div[@class="d-flex align-items-center mb-2"]//select')
+        self.filter_options = "//select[@class='generic-filter-select ms-2 form-select form-select-sm']//option"
         self.filter_option_custom_campaign = page.locator("//option[text()='Campaign']")
         self.filter_option_custom_date_sent = page.locator(
             "//option[text()='Date Sent']"
@@ -116,9 +100,12 @@ class DeploymentAdminSendOrderList(BasePage):
         self.email = page.locator(
             "(//button[@id='order-information-tab-tab-sendInformation']//..//..//..//p[text()='Email'])"
         )
+        self.select_rows_per_page_dropdown = page.locator(
+            '//div[contains(@class,"ps-3 d-flex flex-wrap rows-page-count")]//select')
 
         # cross button locators
         self.cross_button = page.locator("//button[@class='btn-close']")
+        self.all_orders_status = ' //div[contains(@class, "badge-soft-primary") or contains(@class, "badge-soft-success") or contains(@class,"badge-soft-warning") or contains(@class, "badge-soft-info")]'
 
     def click_on_dropdown_and_change_user_role(self, role_to_change):
         """
@@ -223,28 +210,29 @@ class DeploymentAdminSendOrderList(BasePage):
         )
 
     def apply_filter_on_send_order_list_and_verify_filtered_data(
-        self, filter_option, expected_statuses
+            self, available_filter_options, expected_statuses
     ):
         """
         Apply filter on send order list and verify filtered data
         """
-        expect(self.filter_option).to_be_visible()
-        filter_options = self.page.query_selector_all(self.filter_option)
-        filter_options_text = [option.inner_text() for option in filter_option]
+        expect(self.filter_dropdown).to_be_visible()
+        self.select_rows_per_page_dropdown.select_option('250')
+        filter_options = self.page.query_selector_all(self.filter_options)
+        filter_options_text = [option.inner_text() for option in filter_options]
         assert (
-            filter_options_text == filter_options
-        ), f"Expected: {filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {filter_options}")
-        for filter_option in filter_options:
-            self.item_list_filter.select_option(filter_option)
+                filter_options_text == available_filter_options
+        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
+        print(f"all available filters verified: {available_filter_options}")
+        for filter_option in available_filter_options:
+            self.filter_dropdown.select_option(filter_option)
             time.sleep(5)
-            self.page.wait_for_selector(self.all_items_status)
+            self.page.wait_for_selector(self.all_orders_status)
             # Query for the status elements after applying the filter
-            all_items_status = self.page.query_selector_all(self.all_items_status)
-            all_items_status_text = [status.inner_text() for status in all_items_status]
+            all_orders_status = self.page.query_selector_all(self.all_orders_status)
+            all_orders_status_text = [status.inner_text() for status in all_orders_status]
             # Print the text of each status
             print(
-                f"Items status after applying '{filter_option}': {all_items_status_text}"
+                f"Items status after applying '{filter_option}': {all_orders_status_text}"
             )
             # Assertion to verify the expected statuses are present
             if filter_option in expected_statuses:
@@ -252,10 +240,10 @@ class DeploymentAdminSendOrderList(BasePage):
                 if expected:
                     for expected_status in expected:
                         assert (
-                            expected_status in all_items_status_text
+                                expected_status in all_orders_status_text
                         ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
                 else:
                     # If there are no expected statuses, assert that the status list is empty
                     assert (
-                        not all_items_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_items_status_text}"
+                        not all_orders_status_text
+                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_orders_status_text}"
