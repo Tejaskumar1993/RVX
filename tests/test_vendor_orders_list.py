@@ -35,6 +35,7 @@ def test_verify_vendor_orders_list_page_elements(
     # 2. Change user role to vendor
     # vendor_orders_list_page.click_on_dropdown_and_change_user_role(
     #     role_to_change=select_role
+    # u
     # )
     # 3. Navigate to order list tab
     vendor_orders_list_page.verify_and_click_on_orders_list_tab(
