@@ -15,21 +15,19 @@ class DeploymentAdminSendOrderListParams:
     Test_2 = {
         "role_to_change": "Deployment Admin",
         "tab_to_navigate": "Send Order List",
-        "filter_options": [
+        "available_filter_options": [
             "All Orders",
             "Created Orders",
             "Acknowledged Orders",
             "Shipped Orders",
             "Completed Orders",
-            "Custom",
+            "Custom"
         ],
         "expected_statuses": {
-            "All Orders": [
-                "Created",
-                "Acknowledged",
-                "Shipped",
-                "Processing",
-                "completed",
-            ],
-        },
+            "All Users": ["Created", "Shipped", "Processing", "Acknowledged"],
+            "Created Orders": ["Created"],
+            "Acknowledged Orders": ["Acknowledged"],
+            "Shipped Orders": ["Processing"],
+            "Completed Orders": ["Created", "Shipped"]
+        }
     }
