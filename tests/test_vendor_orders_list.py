@@ -40,3 +40,5 @@ def test_verify_vendor_orders_list_page_elements(
     vendor_orders_list_page.verify_and_click_on_orders_list_tab(
         side_navigation_item=tab_to_navigate
     )
+    # 4. Verify send order list page elements availability
+    vendor_orders_list_page.verify_vendor_order_list_page_elements()
