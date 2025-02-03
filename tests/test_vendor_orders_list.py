@@ -33,10 +33,13 @@ def test_verify_vendor_orders_list_page_elements(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to vendor
-    vendor_orders_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # vendor_orders_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # u
+    # )
     # 3. Navigate to order list tab
     vendor_orders_list_page.verify_and_click_on_orders_list_tab(
         side_navigation_item=tab_to_navigate
     )
+    # 4. Verify send order list page elements availability
+    vendor_orders_list_page.verify_vendor_order_list_page_elements()

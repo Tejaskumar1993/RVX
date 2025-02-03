@@ -4,7 +4,6 @@ test cases for deployment admin account balance page
 from qase.pytest import qase
 from conftest import dictionary_parametrize
 from data.deployment_admin_account_balance import DeploymentAdminAccountBalanceParams
-from conftest import deployment_admin_account_balance_page
 
 
 @dictionary_parametrize(
