@@ -1,5 +1,5 @@
 """
-Deployment Admin send order list page modules
+System Admin send order list page modules
 """
 
 import time
@@ -7,9 +7,9 @@ from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
 
 
-class DeploymentAdminSendOrderList(BasePage):
+class SystemAdminSendOrderList(BasePage):
     """
-    Module containing objects and methods related to Deployment admin send order list page
+    Module containing objects and methods related to System admin send order list page
     """
 
     def __init__(self, page: Page):
@@ -33,14 +33,33 @@ class DeploymentAdminSendOrderList(BasePage):
         self.pagination_row_per_page = page.locator(
             "//div[@class='d-flex align-items-center fs--1 ps-3 d-flex flex-wrap rows-page-count']"
         )
+        self.select_rows_per_page_dropdown = page.locator(
+            '//div[contains(@class,"ps-3 d-flex flex-wrap rows-page-count")]//select'
+        )
 
         # Filters Locators
         self.filter_icon = page.locator("//div[@class='filter-text-icon']")
         self.filter_main = page.locator(
             "//div[@class='d-flex align-items-center mb-2']"
         )
-        self.filter_dropdown = page.locator('//div[@class="d-flex align-items-center mb-2"]//select')
+        self.filter_dropdown = page.locator(
+            '//div[@class="d-flex align-items-center mb-2"]//select'
+        )
         self.filter_options = "//select[@class='generic-filter-select ms-2 form-select form-select-sm']//option"
+        self.filter_option = page.locator(
+            "//select[@class='generic-filter-select ms-2 form-select form-select-sm']"
+        )
+        self.filter_option_all_orders = page.locator("//option[text()='All Orders']")
+        self.filter_option_created_orders = page.locator("//option[text()='Created']")
+        self.filter_option_acknowledged_orders = page.locator(
+            "//option[text()='Acknowledged']"
+        )
+        self.filter_option_shipped_orders = page.locator("//option[text()='Shipped']")
+        self.filter_option_completed_orders = page.locator(
+            "//option[text()='Completed']"
+        )
+        self.filter_option_custom = page.locator("//option[text()='Custom']")
+        self.filter_option_custom_id = page.locator("//option[text()='ID']")
         self.filter_option_custom_campaign = page.locator("//option[text()='Campaign']")
         self.filter_option_custom_date_sent = page.locator(
             "//option[text()='Date Sent']"
@@ -51,10 +70,11 @@ class DeploymentAdminSendOrderList(BasePage):
         # Table header locators
         self.thumbnail_header = page.locator("//th[text()='Thumbnail']")
         self.id_header = page.locator("//th[text()='ID']")
-        self.batch_id_header = page.locator("//th[text()='Batch ID']")
-        self.campaign_header = page.locator("//th[text()='Campaign']")
+        self.item_name_header = page.locator("//th[text()='Item Name']")
+        self.deployment_id_header = page.locator("//th[text()='Deployment ID']")
+        self.deployment_name_header = page.locator("//th[text()='Deployment Name']")
+        # self.send_time_header = page.locator("//th[text()='Send Time']")
         self.date_created_header = page.locator("//th[text()='Date Created']")
-        self.date_sent_header = page.locator("//th[text()='Date Sent']")
         self.status_header = page.locator("//th[text()='Status']")
 
         # Summary locators
@@ -65,11 +85,40 @@ class DeploymentAdminSendOrderList(BasePage):
         self.send_information = page.locator(
             "//button[@id='order-information-tab-tab-sendInformation']"
         )
-        self.name = page.locator(
+        self.name = page.locator("//label[text()='Name']")
+        self.tracking_number = page.locator("//input[@id='trackingNo']")
+        self.shipping_company = page.locator("//select[@class='form-select']")
+        self.send_order_status = page.locator("//label[text()='Send Order Status']")
+        self.description = page.locator("//label[text()='Description']")
+        self.send_time = page.locator("//label[text()='Send Time']")
+        self.date_sent = page.locator("//label[text()='Date Sent']")
+        self.arrival_minimum_time = page.locator(
+            "//label[text()='Arrival Minimum Time']"
+        )
+        self.arrival_maximum_time = page.locator(
+            "//label[text()='Arrival Maximum Time']"
+        )
+        self.apply_button = page.locator("//button[text()='Apply']")
+        self.cancel_button = page.locator("//button[text()='Cancel']")
+        self.delete_button = page.locator("//button[text()='Delete']")
+
+        # Prospect Details locators
+        self.prospect_details = page.locator(
+            "//button[@id='order-information-tab-tab-prospectDetails']"
+        )
+        self.prospect_details_header = page.locator("//h5[text()=' Prospect Details']")
+        self.pd_name = page.locator(
             "(//button[@id='order-information-tab-tab-sendInformation']//..//..//..//p[text()='Name'])[1]"
         )
-        self.send_order_status = page.locator("//p[text()='Send Order Status']")
-        self.description = page.locator("//p[text()='Description']")
+        self.email = page.locator(
+            "(//button[@id='order-information-tab-tab-sendInformation']//..//..//..//p[text()='Email'])"
+        )
+
+        # Order Information locators
+        self.order_information = page.locator(
+            "//button[@id='order-information-tab-tab-orderInformation']"
+        )
+        self.order_information_header = page.locator("//h5[text()='Order Information']")
         self.order_id = page.locator("//p[text()='Order Id']")
         self.batch_id = page.locator("//p[text()='Batch ID']")
         self.item_sent = page.locator("//p[text()='Item Sent']")
@@ -77,35 +126,9 @@ class DeploymentAdminSendOrderList(BasePage):
         self.item_vendor = page.locator("//p[text()='Item Vendor']")
         self.date_placed = page.locator("//p[text()='Date Placed']")
 
-        # Delivery Information locators
-        self.delivery_information = page.locator(
-            "//button[@id='order-information-tab-tab-deliveryInformation']"
-        )
-        self.tracking_number = page.locator("//input[@id='trackingNo']")
-        self.shipping_company = page.locator("//select[@class='form-select']")
-        self.send_time = page.locator("//input[@id='editSendTime']")
-        self.arrival_minimum_time = page.locator("//input[@id='arrivalMin']")
-        self.arrival_maximum_time = page.get_by_placeholder("Arrival Maximum Time")
-        self.date_sent = page.locator("//input[@name='dateSent']")
-        self.apply_button = page.locator("//button[text()='Apply']")
-        self.cancel_button = page.locator("//button[text()='Cancel']")
-
-        # Prospect Details locators
-        self.prospect_details = page.locator(
-            "//button[@id='order-information-tab-tab-prospectDetails']"
-        )
-        self.pd_name = page.locator(
-            "(//button[@id='order-information-tab-tab-sendInformation']//..//..//..//p[text()='Name'])[2]"
-        )
-        self.email = page.locator(
-            "(//button[@id='order-information-tab-tab-sendInformation']//..//..//..//p[text()='Email'])"
-        )
-        self.select_rows_per_page_dropdown = page.locator(
-            '//div[contains(@class,"ps-3 d-flex flex-wrap rows-page-count")]//select')
-
         # cross button locators
         self.cross_button = page.locator("//button[@class='btn-close']")
-        self.all_orders_status = ' //div[contains(@class, "badge-soft-primary") or contains(@class, "badge-soft-success") or contains(@class,"badge-soft-warning") or contains(@class, "badge-soft-info")]'
+        self.all_orders_status = '//div[contains(@class, "badge-soft-primary")]'
 
     def click_on_dropdown_and_change_user_role(self, role_to_change):
         """
@@ -140,10 +163,11 @@ class DeploymentAdminSendOrderList(BasePage):
             self.filter_main,
             self.thumbnail_header,
             self.id_header,
-            self.batch_id_header,
-            self.campaign_header,
+            self.item_name_header,
+            self.deployment_id_header,
+            self.deployment_name_header,
+            # self.send_time_header,
             self.date_created_header,
-            self.date_sent_header,
             self.status_header,
             self.pagination_number,
             self.pagination_result,
@@ -160,40 +184,23 @@ class DeploymentAdminSendOrderList(BasePage):
         # Send Information tab elements
         self.clik_on_send_order.click()
         elements_to_check = [
-            self.send_information,
             self.name,
+            self.tracking_number,
+            self.shipping_company,
             self.send_order_status,
             self.description,
-            self.order_id,
-            self.batch_id,
-            self.item_sent,
-            self.total_price,
-            self.item_vendor,
-            self.date_placed,
+            self.send_time,
+            self.date_sent,
+            self.arrival_minimum_time,
+            self.arrival_maximum_time,
+            self.apply_button,
+            self.cancel_button,
+            self.delete_button,
         ]
         for elements in elements_to_check:
             expect(elements).to_be_visible()
         print(
             "This is for summary page-> Send Information tab -> All elements are visible on the page."
-        )
-
-        # Delivery Information tab elements
-        self.delivery_information.click()
-        elements_to_check = [
-            self.delivery_information,
-            self.tracking_number,
-            self.shipping_company,
-            self.send_time,
-            self.arrival_minimum_time,
-            self.arrival_maximum_time,
-            self.date_sent,
-            self.apply_button,
-            self.cancel_button,
-        ]
-        for elements in elements_to_check:
-            expect(elements).to_be_visible()
-        print(
-            "This is for summary page-> Delivery Information tab -> All elements are visible on the page."
         )
 
         # Prospect Details Tab elements
@@ -209,18 +216,46 @@ class DeploymentAdminSendOrderList(BasePage):
             "This is for summary page-> Prospect Details Tab -> All elements are visible on the page."
         )
 
-    def apply_filter_on_send_order_list_and_verify_filtered_data(
-            self, available_filter_options, expected_statuses
+        # Order Information tab elements
+        self.order_information.click()
+        elements_to_check = [
+            self.order_information,
+            self.order_information_header,
+            self.order_id,
+            self.batch_id,
+            self.item_sent,
+            self.total_price,
+            self.item_vendor,
+            self.date_placed,
+        ]
+        for elements in elements_to_check:
+            expect(elements).to_be_visible()
+        print(
+            "This is for summary page-> order Information tab -> All elements are visible on the page."
+        )
+
+        # cross button of summary popup elements
+        elements_to_check = [
+            self.cross_button,
+        ]
+        for elements in elements_to_check:
+            expect(elements).to_be_visible()
+        print(
+            "This is for summary page-> cross button -> All elements are visible on the page."
+        )
+
+    def apply_filter_on_system_admin_send_order_list_and_verify_filtered_data(
+        self, available_filter_options, expected_statuses
     ):
         """
         Apply filter on send order list and verify filtered data
         """
         expect(self.filter_dropdown).to_be_visible()
-        self.select_rows_per_page_dropdown.select_option('250')
+        self.select_rows_per_page_dropdown.select_option("250")
         filter_options = self.page.query_selector_all(self.filter_options)
         filter_options_text = [option.inner_text() for option in filter_options]
         assert (
-                filter_options_text == available_filter_options
+            filter_options_text == available_filter_options
         ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
         print(f"all available filters verified: {available_filter_options}")
         for filter_option in available_filter_options:
@@ -229,7 +264,9 @@ class DeploymentAdminSendOrderList(BasePage):
             self.page.wait_for_selector(self.all_orders_status)
             # Query for the status elements after applying the filter
             all_orders_status = self.page.query_selector_all(self.all_orders_status)
-            all_orders_status_text = [status.inner_text() for status in all_orders_status]
+            all_orders_status_text = [
+                status.inner_text() for status in all_orders_status
+            ]
             # Print the text of each status
             print(
                 f"Items status after applying '{filter_option}': {all_orders_status_text}"
@@ -240,7 +277,7 @@ class DeploymentAdminSendOrderList(BasePage):
                 if expected:
                     for expected_status in expected:
                         assert (
-                                expected_status in all_orders_status_text
+                            expected_status in all_orders_status_text
                         ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
                 else:
                     # If there are no expected statuses, assert that the status list is empty

@@ -13,13 +13,13 @@ from conftest import deployment_admin_send_order_list_page
     }
 )
 def test_verify_send_order_list_page_elements(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    deployment_admin_send_order_list_page,
-    tab_to_navigate,
-    role_to_change,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        deployment_admin_send_order_list_page,
+        tab_to_navigate,
+        role_to_change,
 ):
     # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
@@ -45,15 +45,15 @@ def test_verify_send_order_list_page_elements(
     }
 )
 def test_apply_filter_on_send_order_list_data(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    deployment_admin_send_order_list_page,
-    tab_to_navigate,
-    filter_option,
-    expected_statuses,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        deployment_admin_send_order_list_page,
+        tab_to_navigate,
+        available_filter_options,
+        expected_statuses,
 ):
     # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
@@ -69,6 +69,5 @@ def test_apply_filter_on_send_order_list_data(
     )
     # 4. Apply filter on send order list and verify filtered item list
     deployment_admin_send_order_list_page.apply_filter_on_send_order_list_and_verify_filtered_data(
-        filter_option=filter_option,
-        expected_statuses=expected_statuses,
+        available_filter_options=available_filter_options, expected_statuses=expected_statuses
     )
