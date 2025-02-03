@@ -138,7 +138,7 @@ def system_admin_deployments_page(page: Page) -> SystemAdminDeploymentsPage:
 
 @pytest.fixture
 def system_admin_notification_settings_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminNotificationSettingsPage:
     """
     Initialize deployments page objects and methods
@@ -162,7 +162,7 @@ def system_admin_product_request_page(
 
 @pytest.fixture
 def system_admin_dashboard_page(
-    page: Page,
+        page: Page,
 ) -> SystemAdminDashboardPage:
     """
     Initialize deployments page objects and methods
@@ -360,6 +360,18 @@ def vendor_dashboard_page(
 #     :return:
 #     """
 #     return VendorProductListPage(page)
+
+
+@pytest.fixture
+def vendor_product_list_page(
+        page: Page,
+) -> VendorProductListPage:
+    """
+    Initialize vendor product list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorProductListPage(page)
 
 
 @pytest.fixture
