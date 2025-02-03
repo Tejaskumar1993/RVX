@@ -19,19 +19,19 @@ from conftest import deployment_admin_items_list_page
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify all fields of deployment admin items list page",
+            "description",
+            "Verify all fields of deployment admin items list page",
     ),
 )
 def test_verify_items_list_page_elements(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    role_to_change,
-    headers_text,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        role_to_change,
+        headers_text,
 ):
     """
     Regression test for items list page fields verification
@@ -65,20 +65,20 @@ def test_verify_items_list_page_elements(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Apply filter on items list data and verify filtered data on items list",
+            "description",
+            "Apply filter on items list data and verify filtered data on items list",
     ),
 )
 def test_apply_filter_on_items_list_data(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    available_filter_options,
-    expected_statuses,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        available_filter_options,
+        expected_statuses,
 ):
     """
     Regression test for items list filter functionality
@@ -113,18 +113,18 @@ def test_apply_filter_on_items_list_data(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "apply batch action on multiple items at time to change status",
+            "description",
+            "apply batch action on multiple items at time to change status",
     ),
 )
 def test_apply_batch_action_on_items_to_changes_current_status_in_bulk(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
 ):
     """
     Regression test for batch action functionality
@@ -156,23 +156,23 @@ def test_apply_batch_action_on_items_to_changes_current_status_in_bulk(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "using add item functionality, Add item to the user list",
+            "description",
+            "using add item functionality, Add item to the user list",
     ),
 )
 def test_add_item_flow(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    headers_text_of_summary,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    headers_text,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        headers_text_of_summary,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        headers_text,
 ):
     """
-    Regression test for batch action functionality
+    Regression test for add item functionality
     """
     # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
@@ -203,20 +203,20 @@ def test_add_item_flow(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify item information both tabs fields",
+            "description",
+            "Verify item information both tabs fields",
     ),
 )
 def test_item_information_component_and_tabs(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    tab_to_change,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    headers_text,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        tab_to_change,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        headers_text,
 ):
     """
     Regression test for item information
@@ -250,20 +250,20 @@ def test_item_information_component_and_tabs(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify add item filter functionality",
+            "description",
+            "Verify add item filter functionality",
     ),
 )
 def test_filter_functionality_inside_add_item_feature(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    available_filter_options,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    expected_statuses,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        available_filter_options,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        expected_statuses,
 ):
     """
     Regression test for filter functionality of add item page
@@ -298,20 +298,20 @@ def test_filter_functionality_inside_add_item_feature(
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "Verify and perform actions functionality on items list",
+            "description",
+            "Verify and perform actions functionality on items list",
     ),
 )
 def test_actions_on_the_items_list(
-    environment_to_run,
-    ontrack_username,
-    ontrack_password,
-    ontrack_login_page,
-    role_to_change,
-    deployment_admin_items_list_page,
-    tab_to_navigate,
-    tab_to_change,
-    headers_text,
+        environment_to_run,
+        ontrack_username,
+        ontrack_password,
+        ontrack_login_page,
+        role_to_change,
+        deployment_admin_items_list_page,
+        tab_to_navigate,
+        tab_to_change,
+        headers_text,
 ):
     """
     Regression test for actions functionality of add item page

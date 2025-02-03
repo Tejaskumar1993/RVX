@@ -1,7 +1,6 @@
 """
 test cases for login page
 """
-
 from qase.pytest import qase
 
 
@@ -11,12 +10,12 @@ from qase.pytest import qase
     ("severity", "major"),
     ("priority", "high"),
     (
-        "description",
-        "User should be able see all the required elements on login page",
+            "description",
+            "User should be able see all the required elements on login page",
     ),
 )
 def test_login_page_elements(
-    environment_to_run, ontrack_login_page, ontrack_password, ontrack_username
+        environment_to_run, ontrack_login_page, ontrack_password, ontrack_username
 ):
     """
     P1 Regression test for login page element verification

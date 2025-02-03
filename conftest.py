@@ -375,6 +375,18 @@ def vendor_product_list_page(
 
 
 @pytest.fixture
+def vendor_product_list_page(
+        page: Page,
+) -> VendorProductListPage:
+    """
+    Initialize vendor product list page objects and methods
+    :param page:
+    :return:
+    """
+    return VendorProductListPage(page)
+
+
+@pytest.fixture
 def deployment_admin_users_and_groups_page(
     page: Page,
 ) -> DeploymentAdminUsersAndGroupsPage:
