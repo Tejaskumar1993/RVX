@@ -13,11 +13,15 @@ from playwright.sync_api import Page
 from pages.deployment_admin_account_balance_page import (
     DeploymentAdminAccountBalancePage,
 )
-
-# from pages.vendor_product_list_page import VendorProductListPage
+from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
+from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
+from pages.system_admin_notification_settings_page import (
+    SystemAdminNotificationSettingsPage,
+)
+from pages.system_admin_product_requests_page import SystemAdminProductRequest
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.deployment_admin_items_list_page import DeploymentAdminItemsListPage
 from pages.vendor_company_information_page import VendorCompanyInformationPage
@@ -45,7 +49,9 @@ from pages.system_admin_notification_settings_page import (
 )
 from pages.system_admin_dashboard_page import SystemAdminDashboardPage
 from pages.vendor_users_page import VendorUsersListPage
-from pages.system_admin_send_order_list_page import SystemAdminSendOrderList
+from pages.system_admin_product_requests_page import SystemAdminProductRequest
+from pages.vendor_dashboard_page import VendorDashboardPage
+
 
 # Handle display of output log when using xdist
 sys.stdout = sys.stderr
@@ -143,6 +149,18 @@ def system_admin_notification_settings_page(
 
 
 @pytest.fixture
+def system_admin_product_request_page(
+    page: Page,
+) -> SystemAdminProductRequest:
+    """
+    Initialize system admin request page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminProductRequest(page)
+
+
+@pytest.fixture
 def system_admin_dashboard_page(
     page: Page,
 ) -> SystemAdminDashboardPage:
@@ -225,6 +243,30 @@ def deployment_admin_items_list_page(
 
 
 @pytest.fixture
+def deployment_admin_send_order_list_page(
+    page: Page,
+) -> DeploymentAdminSendOrderList:
+    """
+    Initialize items list page objects and methods
+    :param page:
+    :return:
+    """
+    return DeploymentAdminSendOrderList(page)
+
+
+@pytest.fixture
+def system_admin_notification_settings_page(
+    page: Page,
+) -> SystemAdminNotificationSettingsPage:
+    """
+    Initialize notification settings page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminNotificationSettingsPage(page)
+
+
+@pytest.fixture
 def system_admin_vendors_page(
     page: Page,
 ) -> SystemAdminVendorsPage:
@@ -282,6 +324,18 @@ def sender_connection_list_page(
     :return:
     """
     return SenderConnectionListPage(page)
+
+
+@pytest.fixture
+def system_admin_dashboard_page(
+    page: Page,
+) -> SystemAdminDashboardPage:
+    """
+    Initialize system admin dashboard page objects and methods
+    :param page:
+    :return:
+    """
+    return SystemAdminDashboardPage(page)
 
 
 @pytest.fixture
