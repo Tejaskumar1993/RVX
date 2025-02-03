@@ -17,6 +17,7 @@ from pages.deployment_admin_dashboard_page import DeploymentAdminDashboardPage
 from pages.deployment_admin_send_order_list_page import DeploymentAdminSendOrderList
 from pages.ontrack_login_page import OntrackLoginPage
 from pages.sender_connection_list_page import SenderConnectionListPage
+from pages.sender_notification_settings_page import SenderNotificationPage
 from pages.system_admin_deployment_page import SystemAdminDeploymentsPage
 from pages.system_admin_notification_settings_page import (
     SystemAdminNotificationSettingsPage,
@@ -192,6 +193,30 @@ def deployment_admin_account_balance_page(
     :return:
     """
     return DeploymentAdminAccountBalancePage(page)
+
+
+# @pytest.fixture
+# def deployment_admin_send_order_list_page(
+#     page: Page,
+# ) -> DploymendAdminSendOrderListPage:
+#     """
+#     Initialize account balance page objects and methods
+#     :param page:
+#     :return:
+#     """
+#     return DploymendAdminSendOrderListPage(page)
+
+
+@pytest.fixture
+def sender_notification_settings_page(
+    page: Page,
+) -> SenderNotificationPage:
+    """
+    Initialize Sender Notification page objects and methods
+    :param page:
+    :return:
+    """
+    return SenderNotificationPage(page)
 
 
 @pytest.fixture
