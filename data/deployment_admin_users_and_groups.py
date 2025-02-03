@@ -52,7 +52,7 @@ class DeploymentAdminUsersAndGroupsParams:
         "expected_statuses": {
             "All Users": ["Active", "Suspended"],
             "Active Users": ["Active"],
-            "Suspended Users": ["Suspended"],
+            "Suspended Users": ["Inactive"],
         },
     }
     Test_3 = {

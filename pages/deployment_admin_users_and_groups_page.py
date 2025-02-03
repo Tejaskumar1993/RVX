@@ -212,7 +212,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         ]  # Remove empty users
         # Assert the headers match the expected values
         assert (
-            headers_list == users_table_headers
+                headers_list == users_table_headers
         ), f"Headers do not match: {headers_list} != {users_table_headers}"
         print("All elements verified")
 
@@ -222,7 +222,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         expected="Data should be filtered properly based on the applied filter.",
     )
     def apply_filter_on_users_list_and_verify_filtered_data(
-        self, available_filter_options, expected_statuses
+            self, available_filter_options, expected_statuses
     ):
         """
         Apply filter on users list and verify filtered data
@@ -231,7 +231,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         filter_options = self.page.query_selector_all(self.users_filters_options)
         filter_options_text = [option.inner_text() for option in filter_options]
         assert (
-            filter_options_text == available_filter_options
+                filter_options_text == available_filter_options
         ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
         print(f"all available filters verified: {available_filter_options}")
         for filter_option in available_filter_options:
@@ -251,7 +251,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
                 if expected:
                     for expected_status in expected:
                         assert (
-                            expected_status in all_users_status_text
+                                expected_status in all_users_status_text
                         ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
                 else:
                     # If there are no expected statuses, assert that the status list is empty
@@ -277,13 +277,13 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         # Verify the status is either 'Active' or 'Suspected'
         if "Active" in current_status:
             self.user_checkbox.click()
-            self.batch_action_dropdown.select_option("Suspend")
+            self.batch_action_dropdown.select_option("Inactive")
             self.apply_batch_action_button.click()
             time.sleep(2)
             new_status = user_status_element.text_content()
             assert (
-                "Suspended" in new_status
-            ), f"Expected status to be 'Suspended', but got {new_status}"
+                    "Inactive" in new_status
+            ), f"Expected status to be 'Inactive', but got {new_status}"
             print("Status changed to 'Suspended' successfully.")
             # Now change the status back to 'Active'
             self.user_checkbox.click()
@@ -293,17 +293,17 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
             time.sleep(2)
             reverted_status = user_status_element.text_content()
             assert (
-                "Active" in reverted_status
+                    "Active" in reverted_status
             ), f"Expected status to be 'Active', but got {reverted_status}"
             print("Status reverted to 'Active' successfully.")
-        elif "Suspended" in current_status:
+        elif "Inactive" in current_status:
             self.user_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_batch_action_button.click()
             time.sleep(2)
             reverted_status = user_status_element.text_content()
             assert (
-                "Active" in reverted_status
+                    "Active" in reverted_status
             ), f"Expected status to be 'Active', but got {reverted_status}"
             print("Status changed back to 'Active' successfully.")
         else:
@@ -315,12 +315,12 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         expected="user should be able to add item to the item list",
     )
     def verify_and_test_invite_user_functionality(
-        self,
-        user_name,
-        user_email,
-        available_filter_options,
-        success_message,
-        user_type_to_select,
+            self,
+            user_name,
+            user_email,
+            available_filter_options,
+            success_message,
+            user_type_to_select,
     ):
         """
         add item to the user list and ready it to send
@@ -347,7 +347,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
             for option in self.page.query_selector_all(self.user_type_dropdown_option)
         ]
         assert (
-            dropdown_options == available_filter_options
+                dropdown_options == available_filter_options
         ), f"Dropdown options mismatch. Expected: {available_filter_options}, Found: {dropdown_options}"
         self.user_type_dropdown.select_option(user_type_to_select)
         # Click the invite button and verify success
@@ -358,7 +358,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         print(f"Notice message: {message_text}")
         # Verify success message
         assert (
-            message_text == success_message
+                message_text == success_message
         ), f"Expected success message: '{success_message}', but found: '{message_text}'"
 
     @qase_screenshot
@@ -394,7 +394,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
             time.sleep(3)
             new_status = user_status_element.text_content()
             assert (
-                "Suspended" in new_status
+                    "Suspended" in new_status
             ), f"Expected status to be 'Suspended', but got {new_status}"
             print("Status changed to 'Suspected' successfully.")
         if "Suspended" in current_status:
@@ -407,7 +407,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
             time.sleep(3)
             new_status = user_status_element.text_content()
             assert (
-                "Active" in new_status
+                    "Active" in new_status
             ), f"Expected status to be 'Active', but got {new_status}"
             print("Status changed back to 'Active' successfully.")
 
@@ -417,7 +417,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         expected="Actions functionality should be working as expected",
     )
     def verify_and_perform_manage_user_group_and_nudge_actions_functionality_from_actions(
-        self, headers, success_message
+            self, headers, success_message
     ):
         """
         Verify and perform manage user group and nudge functionality from the actions
@@ -444,7 +444,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         print("Expected headers:", expected_headers)
         print("Actual headers:", headers_list)
         assert (
-            headers_list == expected_headers
+                headers_list == expected_headers
         ), f"Headers mismatch! Expected: {expected_headers}, Got: {headers_list}"
         self.accept_changes_button.click()
         expect(self.notice_message).to_be_visible()
@@ -495,6 +495,6 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         ]  # Remove empty users
         # Assert the headers match the expected values
         assert (
-            headers_list == users_table_headers
+                headers_list == users_table_headers
         ), f"Headers do not match: {headers_list} != {users_table_headers}"
         print("All elements verified")
