@@ -23,7 +23,7 @@ from conftest import system_admin_dashboard_page
         "Verify all fields of system admin Dashboard",
     ),
 )
-def test_verify_dashboard_page_elements(
+def test_verify_system_admin_dashboard_page_elements(
     environment_to_run,
     ontrack_username,
     ontrack_password,

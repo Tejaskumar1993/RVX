@@ -86,80 +86,6 @@ def get_page(page: Page):
     """
     return page
 
-
-# Pytest custom add option arguments
-def pytest_addoption(parser):
-    """
-    Pytest custom arguments
-    :param parser:
-    :return:
-    """
-    # Load the .env file
-    load_dotenv()
-
-    parser.addoption(
-        "--ontrack-user",
-        action="store",
-        help="username",
-        default=os.getenv("ONTRACK_USER"),
-    )
-    parser.addoption(
-        "--ontrack-password",
-        action="store",
-        help="password",
-        default=os.getenv("ONTRACK_PASSWORD"),
-    )
-    parser.addoption(
-        "--env",
-        action="store",
-        help="Environment to run the script(staging, pilot, prod)",
-        default=os.getenv("ENVIRONMENT"),
-    )
-
-
-@pytest.fixture
-def environment_to_run(request):
-    """
-    Argument for environment to run the scripts
-    :param request: staging, test, prod, dev
-    :return:
-    """
-    return request.config.getoption("--env")
-
-
-@pytest.fixture
-def ontrack_username(request):
-    """
-    Argument for ontrack username
-    :param request:
-    :return:
-    """
-    return request.config.getoption("--ontrack-user")
-
-
-@pytest.fixture
-def ontrack_password(request):
-    """
-    Argument for ontrack user password
-    :param request:
-    :return:
-    """
-    return request.config.getoption("--ontrack-password")
-
-
-"""
-Dictionary parametrize
-"""
-
-
-def dictionary_parametrize(data, **kwargs):
-    """Dictionary parametrize    :param data:    :return:"""
-    args = list(list(data.values())[0].keys())
-    formatted_data = [[item[a] for a in args] for item in data.values()]
-    ids = list(data.keys())
-    return pytest.mark.parametrize(args, formatted_data, ids=ids, **kwargs)
-
-
 """
 Add Deployment Admin fixture Here
 """
@@ -482,3 +408,71 @@ def vendor_users_list_page(
     :return:
     """
     return VendorUsersListPage(page)
+
+
+# Pytest custom add option arguments
+def pytest_addoption(parser):
+    """
+    Pytest custom arguments
+    :param parser:
+    :return:
+    """
+    # Load the .env file
+    load_dotenv()
+
+    parser.addoption(
+        "--ontrack-user",
+        action="store",
+        help="username",
+        default=os.getenv("ONTRACK_USER"),
+    )
+    parser.addoption(
+        "--ontrack-password",
+        action="store",
+        help="password",
+        default=os.getenv("ONTRACK_PASSWORD"),
+    )
+    parser.addoption(
+        "--env",
+        action="store",
+        help="Environment to run the script(staging, pilot, prod)",
+        default=os.getenv("ENVIRONMENT"),
+    )
+
+
+def dictionary_parametrize(data, **kwargs):
+    """Dictionary parametrize    :param data:    :return:"""
+    args = list(list(data.values())[0].keys())
+    formatted_data = [[item[a] for a in args] for item in data.values()]
+    ids = list(data.keys())
+    return pytest.mark.parametrize(args, formatted_data, ids=ids, **kwargs)
+
+
+@pytest.fixture
+def environment_to_run(request):
+    """
+    Argument for environment to run the scripts
+    :param request: staging, test, prod, dev
+    :return:
+    """
+    return request.config.getoption("--env")
+
+
+@pytest.fixture
+def ontrack_username(request):
+    """
+    Argument for ontrack user name
+    :param request:
+    :return:
+    """
+    return request.config.getoption("--ontrack-user")
+
+
+@pytest.fixture
+def ontrack_password(request):
+    """
+    Argument for ontrack user password
+    :param request:
+    :return:
+    """
+    return request.config.getoption("--ontrack-password")
