@@ -4,7 +4,8 @@ test cases for System Admin product request page
 
 from conftest import dictionary_parametrize
 from data.system_admin_product_requests import SystemAdminProductRequestParams
-from conftest import system_admin_product_request_page
+from conftest import system_admin_product_requests_page
+
 
 
 @dictionary_parametrize(
