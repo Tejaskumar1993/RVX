@@ -541,7 +541,7 @@ def test_verify_edit_connect_page_elements_range_item_add(
     deployment_admin_connects_page,
     ):
     """
-    Test to verify the edit connect page elements when adding a range of items.
+    Test to verify the  edit connect page elements when adding a range of items.
     """
     # 1. Navigate to OnTrack login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
