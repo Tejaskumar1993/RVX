@@ -30,7 +30,7 @@ class DeploymentsConnectsData:
         "filter_default_value": "all_connects",
         "search_placeholder": "Input Search Text",
         "headers_text": ["Name", "Desc.", "Start Date", "End Date", "Gift Type", "Status", "Actions"],
-    }
+     }
 
     Test_2 = {
         "side_navigation_item": "Connects",
