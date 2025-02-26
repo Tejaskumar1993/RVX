@@ -190,7 +190,12 @@ def deployment_admin_users_and_groups_page(
 
 @pytest.fixture
 def deployment_admin_connects_page(page):
-    return DeploymentAdminConnectsPage(page)  # Pass the required argument
+    """
+       Initialize vendor notification page objects and methods
+       :param page:
+       :return:
+       """
+    return DeploymentAdminConnectsPage(page)
 """
 Add Sender fixture Here
 """
