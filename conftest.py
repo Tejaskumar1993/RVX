@@ -31,6 +31,7 @@ from pages.deployment_admin_token_control_page import DeploymentAdminTokenContro
 from pages.deployment_admin_users_and_groups_page import (
     DeploymentAdminUsersAndGroupsPage,
 )
+from pages.deployment_admin_connects_page import DeploymentAdminConnectsPage
 
 # Sender Import
 from pages.sender_connection_list_page import SenderConnectionListPage
@@ -187,6 +188,14 @@ def deployment_admin_users_and_groups_page(
     return DeploymentAdminUsersAndGroupsPage(page)
 
 
+@pytest.fixture
+def deployment_admin_connects_page(page):
+    """
+       Initialize vendor notification page objects and methods
+       :param page:
+       :return:
+       """
+    return DeploymentAdminConnectsPage(page)
 """
 Add Sender fixture Here
 """
