@@ -2,7 +2,8 @@ import pytest
 from qase.pytest import qase
 from conftest import dictionary_parametrize
 from data.deployment_admin_connects import DeploymentsConnectsData
-from conftest import deployment_admin_connects_page
+from pages.deployment_admin_connects_page import DeploymentAdminConnectsPage
+from conftest import DeploymentAdminConnectsPage
 
 
 @dictionary_parametrize(
