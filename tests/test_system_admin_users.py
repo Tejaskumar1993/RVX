@@ -89,7 +89,8 @@ def test_users_list_filters(
     )
     # 4. Apply all available filters and verify filtered data
     system_admin_users_page.apply_filters_and_verify_filtered_data(
-        available_filter_options, expected_statuses
+        available_filter_options=available_filter_options,
+        expected_statuses=expected_statuses
     )
 
 
@@ -269,7 +270,7 @@ def test_invite_vendor(
         last_name,
         email,
         user_type_select=user_type_select,
-        vendor=vendor_to_select,
+        vendor_to_select=vendor_to_select,
     )
 
 

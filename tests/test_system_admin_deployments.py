@@ -207,7 +207,7 @@ def test_deployment_summary_users_tab_filter(
     )
     # 3. Verify available filter options
     system_admin_deployments_page.verify_deployment_summary_users_filter(
-        available_filter_options=available_filter_options
+        available_filter_options = available_filter_options
     )
     # 4. Apply filter and verify resulted data
     system_admin_deployments_page.apply_filter_on_deployment_summary_users_data(
@@ -299,7 +299,8 @@ def test_deployment_summary_published_items_tab_fields(
     )
     # 3. Verify published items tab
     system_admin_deployments_page.verify_deployment_summary_published_items_tab_fields(
-        headers_text=headers_text, tab_to_navigate=deployment_summary_tab_navigation
+        tab_to_navigate=deployment_summary_tab_navigation,
+        headers_text=headers_text
     )
 
 

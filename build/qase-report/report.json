@@ -1,40 +1,40 @@
 {
     "environment": "local",
     "execution": {
-        "cumulative_duration": 8822,
-        "duration": 8857,
-        "end_time": 1729089356.9360926,
-        "start_time": 1729089348.0790207
+        "cumulative_duration": 66919,
+        "duration": 67075,
+        "end_time": 1741250629.9142458,
+        "start_time": 1741250562.8387108
     },
     "host_data": {
         "machine": "AMD64",
-        "node": "HP-2",
-        "pip": "24.2",
-        "python": "3.12.6.final.0",
+        "node": "LAPTOP-QN95QQSP",
+        "pip": "25.0",
+        "python": "3.13.1.final.0",
         "release": "11",
         "system": "Windows",
         "version": "10.0.22631"
     },
     "results": [
         {
-            "duration": 8822,
-            "id": "b79bf0ff-5482-4dcc-91b4-55a8553b6dbe",
-            "status": "passed",
-            "thread": "30728-MainThread",
-            "title": "User should be able see all the required elements on login page"
+            "duration": 66919,
+            "id": "ea882b57-17db-4e67-90e3-38b39bcaab39",
+            "status": "invalid",
+            "thread": "8512-MainThread",
+            "title": "System admin should be able to suspect, active and assign group to other users"
         }
     ],
     "stats": {
         "broken": 0,
         "failed": 0,
         "muted": 0,
-        "passed": 1,
+        "passed": 0,
         "skipped": 0,
         "total": 1
     },
     "suites": [],
     "threads": [
-        "30728-MainThread"
+        "8512-MainThread"
     ],
     "title": "Test run"
 }

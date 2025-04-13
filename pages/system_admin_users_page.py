@@ -25,7 +25,7 @@ class SystemAdminUsersPage:
 
         # Users list Filters locators
         self.filter_title = page.locator('//div[text()="Filter:"]')
-        self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]//option'
+        self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]'
         self.dropdown = page.locator(
             '(//div[@class="d-flex align-items-center"][1]//select)[1]'
         )
@@ -35,7 +35,9 @@ class SystemAdminUsersPage:
         self.batch_action_dropdown = page.locator(
             '(//div[@class="d-flex align-items-center"]//select)[2]'
         )
+        self. batch_action_dropdown_locator = page.locator("//select[@class='form-control form-select form-select-sm']")
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
+        self.toggle_all_rows_selected = page.locator("//input[contains(@title,'Toggle All Rows Selected')]")
         self.invite_button = page.locator('//button[text()="Invite"]')
         self.user_page_header_component = page.locator('//div[@class="mb-2 card"]')
         self.user_page_list_component = page.locator('//div[@class="card"]')
@@ -54,7 +56,7 @@ class SystemAdminUsersPage:
         self.email_input = page.locator('[id="email"]')
         self.user_type_text = page.locator('//label[text()="User Type"]')
         self.user_type_dropdown = page.locator('//div[@class="col-lg-12"]//select')
-        self.send_invite_button = page.locator('//button[text()="Send Invite"]')
+        self.send_invite_button = page.locator('//button[normalize-space()="Send Invite"]')
         self.cancel_button = page.locator('//button[text()="Cancel"]')
         self.close_button = page.locator('//button[@class="btn-close"]')
         self.success_message = page.locator(
@@ -64,12 +66,14 @@ class SystemAdminUsersPage:
             '//div[@class="ant-message-custom-content ant-message-warning"]'
         )
         self.vendor_select_dropdown = page.locator(
-            '(//div[@class="col-lg-12"]//select)[2]'
+            '//select[@id="vendorList"]'
         )
         self.deployment_dropdown = page.locator(
-            '//span[@class="ant-select-selection-item"]'
+            '//select[@id="userType"]'
         )
-        self.select_deployment_admin = '//div[text()="<<deployment_name>>"]'
+        self.deployment_name_dropdown = page.locator("//div[@class='ant-select-selector']")
+        self.select_deployment_name = page.locator("//div[contains(text(),'Development Deployment')]")
+        self.select_deployment_admin = '//input[@role="combobox"]'
         self.button_to_change_action = page.locator(
             '(//div[@class="d-flex justify-content-center align-items-center"]//button)[1]'
         )
@@ -102,11 +106,13 @@ class SystemAdminUsersPage:
             self.user_page_list_component,
             self.invite_button,
             self.apply_batch_action_button,
-            self.batch_action_dropdown,
-            self.dropdown,
+            self.toggle_all_rows_selected,
+            self.batch_action_dropdown_locator,
+            self.dropdown
         ]
         for element in elements_to_check:
             expect(element).to_be_visible()
+            time.sleep(2)
         # Extract headers from the UI
         headers_title = self.user_list_headers.inner_text()
         # Clean up and split header_title
@@ -127,7 +133,25 @@ class SystemAdminUsersPage:
         assert headers_title_combined == [
             item.strip() for item in headers_text
         ], "Headers do not match"
-        print("all element verified")
+
+        # Click toggle_all_rows_selected
+        self.toggle_all_rows_selected.click()
+        # Wait for the Batch dropdown to be visible
+        time.sleep(1)
+        expect(self.batch_action_dropdown_locator).to_be_visible()
+        self.batch_action_dropdown_locator.click()
+        self.batch_action_dropdown_locator.select_option('Inactivate')
+        selected_text = self.batch_action_dropdown_locator.locator("option:checked").inner_text()
+        assert selected_text == "Inactivate", f"Expected 'Inactivate', but got '{selected_text}'"
+        print("Verified :",selected_text)
+        self.batch_action_dropdown_locator.click()
+        self.batch_action_dropdown_locator.select_option('Activate')
+        selected_text = self.batch_action_dropdown_locator.locator("option:checked").inner_text()
+        assert selected_text == "Activate", f"Expected 'Inactivate', but got '{selected_text}'"
+        print("Verified :", selected_text)
+        self.batch_action_dropdown_locator.click()
+        print("All element verified.")
+
 
     @qase_screenshot
     @qase.step(
@@ -151,55 +175,61 @@ class SystemAdminUsersPage:
         title="Verify filter field title and available filters options",
         expected="Filter option should be visible with all available options",
     )
-    def verify_filters_field_and_filter_options(self, available_filter_options):
+    def verify_filters_field_and_filter_options(self,available_filter_options:list):
         """
-        Verify all available filters options
+        Verify all available filter options
         """
         expect(self.filter_title).to_be_visible()
         # Query all filter option elements
         filter_options = self.page.query_selector_all(self.filter_drop_down)
         # Extract text content from each option element
         filter_options_text = [option.inner_text() for option in filter_options]
+        if len(filter_options_text) == 1 and "\n" in filter_options_text[0]:
+            filter_options_text = filter_options_text[0].split("\n")
+
         print(f"Available filter options are: {filter_options_text}")
         # Assert that the extracted text matches the expected filter options
         assert (
-            filter_options_text == available_filter_options
+                filter_options_text == available_filter_options
         ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
+
+    # Assert that the extracted text matches the expected filter options
+
 
     @qase_screenshot
     @qase.step(
         title="Verify User is able to se only filtered data",
         expected="User should be able to see data according to applied filters",
     )
-    def apply_filters_and_verify_filtered_data(
-        self, available_filter_options, expected_statuses
-    ):
+    def apply_filters_and_verify_filtered_data(self, available_filter_options: list, expected_statuses: dict):
         """
         Verify data visible based on the applied filter
         """
         for filter_option in available_filter_options:
-            self.dropdown.select_option(filter_option)
+            print(f"\nApplying filter: {filter_option}")
+
+            # Apply filter
+            self.page.locator(f"//select[contains(.,'{filter_option}')]").select_option(filter_option)
             self.page.wait_for_selector(self.all_users_status)
-            # Query for the status elements after applying the filter
+            time.sleep(2)
+
+            # Extract and normalize status text
             all_users_status = self.page.query_selector_all(self.all_users_status)
-            all_users_status_text = [status.inner_text() for status in all_users_status]
-            # Print the text of each status
-            print(
-                f"Users status after applying '{filter_option}': {all_users_status_text}"
-            )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                            expected_status in all_users_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_users_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
+            all_users_status_text = [status.text_content().strip().replace("\n", " ") for status in all_users_status]
+
+            print(f"Extracted statuses for '{filter_option}': {all_users_status_text}")
+
+            # Ensure users exist
+            assert all_users_status_text, f"No users found for filter '{filter_option}'"
+
+            # Verify expected status
+            expected = expected_statuses.get(filter_option, [])
+            for expected_status in expected:
+                assert expected_status in all_users_status_text, (
+                    f"'{expected_status}' not found in the status text for filter '{filter_option}'"
+                )
+
+            print(f"✅ Filter '{filter_option}' verified successfully!")
 
     @qase_screenshot
     @qase.step(
@@ -323,15 +353,20 @@ class SystemAdminUsersPage:
         self.email_input.fill(email)
         print(f"Invited user's email: {email}")
         self.user_type_dropdown.select_option(user_type)
-        self.deployment_dropdown.click()
-        self.page.click(
-            self.select_deployment_admin.replace("<<deployment_name>>", deployment_name)
-        )
+        print(f"Invited user's Deployment Admin: {user_type}")
+
+        # Select deployment
+        self.deployment_name_dropdown.wait_for(state="visible")
+        self.deployment_name_dropdown.click()
+        self.page.click(f"//div[contains(text(),'{deployment_name}')]")
+        print(f"Invite user's Deployment_name selected: '{deployment_name}'")
         self.send_invite_button.click()
+
         # Verify the success message is visible
         self.success_message.wait_for(state="visible")
         expect(self.success_message).to_be_visible()
         success_message = self.success_message.text_content()
+
         assert success_message == "Invitation Sent Successfully"
 
     @qase_screenshot
@@ -339,7 +374,7 @@ class SystemAdminUsersPage:
         title="Verify & Invite vendor",
         expected="system admin should be able to invite vendor",
     )
-    def invite_vendor(self, first_name, last_name, email, user_type_select, vendor):
+    def invite_vendor(self, first_name, last_name, email, user_type_select,vendor_to_select):
         """
         Verify  and invite vendor
         """
@@ -362,9 +397,16 @@ class SystemAdminUsersPage:
         print(f"Invited user's lastname: {last_name}")
         self.email_input.fill(email)
         print(f"Invited user's email: {email}")
+        time.sleep(5)
         self.user_type_dropdown.select_option(user_type_select)
-        self.vendor_select_dropdown.select_option(vendor)
+        print(f"Invited user's user_type: {user_type_select}")
+        time.sleep(10)
+        self.vendor_select_dropdown.click()
+        time.sleep(5)
+        self.vendor_select_dropdown.select_option(vendor_to_select)
+        time.sleep(4)
         self.send_invite_button.click()
+        time.sleep(4)
         # Verify the success message is visible
         self.success_message.wait_for(state="visible")
         expect(self.success_message).to_be_visible()

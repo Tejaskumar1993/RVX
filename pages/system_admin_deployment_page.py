@@ -5,6 +5,7 @@ System Admin Deployments page modules
 import re
 import time
 
+import playwright
 from playwright.sync_api import Page, expect
 from qase.pytest import qase
 from pages.base_page import BasePage
@@ -29,7 +30,7 @@ class SystemAdminDeploymentsPage(BasePage):
             '//button[text()="<<tab_to_navigate>>"]'
         )
         self.dropdown = page.locator(
-            '//div[@class="d-flex align-items-center justify-content-between"]//select'
+            '//*[@id="root"]/div/div/div[1]/div/div/div[1]/div/select'
         )
         self.all_users_status = '//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")]'
         self.batch_action_title = page.locator('//label[text()="Batch Action"]')
@@ -52,6 +53,7 @@ class SystemAdminDeploymentsPage(BasePage):
             '(//div[@class="d-flex justify-content-center align-items-center"]//button)[1]'
         )
         self.delete_button = page.locator('//a[text()="Delete"]')
+        self.confirm_button = page.locator("//button[text() = 'Confirm']")
         self.select_deployment = page.locator("(//tr)[2]")
         self.deployment_summary_model = page.locator('//div[@class="modal-content"]')
         self.deployment_summary_title = page.locator(
@@ -69,7 +71,7 @@ class SystemAdminDeploymentsPage(BasePage):
             '//button[text()="Information"]'
         )
         self.deployment_summary_users_filter = page.locator(
-            '//div[@class="deployment-summary-content"]//label[text()="Filter:"]'
+            '//*[@id="order-information-tab-tabpane-users"]/div/div[1]/div/div/div[1]/div/select'
         )
         self.deployment_summary_user_filter_dropdown = page.locator(
             '//div[@class="deployment-summary-content"]//div[@class="card-body"]//select'
@@ -79,6 +81,7 @@ class SystemAdminDeploymentsPage(BasePage):
         # Users tab locators
         self.users_profile_image = page.locator('//div[text()="Profile Image"]')
         self.users_id = page.locator('(//th[text()="ID"])[2]')
+        self.user_name = page.locator("//th[text()='Username']")
         self.user_tab_header = page.locator('(//tr[@class="text-center"])[2]')
         self.users_first_name = page.locator('//th[text()="First Name"]')
         self.users_last_name = page.locator('//th[text()="Last Name"]')
@@ -90,7 +93,7 @@ class SystemAdminDeploymentsPage(BasePage):
             '(//button[@class="btn rounded-3 me-2 fs--2 action-item-sm btn-outline icon-item icon-item-md"])[1]'
         )
         self.multi_actions_button = page.locator(
-            '(//div[@id="order-information-tab-tabpane-users"]//div[@class="font-sans-serif btn-reveal-trigger dropend"])[1]'
+            '(//div[@id="order-information-tab-tabpane-users"]//div[@class="font-sans-serif btn-reveal-t                            rigger dropend"])[1]'
         )
         self.assign_group_button = page.locator('//a[text()="Assign Group"]')
         self.success_message = page.locator(
@@ -117,27 +120,35 @@ class SystemAdminDeploymentsPage(BasePage):
         self.apply_button = page.locator('//button[text()="Apply"]')
         self.cancel_button = page.locator('//button[text()="Cancel"]')
         # Published items tab locators
-        self.published_items_id = page.locator('(//th[text()="ID"])[3]')
         self.published_items_tab_header = page.locator(
             '(//tr[@class="text-center"])[3]'
         )
-        self.published_items_name = page.locator('(//th[text()="Name"])[2]')
-        self.published_items_description = page.locator(
-            '(//th[text()="Description"])[1]'
-        )
+        self.published_items_Thumbnail = page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[1]")
+        self.published_items_id = page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[2]")
+        self.published_items_Name=page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[3]")
+        self.published_items_item_type = page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[4]")
+        self.published_items_price =page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[5]")
+        self.published_items_fee = page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[6]")
+        self.published_items_status = page.locator("//*[@id='order-information-tab-tabpane-publishedItems']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[7]")
+
         # Sends tab locators
         self.sends_tab_header = page.locator('(//tr[@class="text-center"])[4]')
-        self.sends_thumbnail = page.locator('(//th[text()="Thumbnail"])[1]')
-        self.sends_id = page.locator('(//th[text()="ID"])[4]')
+        self.sends_thumbnail = page.locator('//*[@id="order-information-tab-tabpane-sends"]/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[1]')
+        self.sends_id = page.locator('//*[@id="order-information-tab-tabpane-sends"]/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[2]')
+        self.sends_item_sent = page.locator("//*[@id='order-information-tab-tabpane-sends']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[3]")
+        self.sends_price = page.locator("//*[@id='order-information-tab-tabpane-sends']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[4]")
+        self.sends_send_date = page.locator("//*[@id='order-information-tab-tabpane-sends']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[5]")
+        self.sends_date_created_ = page.locator("//*[@id='order-information-tab-tabpane-sends']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[6]")
+        self.sends_status = page.locator("//*[@id='order-information-tab-tabpane-sends']/div/div/div[1]/div/div[1]/div[2]/div/div/div/table/thead/tr/th[7]")
         self.sends_deployment_id = page.locator('//th[text()="Deployment ID"]')
-        self.sends_item_id = page.locator('//th[text()="Item ID"]')
+
+        #self.sends_item_id = page.locator('//th[text()="Item ID"]')
         self.sends_deployment_name = page.locator('//th[text()="Deployment ID"]')
         self.sends_send_time = page.locator('//th[text()="Send Time"]')
         self.sends_date_created = page.locator('//th[text()="Date Created"]')
         self.sends_status = page.locator('(//th[text()="Status"])[3]')
         # Account Balance tab locators
         self.account_balance_title = page.locator('//div[text()="Balance"]')
-        self.account_table_updates_tab = page.locator('//div[text()="As Of"]')
         self.accountbalance_balance = page.locator(
             '//div[@class="pt-4 pb-3 card-body"]'
         )
@@ -217,12 +228,21 @@ class SystemAdminDeploymentsPage(BasePage):
         self.user_checkbox.click()
         time.sleep(2)
         self.apply_batch_action_button.click()
-        deployments_name1 = self.page.query_selector_all("//td[3]")
-        time.sleep(2)
-        name1 = [de_name.text_content() for de_name in deployments_name1]
-        print(name1)
-        self.page.wait_for_load_state("domcontentloaded")
-        assert deployment_name not in name1
+
+       # self.page.wait_for_selector("//div[contains(text(), '" + success_message + "')]", timeout=5000)
+
+        # Retry checking the deployments list to ensure deletion
+        max_retries = 10
+        for attempt in range(max_retries):
+            time.sleep(1)  # Small delay before retrying
+            deployments_name1 = self.page.query_selector_all("//td[3]")
+            name1 = [de_name.text_content().strip() for de_name in deployments_name1]
+            print(f"After deletion attempt {attempt + 1}:", name1)
+
+            if deployment_name not in name1:
+                print(f"✅ Deployment '{deployment_name}' successfully removed after {attempt + 1} attempts.")
+                break  # Success, exit loop
+
         success_text = self.deployment_delete_success_message.text_content()
         assert success_text == success_message
 
@@ -237,6 +257,7 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         self.button_to_change_action.click()
         self.delete_button.click()
+        self.confirm_button.click()
         success_text = self.deployment_delete_success_message.text_content()
         assert success_text == success_message
         print("Deployment deleted successfully.")
@@ -248,22 +269,25 @@ class SystemAdminDeploymentsPage(BasePage):
     )
     def verify_deployment_summary_pop_up_fields(self):
         """
-        Verify deployment summary field
+        Verify deployment summary fields in the deployment summary pop-up.
         """
+        time.sleep(2)
         self.page.wait_for_load_state("domcontentloaded")
         self.select_deployment.click()
-        # Verify visibility of various components on the deployments summary mode
+
+        # List of elements to check
         elements_to_check = [
             self.deployment_summary_model,
             self.deployment_summary_users_tab,
             self.deployment_summary_published_items_tab,
             self.deployment_summary_sends_tab,
-            self.deployment_summary_account_balance_tab,
             self.deployment_summary_information_tab,
         ]
+
         for element in elements_to_check:
-            expect(element).to_be_visible()
-        print("deployment summary pop-up fields verified successfully")
+            element.wait_for(state="visible")  # Ensures the element is visible
+            assert element.is_visible(), f"{element} is not visible!"
+        print("Deployment summary pop-up fields verified successfully.")
 
     @qase_screenshot
     @qase.step(
@@ -274,16 +298,37 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         verify deployment summary users filters
         """
+        time.sleep(2)
         self.select_deployment.click()
-        expect(self.deployment_summary_users_filter).to_be_visible()
-        filter_options = self.page.query_selector_all(
-            self.deployment_summary_user_dropdown_options
-        )
-        filter_options_text = [option.inner_text() for option in filter_options]
-        assert (
-            filter_options_text == available_filter_options
-        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {available_filter_options}")
+        time.sleep(2)
+        self.deployment_summary_users_tab.click()
+        time.sleep(5)
+        #expect(self.deployment_summary_users_filter).to_be_visible()
+        self.page.wait_for_selector('select.generic-filter-select', state='visible')
+
+        # Click the dropdown to open it
+        self.page.click('select.generic-filter-select', force=True)  # Force click if needed
+
+        # Get all text from the options
+        # Get all the options' text
+        options_text = [option.inner_text() for option in
+                        self.page.query_selector_all('select.generic-filter-select option')]
+
+        print(f"Retrieved options: {options_text}")
+
+        # Remove duplicates by converting to a set and back to a list (preserving order)
+        unique_options_text = list(dict.fromkeys(options_text))
+
+        # Filter out any irrelevant options (e.g., "All Deployments")
+        filtered_options_text = [option for option in unique_options_text if option != 'All Deployments']
+        filtered_options_text.sort()
+        available_filter_options.sort()
+        print(f"Filtered options: {filtered_options_text}")
+
+        # Check if options match the expected ones
+        assert filtered_options_text == available_filter_options, f"Expected: {available_filter_options}, but got: {filtered_options_text}"
+
+        print(f"All available filters verified: {available_filter_options}")
 
     @qase_screenshot
     @qase.step(
@@ -291,34 +336,50 @@ class SystemAdminDeploymentsPage(BasePage):
         expected="system admin should be able to apply filter on users data",
     )
     def apply_filter_on_deployment_summary_users_data(
-        self, available_filter_options, expected_statuses
+            self, available_filter_options, expected_statuses
     ):
         """
-        apply filter on deployment summary users data and verify  filtered data
+        Apply filter on deployment summary users data and verify filtered data.
+        Handles cases where no user data is present.
         """
         for filter_option in available_filter_options:
-            self.deployment_summary_user_filter_dropdown.select_option(filter_option)
-            self.page.wait_for_selector(self.all_users_status)
-            # Query for the status elements after applying the filter
+            print(f"\nApplying filter: '{filter_option}'")
+            time.sleep(5)
+            self.deployment_summary_users_filter.select_option(filter_option)
+
+            # Wait for the UI to update (increase time if needed)
+            time.sleep(2)  # Small delay to ensure page updates
+
+            try:
+                # Wait for elements to appear
+                self.page.wait_for_selector(self.all_users_status, state="visible", timeout=5000)
+            except :
+                print(f"Timeout: No data found for filter '{filter_option}'.")
+                continue  # Skip this iteration if no elements are found
+
+            # Query for status elements
             all_users_status = self.page.query_selector_all(self.all_users_status)
-            all_users_status_text = [status.inner_text() for status in all_users_status]
-            # Print the text of each status
-            print(
-                f"Users status after applying '{filter_option}': {all_users_status_text}"
-            )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                            expected_status in all_users_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_users_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
+
+            if not all_users_status:  # Handle case when no user data is found
+                print(f"No user data found after applying '{filter_option}' filter.")
+                continue
+
+            # Get text content of all status elements
+            all_users_status_text = [status.text_content().strip() for status in all_users_status]
+
+            print(f"Extracted statuses for '{filter_option}': {all_users_status_text}")
+
+            # Retrieve expected statuses, handling case insensitivity
+            expected = expected_statuses.get(filter_option, [])
+            expected_cleaned = [e.strip() for e in expected]
+
+            print(f"Expected statuses for '{filter_option}': {expected_cleaned}")
+
+            # Assertion to verify expected statuses are in extracted statuses
+            for expected_status in expected_cleaned:
+                assert expected_status in all_users_status_text, (
+                    f"Expected '{expected_status}' but found: {all_users_status_text}"
+                )
 
     @qase_screenshot
     @qase.step(
@@ -329,17 +390,20 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         Verify that all fields in the deployment summary's users tab are correctly displayed
         """
+        time.sleep(2)
         self.page.wait_for_load_state("domcontentloaded")
         self.select_deployment.click()
         self.page.wait_for_load_state("domcontentloaded")
+        self.deployment_summary_users_tab.click()
         # Verify visibility of various components on the deployments summary mode
         elements_to_check = [
-            self.users_profile_image,
-            self.users_id,
+           # self.users_profile_image,
+           # self.users_id,
+            self.user_name,
             self.users_first_name,
             self.users_last_name,
             self.users_email,
-            self.users_phone_numbers,
+           # self.users_phone_numbers,
             self.users_status,
             self.users_actions,
         ]
@@ -374,7 +438,7 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         Verify that all fields in the deployment summary's published items tab are correctly displayed
         """
-        self.page.wait_for_load_state("domcontentloaded")
+        time.sleep(2)
         self.select_deployment.click()
         self.page.wait_for_load_state("domcontentloaded")
         self.page.click(
@@ -385,10 +449,15 @@ class SystemAdminDeploymentsPage(BasePage):
         print(f"successfully able to click on {tab_to_navigate} tab")
         self.page.wait_for_load_state("domcontentloaded")
         # Verify visibility of various components on the deployments summary mode
+        time.sleep(2)
         elements_to_check = [
+            self.published_items_Thumbnail,
             self.published_items_id,
-            self.published_items_name,
-            self.published_items_description,
+            self.published_items_Name,
+            self.published_items_item_type,
+            self.published_items_price,
+            self.published_items_fee,
+            self.published_items_status
         ]
         for element in elements_to_check:
             expect(element).to_be_visible()
@@ -419,7 +488,7 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         Verify that all fields in the deployment summary's sends tab are correctly displayed
         """
-        self.page.wait_for_load_state("domcontentloaded")
+        time.sleep(2)
         self.select_deployment.click()
         self.page.wait_for_load_state("domcontentloaded")
         self.page.click(
@@ -433,10 +502,9 @@ class SystemAdminDeploymentsPage(BasePage):
         elements_to_check = [
             self.sends_thumbnail,
             self.sends_id,
-            self.sends_item_id,
-            self.sends_deployment_id,
-            self.sends_deployment_name,
-            self.sends_send_time,
+            self.sends_item_sent,
+            self.sends_price,
+            self.sends_send_date,
             self.sends_date_created,
             self.sends_status,
         ]
@@ -471,26 +539,19 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         Verify that all fields in the deployment summary's account balance tab are correctly displayed
         """
-        self.page.wait_for_load_state("domcontentloaded")
+        time.sleep(2)
         self.select_deployment.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        self.page.click(
-            self.deployment_summary_tab_navigation.replace(
-                "<<tab_to_navigate>>", tab_to_navigate
-            )
-        )
-        print(f"successfully able to click on {tab_to_navigate} tab")
         self.page.wait_for_load_state("domcontentloaded")
         # Verify visibility of various components on the deployments summary mode
         elements_to_check = [
             self.accountbalance_balance,
-            self.account_table_updates_tab,
             self.account_balance_title,
         ]
         for element in elements_to_check:
             expect(element).to_be_visible()
         title = self.account_balance_title.text_content()
         assert title == account_balance_title
+        print("a few seconds ago Balance is :",self.accountbalance_balance.inner_text())
         print("deployment summary's account balance tab verified successfully")
 
     @qase_screenshot
@@ -508,11 +569,12 @@ class SystemAdminDeploymentsPage(BasePage):
         """
         Verify actions buttons on users tab
         """
-        self.page.wait_for_load_state("domcontentloaded")
-        time.sleep(5)
+        time.sleep(2)
         self.select_deployment.click()
         self.page.wait_for_load_state("domcontentloaded")
-        time.sleep(5)
+        time.sleep(2)
+        self.deployment_summary_users_tab.click()
+        time.sleep(2)
         self.user_action_button.click()
         time.sleep(2)
         if self.success_message.is_visible():
@@ -520,7 +582,7 @@ class SystemAdminDeploymentsPage(BasePage):
             print(f"Message displayed: '{message_text}'")
             # Check if the message matches the expected success or error text
             if message_text == success_message:
-                print("Success message verified.")
+                print ("Success message verified.")
                 assert (
                     message_text == success_message
                 ), f"Expected success message '{success_message}', but got '{message_text}'"

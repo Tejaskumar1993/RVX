@@ -1,7 +1,6 @@
 """
 Parameters for the deployment admin token control page
 """
-
 import random
 import string
 

@@ -2,7 +2,6 @@
 Parameters for the deployment admin dashboard page
 """
 
-
 class DeploymentAdminDashboardParams:
     """
     Parameters for the deployment admin dashboard page test-cases

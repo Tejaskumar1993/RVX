@@ -24,24 +24,22 @@ class SystemAdminDeploymentsParams:
         "available_filter_options": [
             "All Users",
             "Active Users",
-            "Suspended Users",
+            "Inactive Users",
             "Custom",
         ],
         "expected_statuses": {
-            "All Users": ["Active", "Suspended"],
+            "All Users": ["Active Users", "Inactive Users"],
             "Active Users": ["Active"],
-            "Suspended Users": ["Suspended"],
+            "Inactive Users": ["Inactive"],
         },
     }
     Test_5 = {
         "tab_to_navigate": "Deployments",
         "headers_text": [
-            "Profile Image",
-            "ID",
+            "Username",
             "First Name",
             "Last Name",
             "Email",
-            "Phone Number",
             "Status",
             "Actions",
         ],
@@ -49,7 +47,7 @@ class SystemAdminDeploymentsParams:
     Test_6 = {
         "tab_to_navigate": "Deployments",
         "deployment_summary_tab_navigation": "Published Items",
-        "headers_text": ["ID", "Name", "Description", "Price", "Status"],
+        "headers_text": ["Thumbnail","ID", "Name", "Item Type", "Price","Fee", "Status"],
     }
     Test_7 = {
         "tab_to_navigate": "Deployments",
@@ -57,10 +55,9 @@ class SystemAdminDeploymentsParams:
         "headers_text": [
             "Thumbnail",
             "ID",
-            "Item ID",
-            "Deployment ID",
-            "Deployment Name",
-            "Send Time",
+            "Item Sent",
+            "Price",
+            "Send Date",
             "Date Created",
             "Status",
         ],

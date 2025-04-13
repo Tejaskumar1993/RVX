@@ -1,0 +1,126 @@
+{
+    "attachments": [
+        {
+            "content": null,
+            "file_name": "open_and_verify_ontrack_login_page.png",
+            "file_path": null,
+            "id": "d95ea66f-54f2-4b31-a3d6-3d97ff17d9d7",
+            "mime_type": "image/png",
+            "size": 9908,
+            "temporary": false
+        },
+        {
+            "content": null,
+            "file_name": "verify_and_click_on_deployments_tab.png",
+            "file_path": null,
+            "id": "d6ec2dff-7c71-4e27-9ea6-f06f32b7d7df",
+            "mime_type": "image/png",
+            "size": 27201,
+            "temporary": false
+        }
+    ],
+    "author": null,
+    "execution": {
+        "duration": 66919,
+        "end_time": 1741250629.911106,
+        "stacktrace": "environment_to_run = 'dev', system_admin_deployments_page = <pages.system_admin_deployment_page.SystemAdminDeploymentsPage object at 0x000002A906CBA3C0>\nontrack_login_page = <pages.ontrack_login_page.OntrackLoginPage object at 0x000002A906CBB0E0>, ontrack_password = 'Test@123', ontrack_username = 'ItachiSysAdmin'\nerror_message = 'User Suspended', tab_to_navigate = 'Deployments', success_message = 'User Activated'\navailable_filter_options = ['All Groups', 'Active Groups', 'Inactive Groups', 'Custom']\nexpected_statuses = {'Active Users': ['Active'], 'All Users': ['Active', 'Inactive'], 'Suspended Users': ['Inactive']}\n\n    @dictionary_parametrize(\n        {\n            \"Test_9\": SystemAdminDeploymentsParams.Test_9,\n        }\n    )\n    @qase.title(\n        \"System admin should be able to suspect, active and assign group to other users\"\n    )\n    # @qase.id(2)\n    @qase.fields(\n        (\"severity\", \"major\"),\n        (\"priority\", \"high\"),\n        (\n            \"description\",\n            \"Verify and perform users tab group actions\",\n        ),\n    )\n    def test_deployment_summary_users_tab_group_actions(\n        environment_to_run,\n        system_admin_deployments_page,\n        ontrack_login_page,\n        ontrack_password,\n        ontrack_username,\n        error_message,\n        tab_to_navigate,\n        success_message,\n        available_filter_options,\n        expected_statuses,\n    ):\n        \"\"\"\n        Regression test to check deployments summary group actions\n        \"\"\"\n        # 1. Navigate to ontrack log, in page and verify all element of login page\n        ontrack_login_page.open_and_verify_ontrack_login_page(\n            environment_to_run, ontrack_username, ontrack_password\n        )\n        # 2. Click and Verify users tab\n        system_admin_deployments_page.verify_and_click_on_deployments_tab(\n            side_navigation_item=tab_to_navigate\n        )\n        # 3. Verify account balance tab fields\n>       system_admin_deployments_page.verify_actions_button_on_users_tab(\n            error_message=error_message,\n            success_message=success_message,\n            available_filter_options=available_filter_options,\n            expected_statuses=expected_statuses,\n        )\n\ntests\\test_system_admin_deployments.py:437: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nutilities\\decorators.py:14: in wrapper_decorator\n    value = func(self, *args, **kwargs)\nC:\\Users\\tejas\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\contextlib.py:85: in inner\n    return func(*args, **kwds)\npages\\system_admin_deployment_page.py:576: in verify_actions_button_on_users_tab\n    self.deployment_summary_users_tab.click()\n.venv\\Lib\\site-packages\\playwright\\sync_api\\_generated.py:15450: in click\n    self._sync(\n.venv\\Lib\\site-packages\\playwright\\_impl\\_locator.py:156: in click\n    return await self._frame.click(self._selector, strict=True, **params)\n.venv\\Lib\\site-packages\\playwright\\_impl\\_frame.py:488: in click\n    await self._channel.send(\"click\", locals_to_params(locals()))\n.venv\\Lib\\site-packages\\playwright\\_impl\\_connection.py:61: in send\n    return await self._connection.wrap_api_call(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <playwright._impl._connection.Connection object at 0x000002A906B638C0>, cb = <function Channel.send.<locals>.<lambda> at 0x000002A907058A40>, is_internal = False\n\n    async def wrap_api_call(\n        self, cb: Callable[[], Any], is_internal: bool = False\n    ) -> Any:\n        if self._api_zone.get():\n            return await cb()\n        task = asyncio.current_task(self._loop)\n        st: List[inspect.FrameInfo] = getattr(task, \"__pw_stack__\", inspect.stack())\n        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal)\n        self._api_zone.set(parsed_st)\n        try:\n            return await cb()\n        except Exception as error:\n>           raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nE           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nE           Call log:\nE             - waiting for locator(\"//button[text()=\\\"Users\\\"]\")\n\n.venv\\Lib\\site-packages\\playwright\\_impl\\_connection.py:528: TimeoutError",
+        "start_time": 1741250562.991478,
+        "status": "invalid",
+        "thread": "8512-MainThread"
+    },
+    "fields": {
+        "description": "Verify and perform users tab group actions",
+        "priority": "high",
+        "severity": "major"
+    },
+    "id": "ea882b57-17db-4e67-90e3-38b39bcaab39",
+    "message": "playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"//button[text()=\\\"Users\\\"]\")",
+    "muted": false,
+    "params": {
+        "available_filter_options": "['All Groups', 'Active Groups', 'Inactive Groups', 'Custom']",
+        "browser_name": "chromium",
+        "error_message": "User Suspended",
+        "expected_statuses": "{'All Users': ['Active', 'Inactive'], 'Active Users': ['Active'], 'Suspended Users': ['Inactive']}",
+        "success_message": "User Activated",
+        "tab_to_navigate": "Deployments"
+    },
+    "relations": [],
+    "run_id": null,
+    "signature": "tests/test_system_admin_deployments.py::test_deployment_summary_users_tab_group_actions",
+    "steps": [
+        {
+            "attachments": [],
+            "data": {
+                "action": "Navigate to ontrack login page",
+                "expected_result": "open and verify login page elements"
+            },
+            "execution": {
+                "duration": 13937,
+                "end_time": 1741250577.7869856,
+                "start_time": 1741250563.8497212,
+                "status": "passed"
+            },
+            "id": "87935e73-3e71-4cd3-b8c3-80449aadf7ef",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x000002A97F609300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9333E2700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x000002A97F609080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        },
+        {
+            "attachments": [],
+            "data": {
+                "action": "Verify and click on Deployments tab",
+                "expected_result": "Verify deployment tab icon and click on deployments tab"
+            },
+            "execution": {
+                "duration": 950,
+                "end_time": 1741250578.8991435,
+                "start_time": 1741250577.9482179,
+                "status": "passed"
+            },
+            "id": "e5e6b038-6918-41fa-bee4-e2d9e334819b",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x000002A97F609300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9333E2700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x000002A97F609080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        },
+        {
+            "attachments": [],
+            "data": {
+                "action": "Verify actions button og users tab",
+                "expected_result": "system admin should be able to active, suspend and assign group to users"
+            },
+            "execution": {
+                "duration": 50485,
+                "end_time": 1741250629.515382,
+                "start_time": 1741250579.0301888,
+                "status": "failed"
+            },
+            "id": "621ac4c1-76a2-4dce-8033-b472f4fb64a6",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x000002A97F609300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9333E2700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x000002A97F609080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        }
+    ],
+    "suite": {
+        "description": "tests.test_system_admin_deployments.py",
+        "id": "fb6abc2a-455c-4113-b8ee-33b212cb1f0c",
+        "parent_id": null,
+        "title": "tests.test_system_admin_deployments"
+    },
+    "testops_id": null,
+    "title": "System admin should be able to suspect, active and assign group to other users"
+}

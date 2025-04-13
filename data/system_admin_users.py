@@ -34,17 +34,12 @@ class SystemAdminUsersParams:
     }
 
     Test_2 = {
-        "available_filter_options": [
-            "All Users",
-            "Active Users",
-            "Suspended Users",
-            "Custom",
-        ],
+        "available_filter_options": ["All Users","Active Users","Inactive Users","Custom",],
         "tab_to_navigate": "Users",
         "expected_statuses": {
-            "All Users": ["Active", "Suspended"],
+            "All Users": ["Active", "Inactive"],
             "Active Users": ["Active"],
-            "Suspended Users": ["Suspended"],
+            "Inactive Users": ["Inactive"],
         },
     }
 
@@ -66,7 +61,7 @@ class SystemAdminUsersParams:
         "first_name": firstname,
         "email": email,
         "user_type_select": "Deployment Admin",
-        "deployment_name": "Piedmont Solutions Group",
+        "deployment_name": "Development Deployment",
     }
 
     Test_6 = {
@@ -75,5 +70,5 @@ class SystemAdminUsersParams:
         "first_name": firstname,
         "email": email,
         "user_type_select": "Vendor",
-        "vendor_to_select": "Insomnia Cookies",
+        "vendor_to_select": "Tango E-Gift Provider",
     }
