@@ -1,0 +1,123 @@
+{
+    "attachments": [
+        {
+            "content": null,
+            "file_name": "open_and_verify_ontrack_login_page.png",
+            "file_path": null,
+            "id": "8f6b46da-9116-4e70-8f30-36ed23b33434",
+            "mime_type": "image/png",
+            "size": 9899,
+            "temporary": false
+        },
+        {
+            "content": null,
+            "file_name": "verify_and_click_on_items_list_tab.png",
+            "file_path": null,
+            "id": "6e9b5292-1efe-4162-baf8-a6ddb6e3c10c",
+            "mime_type": "image/png",
+            "size": 29267,
+            "temporary": false
+        }
+    ],
+    "author": null,
+    "execution": {
+        "duration": 14002,
+        "end_time": 1749224468.6101558,
+        "stacktrace": "environment_to_run = 'test', ontrack_username = 'Tsytem', ontrack_password = 'Test@123'\nontrack_login_page = <pages.ontrack_login_page.OntrackLoginPage object at 0x00000245C0632120>\nsystem_admin_items_list_page = <pages.system_admin_items_list_page.SystemAdminItemsListPage object at 0x00000245C0632510>, tab_to_navigate = 'Items List'\nheaders_text = ['Thumbnail', 'ID', 'Item Name', 'Category', 'Vendor Name', 'Price', ...]\n\n    @dictionary_parametrize(\n        {\n            \"Test_1\": SystemAdminItemsListParams.Test_1,\n        }\n    )\n    @qase.title(\"Verify element visibility on system admin items list\")\n    # @qase.id(2)\n    @qase.fields(\n        (\"severity\", \"major\"),\n        (\"priority\", \"high\"),\n        (\n            \"description\",\n            \"Verify all available fields on system admin items list\",\n        ),\n    )\n    def test_verify_system_admin_items_list_page_elements(\n        environment_to_run,\n        ontrack_username,\n        ontrack_password,\n        ontrack_login_page,\n        system_admin_items_list_page,\n        tab_to_navigate,\n        headers_text,\n    ):\n        \"\"\"\n        Regression test for system admin items list fields verification\n        \"\"\"\n        # 1. Navigate to ontrack login page and verify all element of login page\n        ontrack_login_page.open_and_verify_ontrack_login_page(\n            environment_to_run, ontrack_username, ontrack_password\n        )\n        # 2. Click and Verify items list tab\n        system_admin_items_list_page.verify_and_click_on_items_list_tab(\n            side_navigation_item=tab_to_navigate\n        )\n        # 3. Verify items list page elements availability\n>       system_admin_items_list_page.verify_items_list_page_elements(\n            headers_text=headers_text\n        )\n\ntests\\test_system_admin_items_list.py:47: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nutilities\\decorators.py:14: in wrapper_decorator\n    value = func(self, *args, **kwargs)\nC:\\Users\\tejas\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\contextlib.py:85: in inner\n    return func(*args, **kwds)\npages\\system_admin_items_list_page.py:303: in verify_items_list_page_elements\n    expect(element).to_be_visible()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <playwright.sync_api.Expect object at 0x00000245BC40E3C0>, actual = '//select[@class=\"generic-filter-select ms-2 form-select form-select-sm\"]//option', message = None\n\n    def __call__(\n        self, actual: Union[Page, Locator, APIResponse], message: Optional[str] = None\n    ) -> Union[PageAssertions, LocatorAssertions, APIResponseAssertions]:\n        if isinstance(actual, Page):\n            return PageAssertions(\n                PageAssertionsImpl(actual._impl_obj, self._timeout, message=message)\n            )\n        elif isinstance(actual, Locator):\n            return LocatorAssertions(\n                LocatorAssertionsImpl(actual._impl_obj, self._timeout, message=message)\n            )\n        elif isinstance(actual, APIResponse):\n            return APIResponseAssertions(\n                APIResponseAssertionsImpl(\n                    actual._impl_obj, self._timeout, message=message\n                )\n            )\n>       raise ValueError(f\"Unsupported type: {type(actual)}\")\nE       ValueError: Unsupported type: <class 'str'>\n\n.venv\\Lib\\site-packages\\playwright\\sync_api\\__init__.py:142: ValueError",
+        "start_time": 1749224454.60768,
+        "status": "invalid",
+        "thread": "10864-MainThread"
+    },
+    "fields": {
+        "description": "Verify all available fields on system admin items list",
+        "priority": "high",
+        "severity": "major"
+    },
+    "id": "e4753a30-cac4-4bb3-91af-51a0418c6e9a",
+    "message": "ValueError: Unsupported type: <class 'str'>",
+    "muted": false,
+    "params": {
+        "browser_name": "chromium",
+        "headers_text": "['Thumbnail', 'ID', 'Item Name', 'Category', 'Vendor Name', 'Price', 'Status', 'Actions']",
+        "tab_to_navigate": "Items List"
+    },
+    "relations": [],
+    "run_id": null,
+    "signature": "tests/test_system_admin_items_list.py::test_verify_system_admin_items_list_page_elements",
+    "steps": [
+        {
+            "attachments": [],
+            "data": {
+                "action": "Navigate to ontrack login page",
+                "expected_result": "open and verify login page elements"
+            },
+            "execution": {
+                "duration": 6721,
+                "end_time": 1749224462.0881224,
+                "start_time": 1749224455.3663325,
+                "status": "passed"
+            },
+            "id": "a06e84a3-bedc-4505-8873-dc40c2f388d8",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000245B8E99300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9B1122700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x00000245B8E99080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        },
+        {
+            "attachments": [],
+            "data": {
+                "action": "Verify and click on items list tab",
+                "expected_result": "items list tab and icon should be visible and user should be able to navigate on items list page"
+            },
+            "execution": {
+                "duration": 962,
+                "end_time": 1749224463.175616,
+                "start_time": 1749224462.2130682,
+                "status": "passed"
+            },
+            "id": "53198202-4b50-4b3c-830d-0e70f736f027",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000245B8E99300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9B1122700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x00000245B8E99080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        },
+        {
+            "attachments": [],
+            "data": {
+                "action": "Verify items list elements",
+                "expected_result": "items list  elements should be visible"
+            },
+            "execution": {
+                "duration": 5029,
+                "end_time": 1749224468.313933,
+                "start_time": 1749224463.2849238,
+                "status": "failed"
+            },
+            "id": "34cea7a6-ab7d-4fdb-bd46-bd8ef3cb9ec0",
+            "parent_id": null,
+            "step_type": {
+                "__objclass__": "{'_generate_next_value_': <staticmethod(<function Enum._generate_next_value_ at 0x00000245B8E99300>)>, '__module__': 'qase.commons.models.step', '__firstlineno__': 10, '__static_attributes__': (), '_new_member_': <built-in method __new__ of type object at 0x00007FF9B1122700>, '_use_args_': False, '_member_names_': ['TEXT', 'ASSERT', 'GHERKIN', 'REQUEST', 'DB_QUERY', 'SLEEP'], '_member_map_': {'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>}, '_value2member_map_': {'text': <StepType.TEXT: 'text'>, 'assert': <StepType.ASSERT: 'assert'>, 'gherkin': <StepType.GHERKIN: 'gherkin'>, 'request': <StepType.REQUEST: 'request'>, 'db_query': <StepType.DB_QUERY: 'db_query'>, 'sleep': <StepType.SLEEP: 'sleep'>}, '_hashable_values_': ['text', 'assert', 'gherkin', 'request', 'db_query', 'sleep'], '_unhashable_values_': [], '_unhashable_values_map_': {}, '_member_type_': <class 'object'>, '_value_repr_': None, '__doc__': None, 'TEXT': <StepType.TEXT: 'text'>, 'ASSERT': <StepType.ASSERT: 'assert'>, 'GHERKIN': <StepType.GHERKIN: 'gherkin'>, 'REQUEST': <StepType.REQUEST: 'request'>, 'DB_QUERY': <StepType.DB_QUERY: 'db_query'>, 'SLEEP': <StepType.SLEEP: 'sleep'>, '__new__': <function Enum.__new__ at 0x00000245B8E99080>}",
+                "_name_": "TEXT",
+                "_sort_order_": 0,
+                "_value_": "text"
+            },
+            "steps": []
+        }
+    ],
+    "suite": {
+        "description": "tests.test_system_admin_items_list.py",
+        "id": "8e9fb086-d3a3-4231-918f-746bdfdc2c47",
+        "parent_id": null,
+        "title": "tests.test_system_admin_items_list"
+    },
+    "testops_id": null,
+    "title": "Verify element visibility on system admin items list"
+}
