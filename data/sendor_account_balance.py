@@ -9,7 +9,7 @@ class SenderAccountBalanceParams:
     """
 
     Test_1 = {
-        "select_role": "Sender",
+       # "select_role": "Sender",
         "tab_to_navigate": "Account Balance",
         "history_table_headers": [
             "Name",
@@ -21,10 +21,10 @@ class SenderAccountBalanceParams:
         ],
     }
     Test_2 = {
-        "select_role": "Sender",
+      # "select_role": "Sender",
         "tab_to_navigate": "Account Balance",
         "available_filter_options": [
-            "All Items",
+            "All Transactions",
             "Previous Month",
             "Previous Week",
             "Quarter-1 : Jan-March",

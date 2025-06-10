@@ -9,7 +9,7 @@ def login_form_run_environment(environment_to_run):
     if environment_to_run == "dev":
         env = "dev"
         print("\nRunning scripts in dev")
-    if environment_to_run == "testing":
+    if environment_to_run == "test":
         env = "test"
         print("\nRunning scripts in testing")
     if environment_to_run == "staging":

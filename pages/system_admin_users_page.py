@@ -24,8 +24,12 @@ class SystemAdminUsersPage:
         self.users_tab = '//span[text()="<<side_navigation_tabs>>"]'
 
         # Users list Filters locators
-        self.filter_title = page.locator('//div[text()="Filter:"]')
-        self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]'
+        self.filter_title = page.locator('//label[normalize-space()="Filter:"]')
+        #self.filter_drop_down = '(//select[@class="generic-filter-select ms-2 form-select form-select-sm"])'
+        #self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]'
+        #self.filter_drop_down = "select.generic-filter-select.ms-2.form-select.form-select-sm"
+        dropdown_selector = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]'
+
         self.dropdown = page.locator(
             '(//div[@class="d-flex align-items-center"][1]//select)[1]'
         )
@@ -140,18 +144,17 @@ class SystemAdminUsersPage:
         time.sleep(1)
         expect(self.batch_action_dropdown_locator).to_be_visible()
         self.batch_action_dropdown_locator.click()
-        self.batch_action_dropdown_locator.select_option('Inactivate')
+        self.batch_action_dropdown_locator.select_option('Deactivate')
         selected_text = self.batch_action_dropdown_locator.locator("option:checked").inner_text()
-        assert selected_text == "Inactivate", f"Expected 'Inactivate', but got '{selected_text}'"
+        assert selected_text == "Deactivate", f"Expected 'Deactivate', but got '{selected_text}'"
         print("Verified :",selected_text)
         self.batch_action_dropdown_locator.click()
         self.batch_action_dropdown_locator.select_option('Activate')
         selected_text = self.batch_action_dropdown_locator.locator("option:checked").inner_text()
-        assert selected_text == "Activate", f"Expected 'Inactivate', but got '{selected_text}'"
+        assert selected_text == "Activate", f"Expected 'Activate', but got '{selected_text}'"
         print("Verified :", selected_text)
         self.batch_action_dropdown_locator.click()
         print("All element verified.")
-
 
     @qase_screenshot
     @qase.step(
@@ -175,61 +178,95 @@ class SystemAdminUsersPage:
         title="Verify filter field title and available filters options",
         expected="Filter option should be visible with all available options",
     )
-    def verify_filters_field_and_filter_options(self,available_filter_options:list):
+    # def verify_filters_field_and_filter_options(self,available_filter_options):
+    #     """
+    #     Verify all available filter options
+    #     """
+    #     expect(self.filter_title).to_be_visible()
+    #     # Query all filter option elements
+    #     filter_options = self.page.query_selector_all(self.filter_drop_down)
+    #     # Extract text content from each option element
+    #     filter_options_text = [option.inner_text() for option in filter_options]
+    #     if len(filter_options_text) == 1 and "\n" in filter_options_text[0]:
+    #         filter_options_text = filter_options_text[0].split("\n")
+    #
+    #     print(f"Available filter options are: {filter_options_text}")
+    #     # Assert that the extracted text matches the expected filter options
+    #     assert (
+    #             filter_options_text == available_filter_options
+    #     ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
+    #
+    # # Assert that the extracted text matches the expected filter options
+    def verify_filters_field_and_filter_options(self, available_filter_options):
         """
-        Verify all available filter options
+        Verify all available filter options in the filter dropdown.
         """
         expect(self.filter_title).to_be_visible()
-        # Query all filter option elements
-        filter_options = self.page.query_selector_all(self.filter_drop_down)
+
+        # Select all <option> elements inside the dropdown (assuming filter_drop_down is the selector for <select>)
+        filter_options = self.page.query_selector_all(self.filter_drop_down + " option")
+
         # Extract text content from each option element
-        filter_options_text = [option.inner_text() for option in filter_options]
-        if len(filter_options_text) == 1 and "\n" in filter_options_text[0]:
-            filter_options_text = filter_options_text[0].split("\n")
+        filter_options_text = [option.inner_text().strip() for option in filter_options]
 
         print(f"Available filter options are: {filter_options_text}")
+
         # Assert that the extracted text matches the expected filter options
-        assert (
-                filter_options_text == available_filter_options
-        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-
-    # Assert that the extracted text matches the expected filter options
-
+        assert filter_options_text == available_filter_options, \
+            f"Expected: {available_filter_options}, but got: {filter_options_text}"
 
     @qase_screenshot
     @qase.step(
         title="Verify User is able to se only filtered data",
         expected="User should be able to see data according to applied filters",
     )
-    def apply_filters_and_verify_filtered_data(self, available_filter_options: list, expected_statuses: dict):
+    def apply_filters_and_verify_filtered_data(self, available_filter_options, expected_statuses):
         """
-        Verify data visible based on the applied filter
+        Verify data visible based on the applied filter.
         """
+        dropdown_selector = "your-dropdown-selector"  # Replace with actual selector
+
         for filter_option in available_filter_options:
-            print(f"\nApplying filter: {filter_option}")
+            # Debugging step: Pause execution and inspect elements
+            self.page.pause()
 
-            # Apply filter
-            self.page.locator(f"//select[contains(.,'{filter_option}')]").select_option(filter_option)
-            self.page.wait_for_selector(self.all_users_status)
-            time.sleep(2)
+            # Ensure the dropdown exists in the DOM
+            dropdown = self.page.locator(dropdown_selector)
+            assert dropdown.count() > 0, "Dropdown not found. Check the selector!"
 
-            # Extract and normalize status text
+            # Ensure the dropdown is visible
+            dropdown.wait_for(state="visible", timeout=60000)
+
+            # Ensure dropdown is enabled
+            self.page.wait_for_function(
+                f"document.querySelector('{dropdown_selector}') !== null && "
+                f"!document.querySelector('{dropdown_selector}').disabled"
+            )
+
+            # Select the option
+            self.dropdown.select_option(filter_option)
+
+            # Wait for the filtered results to be displayed
+            self.page.wait_for_selector(self.all_users_status, state="visible", timeout=60000)
+
+            # Query for the status elements after applying the filter
             all_users_status = self.page.query_selector_all(self.all_users_status)
-            all_users_status_text = [status.text_content().strip().replace("\n", " ") for status in all_users_status]
+            all_users_status_text = [status.inner_text() for status in all_users_status]
 
-            print(f"Extracted statuses for '{filter_option}': {all_users_status_text}")
+            # Print the text of each status
+            print(f"Users status after applying '{filter_option}': {all_users_status_text}")
 
-            # Ensure users exist
-            assert all_users_status_text, f"No users found for filter '{filter_option}'"
-
-            # Verify expected status
-            expected = expected_statuses.get(filter_option, [])
-            for expected_status in expected:
-                assert expected_status in all_users_status_text, (
-                    f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                )
-
-            print(f"✅ Filter '{filter_option}' verified successfully!")
+            # Assertion to verify the expected statuses are present
+            if filter_option in expected_statuses:
+                expected = expected_statuses[filter_option]
+                if expected:
+                    for expected_status in expected:
+                        assert expected_status in all_users_status_text, \
+                            f"'{expected_status}' not found in the status text for filter '{filter_option}'"
+                else:
+                    # If there are no expected statuses, assert that the status list is empty
+                    assert not all_users_status_text, \
+                        f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
 
     @qase_screenshot
     @qase.step(

@@ -100,8 +100,8 @@ class DeploymentAdminMessageTemplatesParams:
     }
     Test_10 = {
         "tab_to_navigate": "Message Templates",
-        "select_role": "Deployment Admin",
-        "template_name": "test template",
+        #"select_role": "Deployment Admin",
+        "template_name": "Test33",
         "enter_text_in_paragraph": "this is test template description",
     }
     Test_11 = {

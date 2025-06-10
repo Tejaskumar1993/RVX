@@ -31,7 +31,7 @@ def test_verify_users_and_account_balance_tab(
     sender_account_balance_page,
     tab_to_navigate,
     history_table_headers,
-    select_role,
+    #select_role,
 ):
     """
     Regression test for sender account balance page elements verification
@@ -41,7 +41,7 @@ def test_verify_users_and_account_balance_tab(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to sender
-    sender_account_balance_page.verify_and_change_user_of_role(select_role=select_role)
+    #sender_account_balance_page.verify_and_change_user_of_role(select_role=select_role)
     # 3. Navigate to account balance tab
     sender_account_balance_page.verify_and_click_on_account_balance_tab(
         tab_to_navigate=tab_to_navigate
@@ -77,7 +77,7 @@ def test_apply_filter_on_transactions_record_and_verify_data_of_sender_account(
     sender_account_balance_page,
     tab_to_navigate,
     available_filter_options,
-    select_role,
+    #select_role,
 ):
     """
     Regression test for account balance  filter options verification
@@ -87,7 +87,7 @@ def test_apply_filter_on_transactions_record_and_verify_data_of_sender_account(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to sender
-    sender_account_balance_page.verify_and_change_user_of_role(select_role=select_role)
+    #sender_account_balance_page.verify_and_change_user_of_role(select_role=select_role)
     # 3. Navigate to account balance tab
     sender_account_balance_page.verify_and_click_on_account_balance_tab(
         tab_to_navigate=tab_to_navigate

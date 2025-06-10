@@ -13,4 +13,4 @@ class TestData:
     DEFAULT_HEIGHT = 1080
 
     # greetings message
-    greeting_message = "Welcome to Ontrack Send!Please Login."
+    greeting_message = "Welcome to RevoSend!Please Login."

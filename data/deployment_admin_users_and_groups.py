@@ -30,29 +30,18 @@ class DeploymentAdminUsersAndGroupsParams:
         "select_role": "Deployment Admin",
         "tab_to_navigate": "Users & Groups",
         "users_table_headers": [
-            "Profile Image",
-            "ID",
-            "First Name",
-            "Last Name",
-            "Email",
-            "Phone Number",
-            "Status",
-            "Actions",
-        ],
+            'Profile Image', 'Username', 'ID', 'First Name', 'Last Name', 'Email', 'Phone Number', 'Status', 'Actions'],
     }
     Test_2 = {
         "select_role": "Deployment Admin",
         "tab_to_navigate": "Users & Groups",
         "available_filter_options": [
-            "All Users",
-            "Active Users",
-            "Suspended Users",
-            "Custom",
+            'All Users', 'Activated', 'Deactivated', 'Custom',
         ],
         "expected_statuses": {
-            "All Users": ["Active", "Suspended"],
-            "Active Users": ["Active"],
-            "Suspended Users": ["Inactive"],
+            "All Users": ["Activated"],
+            "Active Users": ["Activated"],
+            "Suspended Users": ["Deactivated"],
         },
     }
     Test_3 = {
@@ -76,5 +65,5 @@ class DeploymentAdminUsersAndGroupsParams:
         "select_role": "Deployment Admin",
         "tab_to_navigate": "Users & Groups",
         "headers": ["ID", "Name", "description", "Status"],
-        "success_message": "User added to the group",
+        "success_message": "Groups assigned to user",
     }

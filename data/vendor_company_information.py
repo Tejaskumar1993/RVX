@@ -16,11 +16,11 @@ class VendorCompanyInformationParams:
 
     test_1 = {
         "tab_to_navigate": "Company Information",
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
     }
     test_2 = {
         "tab_to_navigate": "Company Information",
-        "select_role": "Vendor",
+       # "select_role": "Vendor",
         "updated_email": random_email,
         "success_message_text": "Updated Company Information Successfully",
     }

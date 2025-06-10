@@ -25,7 +25,8 @@ def test_vendor_users_list_page_elements(
         ontrack_password,
         ontrack_login_page,
         vendor_users_list_page,
-        select_role, users_table_headers,
+        #select_role,
+        users_table_headers,
         tab_to_navigate,
 ):
     # Log in to the application
@@ -33,9 +34,9 @@ def test_vendor_users_list_page_elements(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # vendor_users_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate
@@ -60,32 +61,24 @@ def test_vendor_users_list_page_elements(
     ),
 )
 def test_apply_filter_on_vendor_users_data(
-        environment_to_run,
-        ontrack_username,
-        ontrack_password,
-        ontrack_login_page,
-        select_role,
-        vendor_users_list_page,
-        tab_to_navigate,
-        available_filter_options,
-        expected_statuses,
+    environment_to_run,
+    ontrack_username,
+    ontrack_password,
+    ontrack_login_page,
+    vendor_users_list_page,
+    tab_to_navigate,
+    available_filter_options,
+    expected_statuses,
 ):
     """
     Regression test for users list filter functionality
     """
-    # 1. Navigate to ontrack login page and verify all element of login page
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
-    # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate
     )
-    # 4. Apply filter on items list and verify filtered users list
     vendor_users_list_page.apply_filter_on_users_list_and_verify_filtered_data(
         available_filter_options=available_filter_options,
         expected_statuses=expected_statuses,
@@ -112,7 +105,7 @@ def test_apply_batch_action_on_vendor_users_to_changes_current_status_in_bulk(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        select_role,
+        #select_role,
         vendor_users_list_page,
         tab_to_navigate,
 ):
@@ -123,10 +116,10 @@ def test_apply_batch_action_on_vendor_users_to_changes_current_status_in_bulk(
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # # 2. Change user role to vendor
+    # vendor_users_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate
@@ -155,7 +148,7 @@ def test_vendor_invite_user_flow(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        select_role,
+        #select_role,
         user_email,
         vendor_users_list_page,
         tab_to_navigate,
@@ -170,10 +163,10 @@ def test_vendor_invite_user_flow(
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # # 2. Change user role to vendor
+    # vendor_users_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate
@@ -207,7 +200,7 @@ def test_active_and_inactive_and_delete_action_of_users_list(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        select_role,
+        #select_role,
         vendor_users_list_page,
         tab_to_navigate,
 ):
@@ -219,9 +212,9 @@ def test_active_and_inactive_and_delete_action_of_users_list(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # vendor_users_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate
@@ -250,7 +243,7 @@ def test_user_information_of_users_list(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        select_role,
+        #select_role,
         vendor_users_list_page,
         tab_to_navigate,
 ):
@@ -261,10 +254,10 @@ def test_user_information_of_users_list(
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Change user role to vendor
-    vendor_users_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # # 2. Change user role to vendor
+    # vendor_users_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to users list tab
     vendor_users_list_page.verify_and_click_on_users_list_tab(
         side_navigation_item=tab_to_navigate

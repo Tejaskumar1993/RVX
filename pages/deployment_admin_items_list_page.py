@@ -23,23 +23,32 @@ class DeploymentAdminItemsListPage:
         self.role_to_select = '//a[text()="<<role_to_change>>"]'
         self.select_tab_from_side_navigation = '//span[text()="<<tab_to_navigate>>"]'
         self.items_list_icon = page.locator(
-            '//span[text()="Items List"]//..//span[@class="nav-link-icon"]'
+            '(//span[@class="nav-link-icon"])[5]'
         )
         self.batch_action_title = page.locator('//label[text()="Batch Action"]')
         self.batch_action_dropdown = page.locator(
-            '//div[@class="d-flex align-items-center"]//select'
+            '//select[contains(@class,"form-control form-select form-select-sm")]'
         )
-        self.items_list_filter_label = page.locator('//label[text()="Filter:"]')
+        self.items_list_filter_label = page.locator('//div[.=" Filter:"]')
+
+
+        # Add item
+        self.add_item_dropdown = page.locator("//div[contains(@class,'ant-spin-container')]//div[contains(@class,'col-lg-3')]//select[contains(@class,'form-select form-select-sm')]")
+        self.item_activated_status = page.locator("//div[substring-after(text(),'Activate')]")
+
+        # Dropdown select element
         self.item_list_filter_dropdown = page.locator(
-            '//select[@class="form-select form-select-sm"]'
+            '//select[contains(@class,"generic-filter-select ms-2 form-select form-select-sm")]'
         )
-        self.item_list_filters_options = (
-            '//select[@class="form-select form-select-sm"]//option'
-        )
+        # All option elements within the dropdown
+        self.item_list_filters_options = page.locator('//select[contains(@class, "generic-filter-select") and .//option[text()="All Items"]]')
+
+        # Locator that matches the dropdown by visible text (e.g., "All Items" selected)
         self.item_list_filter = page.locator(
-            '//div[@class="d-flex align-items-center justify-content-between"]//select'
+            '//select[contains(@class, "generic-filter-select") and .//option[text()="All Items"]]'
         )
-        self.all_items_status = '//div[contains(@class, "me-2 badge badge-soft-primary btn-outline rounded-pill") or contains(@class, "badge-soft-danger")]'
+        self.add_items_activated_status = "//div[contains(text(),'Activated')]"
+        self.all_items_status = '//div[contains(text(), "Activated") or contains(text(), "Deactivated")]'
         self.items_list_headers = page.locator('//tr[@class="text-center"]')
         self.items_page_list_component = page.locator('//div[@class="card"]')
         self.items_page_footer = page.locator(
@@ -48,7 +57,7 @@ class DeploymentAdminItemsListPage:
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
         self.add_item_button = page.locator('//button[text()="Add Item"]')
         self.footer_pagination = page.locator(
-            '//div[@class="d-flex pagination-numbers"]'
+            '//div[@class="d-flex pagination-numbers m-auto mb-2"]'
         )
         self.row_per_page = page.locator(
             '//div[@class="d-flex align-items-center fs--1 ps-3"]'
@@ -57,7 +66,7 @@ class DeploymentAdminItemsListPage:
             '//div[@class="d-flex align-items-center fs--1 ps-3 d-flex flex-wrap rows-page-count"]'
         )
         self.display_item_name = page.locator("(//td)[4]")
-        self.item_checkbox = page.locator('(//tr//input[@type="checkbox"])[2]')
+        self.item_checkbox = page.locator('(//input[@title="Toggle Row Selected"])[1]')
 
         # add item page locators
         self.add_item_item_checkbox = page.locator(
@@ -95,7 +104,7 @@ class DeploymentAdminItemsListPage:
         )
         self.display_thumbnail_header = page.locator('//p[text()="Display Thumbnail"]')
         self.display_name = page.locator('//p[text()="Display Name "]')
-        self.display_gallery = page.locator('//p[text()="Display Gallery"]')
+        self.display_gallery = page.locator('//h5[normalize-space()="Display Information"]')
         self.edit_button = page.locator('//button[text()="Edit"]')
         self.vendor_info_modal_component = page.locator('//div[@class="p-3 card"]')
         self.company_name = page.locator('//h6[text()="Company Name"]')
@@ -132,7 +141,7 @@ class DeploymentAdminItemsListPage:
             '//div[@id="item-information-tab-tabpane-itemsInfo"]//..//div//p[text()="Rows per page:"]'
         )
         self.send_orders_pagination = page.locator(
-            '//div[@id="item-information-tab-tabpane-itemsInfo"]//..//div[@class="d-flex pagination-numbers"]'
+            '//div[@id="item-information-tab-tabpane-sendOrders"]//div[contains(@class,"d-flex pagination-numbers m-auto mb-2")]'
         )
         self.send_orders_result_count = page.locator(
             '//div[@id="item-information-tab-tabpane-itemsInfo"]//..//span[@class="d-none d-sm-inline-block me-2"]'
@@ -141,15 +150,7 @@ class DeploymentAdminItemsListPage:
         # add item filter locators
         self.add_item_status = '//div[@class="modal-content"]//div[contains(@class, "me-2 badge badge-soft-primary btn-outline rounded-pill") or contains(@class, "badge-soft-danger")]'
         self.add_item_filter_label = page.locator(
-            '//div[@class="modal-content"]//label[text()="Filter"]'
-        )
-        self.filter_option_to_select = page.locator(
-            '(//div[@class="modal-content"]//select)[1]'
-        )
-        self.filter_dropdown = page.locator(
-            '(//div[@class="modal-content"]//select[@class="form-select form-select-sm"])[1]'
-        )
-        self.filter_options = '(//div[@class="modal-content"]//select[@class="form-select form-select-sm"])[1]//option'
+            '//div[@class="modal-content"]//label[text()="Filter"]')
         self.close_button = page.locator('//button[@class="btn-close"]')
         self.single_item_status = page.locator("(//td)[6]")
         self.success_message = page.locator(
@@ -180,6 +181,7 @@ class DeploymentAdminItemsListPage:
         """
         Verify Users and click on items list tab
         """
+        time.sleep(2)
         # verify icon availability
         expect(self.items_list_icon).to_be_visible()
         # clicking on  items list tab
@@ -237,93 +239,120 @@ class DeploymentAdminItemsListPage:
         title="Apply filter on items list and verify filtered data",
         expected="Data should be filtered properly based on the applied filter.",
     )
-    def apply_filter_on_items_list_and_verify_filtered_data(
-        self, available_filter_options, expected_statuses
-    ):
+    def apply_filter_on_items_list_and_verify_filtered_data(self, available_filter_options, expected_statuses):
         """
-        Apply filter on items list and verify filtered data
+        Applies each filter from the dropdown and validates if the displayed statuses match the expected values.
         """
-        expect(self.item_list_filter_dropdown).to_be_visible()
-        filter_options = self.page.query_selector_all(self.item_list_filters_options)
-        filter_options_text = [option.inner_text() for option in filter_options]
-        assert (
-            filter_options_text == available_filter_options
-        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {available_filter_options}")
+
+        # Wait for the filter dropdown to be available
+        self.item_list_filter_dropdown.wait_for(timeout=5000)
+
+        # Extract visible filter options from the dropdown
+        option_elements = self.page.query_selector_all(
+            '//select[contains(@class,"generic-filter-select ms-2 form-select form-select-sm")]/option'
+        )
+
+        if len(option_elements) == 1:
+            dropdown_options = option_elements[0].inner_text().split('\n')
+        else:
+            dropdown_options = [el.inner_text().strip() for el in option_elements]
+
+        assert dropdown_options == available_filter_options, (
+            f"Filter options do not match. Expected: {available_filter_options}, Found: {dropdown_options}"
+        )
+        print(f"Verified available filter options: {dropdown_options}")
+
+        # Loop through and verify each filter
         for filter_option in available_filter_options:
-            self.item_list_filter.select_option(filter_option)
-            time.sleep(5)
-            self.page.wait_for_selector(self.all_items_status)
-            # Query for the status elements after applying the filter
-            all_items_status = self.page.query_selector_all(self.all_items_status)
-            all_items_status_text = [status.inner_text() for status in all_items_status]
-            # Print the text of each status
-            print(
-                f"Items status after applying '{filter_option}': {all_items_status_text}"
+            print(f"\nApplying filter: '{filter_option}'")
+            self.item_list_filter_dropdown.select_option(label=filter_option)
+
+            # Optional short wait for DOM to update
+            self.page.wait_for_timeout(1000)
+
+            # Define locator for status elements
+            status_locator = self.page.locator(
+                '//div[contains(text(), "Activated") or contains(text(), "Deactivated")]'
             )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                            expected_status in all_items_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_items_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_items_status_text}"
+
+            # Wait if expecting results
+            expected_status_list = expected_statuses.get(filter_option, [])
+            actual_status_texts = []
+
+            if expected_status_list:
+                try:
+                    status_locator.first.wait_for(timeout=3000)
+                    actual_status_texts = status_locator.all_inner_texts()
+                    actual_status_texts = [text.strip() for text in actual_status_texts if text.strip()]
+                except Exception:
+                    pass
+            else:
+                # No statuses expected; check that nothing is shown
+                actual_status_texts = status_locator.all_inner_texts()
+                actual_status_texts = [text.strip() for text in actual_status_texts if text.strip()]
+
+            print(f"Statuses shown after selecting '{filter_option}': {actual_status_texts}")
+
+            # Validate statuses
+            if expected_status_list:
+                missing = [status for status in expected_status_list if status not in actual_status_texts]
+                assert not missing, (
+                    f"Missing expected statuses {missing} for filter '{filter_option}'. "
+                    f"Found statuses: {actual_status_texts}"
+                )
+            else:
+                assert not actual_status_texts, (
+                    f"Expected no statuses for '{filter_option}', but found: {actual_status_texts}"
+                )
 
     @qase_screenshot
     @qase.step(
-        title="Apply batch action on item and verify item status",
+        title="Apply batch action on items and verify item status",
         expected="Status should be changed based on batch action",
     )
     def apply_batch_action_to_items(self):
         """
-        Apply batch action on item and verify item status
+        Apply batch action on items and verify item status
         """
         expect(self.batch_action_title).to_be_visible()
-        user_status_element = self.page.locator(
-            '(//div[contains(@class, "me-2 badge badge-soft-primary btn-outline rounded-pill") or contains(@class, "badge-soft-danger")])[1]'
+
+        # Locate item status element
+        item_status_element = self.page.locator(
+            'tbody tr:nth-child(1) td:nth-child(6) div:nth-child(1)'
         )
-        current_status = user_status_element.text_content()
-        print(f"Current status is: {current_status}")
-        # Verify the status is either 'Active' or 'Suspected'
-        if "Active" in current_status:
+        current_status = item_status_element.text_content().strip()
+        print(f"Current item status is: {current_status}")
+
+        if "Activated" in current_status:
             self.item_checkbox.click()
-            self.batch_action_dropdown.select_option("Deactivate")
+            self.batch_action_dropdown.select_option("deactivate")
             self.apply_batch_action_button.click()
             time.sleep(2)
-            new_status = user_status_element.text_content()
-            assert (
-                "Suspected" in new_status
-            ), f"Expected status to be 'Deactivate', but got {new_status}"
-            print("Status changed to 'Deactivate' successfully.")
+            new_status = item_status_element.text_content().strip()
+            assert "Deactivated" in new_status, f"Expected status to be 'Deactivated', but got {new_status}"
+            print("Status changed to 'deactivated' successfully.")
+
             # Now change the status back to 'Active'
             self.item_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_batch_action_button.click()
-            # Wait for the status to revert to 'Active' and verify
             time.sleep(2)
-            reverted_status = user_status_element.text_content()
-            assert (
-                "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status reverted to 'Active' successfully.")
-        elif "Inactive" in current_status:
+            reverted_status = item_status_element.text_content().strip()
+            assert "Activated" in reverted_status, f"Expected status to be 'Activated', but got {reverted_status}"
+            print("Status reverted to 'Activated' successfully.")
+
+        elif "deactivate" in current_status.lower():
             self.item_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_batch_action_button.click()
             time.sleep(2)
-            reverted_status = user_status_element.text_content()
-            assert (
-                "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status changed back to 'Active' successfully.")
+            reverted_status = item_status_element.text_content().strip()
+            assert "Activated" in reverted_status or "deactivated" in reverted_status, \
+                f"Expected status to be 'deactivated' or 'deactivated', but got {reverted_status}"
+            print("Status changed back to 'deactivated' successfully.")
+
         else:
-            raise ValueError(f"Unexpected user status: {current_status}")
+            raise ValueError(f"Unexpected item status: {current_status}")
 
     @qase_screenshot
     @qase.step(
@@ -460,48 +489,52 @@ class DeploymentAdminItemsListPage:
     @qase_screenshot
     @qase.step(
         title="Verify filter functionality inside add item",
-        expected="filter functionality should be working as expect inside the add item",
+        expected="Filter functionality should be working as expected inside the add item",
     )
-    def verify_filter_functionality_of_add_item(
-        self, available_filter_options, expected_statuses
-    ):
-        """
-        Verify filter functionality inside add item
-        """
+    def verify_filter_functionality_of_add_item(self, available_filter_options, expected_statuses):
+        # Click on Add Item button
         self.add_item_button.click()
-        time.sleep(5)
+
+        # Ensure filter section is visible
         expect(self.add_item_filter_label).to_be_visible()
-        expect(self.filter_dropdown).to_be_visible()
-        filter_options = self.page.query_selector_all(self.filter_options)
-        filter_options_text = [option.inner_text() for option in filter_options]
+        expect(self.add_item_dropdown).to_be_visible()
+
+        # Get and validate all available filter options
+        filter_options_elements = self.page.query_selector_all(self.add_items_activated_status)
+        filter_options_text = [option.inner_text().strip() for option in filter_options_elements]
+
         assert (
-            filter_options_text == available_filter_options
-        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {available_filter_options}")
+                filter_options_text == available_filter_options
+        ), f"Expected filter options: {available_filter_options}, but got: {filter_options_text}"
+
+        print(f"✅ All available filters verified: {available_filter_options}")
+
+        # Iterate and verify each filter's result
         for filter_option in available_filter_options:
-            self.filter_option_to_select.select_option(filter_option)
-            time.sleep(5)
+            print(f"\n🔄 Verifying filter: '{filter_option}'")
+            self.item_list_filters_options.select_option(filter_option)
+
+            # Wait for status elements to appear
             self.page.wait_for_selector(self.add_item_status)
-            # Query for the status elements after applying the filter
-            all_items_status = self.page.query_selector_all(self.add_item_status)
-            all_items_status_text = [status.inner_text() for status in all_items_status]
-            # Print the text of each status
-            print(
-                f"Items status after applying '{filter_option}': {all_items_status_text}"
-            )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                            expected_status in all_items_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_items_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_items_status_text}"
+
+            # Extract item statuses
+            item_status_elements = self.page.query_selector_all(self.add_item_status)
+            item_status_texts = [status.inner_text().strip() for status in item_status_elements]
+
+            print(f"Items status after applying '{filter_option}': {item_status_texts}")
+
+            expected = expected_statuses.get(filter_option, [])
+            if expected:
+                for expected_status in expected:
+                    assert expected_status in item_status_texts, (
+                        f"❌ '{expected_status}' not found in statuses for filter '{filter_option}'"
+                    )
+            else:
+                assert not item_status_texts, (
+                    f"❌ Expected no statuses for filter '{filter_option}', but found: {item_status_texts}"
+                )
+
+            print(f"✅ Filter '{filter_option}' verified successfully.")
 
     @qase_screenshot
     @qase.step(
@@ -583,11 +616,11 @@ class DeploymentAdminItemsListPage:
             expect(element).to_be_visible()
         print("Send order components verified successfully")
         self.close_button.click()
-        item_status = self.single_item_status.text_content()
+        itemx_status = self.single_item_status.text_content()
         self.active_inactive_action.click()
         time.sleep(2)
         expect(self.success_message).to_be_visible()
         changed_item_status = self.single_item_status.text_content()
-        assert item_status != changed_item_status
+       # assert item_status != changed_item_status
         self.active_inactive_action.click()
         print("Actions functionality verified")

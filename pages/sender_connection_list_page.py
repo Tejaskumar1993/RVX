@@ -27,10 +27,10 @@ class SenderConnectionListPage:
         self.page = page
 
         # Role locator
-        self.select_role_dropdown = page.locator('(//div[@class="dropdown"])[2]')
-        self.select_role = '//a[text()="<<select_role>>"]'
+       # self.select_role_dropdown = page.locator('(//div[@class="dropdown"])[2]')
+        #self.select_role = '//a[text()="<<select_role>>"]'
         # Side navigation tab
-        self.connection_list_icon = page.locator('//*[@data-icon="circle-arrow-up"]')
+        self.connection_list_icon = page.locator('//a[@class="nav-link active"]//div[@class="d-flex align-items-center"]')
         self.connection_list_tab = '//span[text()="<<tab_to_navigate>>"]'
         # connection list page locators
         self.connection_list_page_component = page.locator('//div[@class="content"]')
@@ -41,7 +41,7 @@ class SenderConnectionListPage:
             '//select[@class="select-width form-select form-select-sm"]'
         )
         self.header_titles = page.locator('//tr[@class="text-center"]')
-        self.pagination = page.locator('//div[@class="d-flex pagination-numbers"]')
+        self.pagination = page.locator('//div[@class="d-flex pagination-numbers m-auto mb-2"]')
         self.results_counter = page.locator(
             '//div[@class="d-flex align-items-center fs--1 ps-3"]'
         )
@@ -57,15 +57,15 @@ class SenderConnectionListPage:
         title="Verify logged in user is able to change role to sender",
         expected="Logged in user should be able to change role",
     )
-    def verify_and_change_user_of_role(self, select_role):
-        """
-        Verify and change role of sender
-        """
-        expect(self.select_role_dropdown).to_be_visible()
-        self.select_role_dropdown.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        self.page.click(self.select_role.replace("<<select_role>>", select_role))
-        print(f"successfully changed role to {select_role}")
+    # def verify_and_change_user_of_role(self, select_role):
+    #     """
+    #     Verify and change role of sender
+    #     """
+    #     expect(self.select_role_dropdown).to_be_visible()
+    #     self.select_role_dropdown.click()
+    #     self.page.wait_for_load_state("domcontentloaded")
+    #     self.page.click(self.select_role.replace("<<select_role>>", select_role))
+    #     print(f"successfully changed role to {select_role}")
 
     @qase_screenshot
     @qase.step(

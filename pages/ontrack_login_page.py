@@ -4,8 +4,9 @@ login page modules
 
 from http.client import HTTPException
 from playwright.sync_api import Page
-from pages.base_page import BasePage
+
 from data.constant_data import TestData
+from pages.base_page import BasePage
 from qase.pytest import qase
 
 from utilities import utils
@@ -48,21 +49,30 @@ class OntrackLoginPage(BasePage):
                 f"Response from booking form after reloading {max_reloads} times",
             )
 
-    def open_ontracksend(self, environment_to_run):
-        """.open login page
-        :param environment_to_run:
-        Navigates to the ontrack login page URL.
+    def open_revosend(self, environment_to_run):
+        """
+        Open the RevoSend login page.
+        :param environment_to_run: e.g., 'test', 'stage', 'prod'
         """
         env = utils.login_form_run_environment(environment_to_run)
-        # base url of the ontrack login page
-        base_url = f"https://send-{env}.ontrackworkflow.com"
-        response = self.page.goto(base_url)
-        print("ontracksend response:", response.status)
-        if "ontrackworkflow" not in base_url:
-            raise ValueError("Base URL does not contain 'ontrackworkflow'")
+
+        if not env:
+            raise ValueError("Environment is empty. Cannot build RevoSend URL.")
+
+        base_url = f"https://app-{env}.revosend.com"
+
+        if "revosend.com" not in base_url:
+            raise ValueError("Base URL does not contain 'revosend.com'")
+
         print("Navigating to:", base_url)
+        response = self.page.goto(base_url)
+
+        if response is None:
+            raise RuntimeError("Failed to navigate: No response received.")
+
+        print("RevoSend response:", response.status)
         self._verify_response_and_reload_page_if_needed(response)
-        print("Navigated to ontrack login page")
+        print("Navigated to RevoSend login page")
 
     @qase_screenshot
     @qase.step(
@@ -76,13 +86,13 @@ class OntrackLoginPage(BasePage):
         open and verify ontrack login page elements
         :return:
         """
-        self.open_ontracksend(environment_to_run)
+        self.open_revosend(environment_to_run)
         self.verify_element(self.logo_image)
         self.verify_element(self.welcome_greetings)
         welcome_message = self.welcome_greetings.text_content()
         print("welcome_message -->", welcome_message)
         # Verify if the welcome message matches the expected message
-        if welcome_message != TestData.greeting_message:
+        if welcome_message !=   TestData.greeting_message:
             raise AssertionError(
                 f"Expected greeting message '{TestData.greeting_message}', but got '{welcome_message}'"
             )

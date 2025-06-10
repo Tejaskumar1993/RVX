@@ -27,7 +27,7 @@ def test_verify_vendor_notification_page_elements(
     ontrack_password,
     ontrack_login_page,
     vendor_notification_settings_page,
-    select_role,
+    #select_role,
     success_message_text,
     change_to_notification,
 ):
@@ -40,9 +40,8 @@ def test_verify_vendor_notification_page_elements(
     )
 
     # 2. Navigate to vendor
-    vendor_notification_settings_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+   # vendor_notification_settings_page.click_on_dropdown_and_change_user_role(
+   #      role_to_change=select_role)
     # 3. Navigate to vendor notification page
     vendor_notification_settings_page.click_on_profile_and_click_on_notification(
         change_to_notification=change_to_notification

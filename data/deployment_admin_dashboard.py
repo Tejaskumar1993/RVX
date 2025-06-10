@@ -10,13 +10,9 @@ class DeploymentAdminDashboardParams:
     Test_1 = {
         "role_to_change": "Deployment Admin",
         "user_data_table_headers": [
-            "ID",
-            "First Name",
-            "Last Name",
-            "Email",
-            "Phone Number",
+           'ID', 'First Name', 'Last Name', 'Email', 'Phone Number', 'Items Sent',
         ],
-        "item_data_table_headers": ["ID", "Name", "Price", "Status"],
+        "item_data_table_headers": ["ID", "Name", "Price","Sends","Status"],
         "newest_sends_data_table_headers": [
             "Name",
             "Description",

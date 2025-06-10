@@ -1,8 +1,8 @@
 from pytest_playwright.pytest_playwright import page
 from qase.pytest import qase
 from conftest import dictionary_parametrize
-from data.vendor_dashboard import VendorDashboardParams
 from conftest import vendor_dashboard_page
+from data.vendor_dashboard import VendorDashboardParams
 
 
 @dictionary_parametrize(
@@ -26,9 +26,9 @@ def test_verify_vendor_dashboard_page_elements(
         ontrack_password,
         ontrack_login_page,
         vendor_dashboard_page,
-        role_to_change,
-        sold_products_this_week_table_headers,
+        #role_to_change,
         most_sold_products_by_publish_table_headers,
+        sold_products_this_week_table_headers,
 ):
     """
     Regression test for items list page fields verification
@@ -38,12 +38,13 @@ def test_verify_vendor_dashboard_page_elements(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role
-    vendor_dashboard_page.click_on_dropdown_and_change_user_role(
-        role_to_change=role_to_change
-    )
+    # vendor_dashboard_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=role_to_change
+    # )
     # 3. Click and Verify items list tab
     vendor_dashboard_page.verify_dashboard_tab()
     # 4. Verify dashboard page functionality and elements
     vendor_dashboard_page.verify_dashboard_page_elements(
-        sold_products_this_week_table_headers=sold_products_this_week_table_headers,
-        most_sold_products_by_publish_table_headers=most_sold_products_by_publish_table_headers)
+      most_sold_products_by_publish_table_headers =most_sold_products_by_publish_table_headers,
+        sold_products_this_week_table_headers=sold_products_this_week_table_headers
+      )

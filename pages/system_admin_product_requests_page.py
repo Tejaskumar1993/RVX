@@ -24,7 +24,7 @@ class SystemAdminProductRequest(BasePage):
 
         # System admin product request main page locators
         self.filter_dropdown = page.locator(
-            '//div[@class="d-flex align-items-center mb-2"]//select'
+            '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]'
         )
         self.filter_options = "//select[@class='generic-filter-select ms-2 form-select form-select-sm']//option"
         self.all_product_status = ' //div[contains(@class, "badge-soft-primary")'

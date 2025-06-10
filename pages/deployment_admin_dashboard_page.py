@@ -60,7 +60,7 @@ class DeploymentAdminDashboardPage:
 
         # send statistics locators
         self.send_statistics_component = page.locator(
-            '(//div[@class="py-3 mb-2 card"])[2]'
+            '//div[@class="py-3 dep-send-stats card"]'
         )
         self.send_statistics_title = page.locator('//h6[text()="Send Statistics"]')
         self.created_sends_title = page.locator('//h6[text()="Created"]')
@@ -69,11 +69,11 @@ class DeploymentAdminDashboardPage:
 
         # user statistics locators
         self.user_statistics_component = page.locator(
-            '(//div[@class="py-3 mb-2 card"])[1]'
+            '//div[contains(@class,"py-3 dep-send-stats card")]'
         )
-        self.user_statistics_title = page.locator('//h6[text()="User Stats"]')
-        self.active_users_title = page.locator('//h6[text()="Active Users"]')
-        self.suspended_users_title = page.locator('//h6[text()="Acknowledged"]')
+        self.user_statistics_title = page.locator('//h6[contains(text(),"User Statistics")]')
+        self.active_users_title = page.locator('//h6[contains(text(),"Activated Users")]')
+        self.suspended_users_title = page.locator('//h6[contains(.,"Deactivated Users")]')
         self.archived_users_title = page.locator('//h6[text()="Archived Users"]')
 
     @qase_screenshot
@@ -112,6 +112,7 @@ class DeploymentAdminDashboardPage:
         """
         Verify and check availability of visual graphs elements
         """
+        time.sleep(4)
         expect(self.daily_sends_summary_component).to_be_visible()
         expect(self.daily_sends_orders_tab).to_be_visible()
         expect(self.top_sent_items_tab).to_be_visible()

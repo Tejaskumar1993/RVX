@@ -16,27 +16,22 @@ class SystemAdminItemsListParams:
             "Item Name",
             "Category",
             "Vendor Name",
-            "Description",
             "Price",
             "Status",
-            "Actions",
-        ],
+            "Actions"
+        ]
     }
+
     Test_2 = {
         "tab_to_navigate": "Items List",
     }
     Test_3 = {
         "tab_to_navigate": "Items List",
-        "available_filter_options": [
-            "All Items",
-            "Active Items",
-            "Inactive Items",
-            "Custom",
-        ],
+        "available_filter_options": ['All Items','Activated Items', 'On hold by Vendor', 'On hold by Admin', 'Custom'],
         "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Inactive Items": ["Inactive"],
+            "All Items": ["Activated","On hold by Admin"],
+            "Activated Items": ["Activated","On hold by Admin"],
+            "On hold by Admin":["On hold by Admin"],
         },
     }
     Test_4 = {
@@ -44,12 +39,13 @@ class SystemAdminItemsListParams:
         "headers_text": [
             "Thumbnail",
             "ID",
-            "Batch ID",
-            "Campaign",
-            "Date Created",
-            "Date Sent",
+            "Item Name",
+            "Category",
+            "Vendor Name",
+            "Price",
             "Status",
-        ],
+            "Actions"],
+
         "deployments_header": [
             "ID",
             "Deployment Name",

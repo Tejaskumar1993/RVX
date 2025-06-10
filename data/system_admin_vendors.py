@@ -20,16 +20,12 @@ class SystemAdminVendorsParams:
     }
     Test_2 = {
         "available_filter_options": [
-            "All Vendors",
-            "Active Vendors",
-            "Suspended Vendors",
-            "Custom",
-        ],
+        'All Vendors', 'Activated Vendors', 'Deactivated Vendors', 'Custom'],
         "tab_to_navigate": "Vendors",
         "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Suspended Users": ["Inactive"],
+            "All Vendors": ["Activated","Deactivated"],
+            "Activated Vendors": ["Activated"],
+            "Deactivated Vendors":["Deactivated"],
         },
     }
     Test_3 = {
@@ -39,19 +35,20 @@ class SystemAdminVendorsParams:
     Test_4 = {
         "tab_to_navigate": "Vendors",
         "success_message_text": "Vendor Created Successfully",
-        "vendor_name": fake.company(),
+        "vendor_name": fake.name(),
         "vendor_email": fake.email(),
         "vendor_addressline_1": fake.street_address(),
         "vendor_addressline_2": fake.secondary_address(),
         "vendor_city": fake.city(),
         "state_to_select": "Alabama",
         "zipcode": fake.zipcode(),
-        "phone_number": fake.phone_number(),
-        "select_vendor": "AlexDoe",
+        "phone_number": "1234567890",
+        "select_vendor": "Tango Card Providor",
+        "image_path":"C:\\Playwright\\qa-automation-scripts\\resources\\download.jpg"
     }
     Test_5 = {
         "tab_to_navigate": "Vendors",
-        "updated_vendor_message_text": ["Vendor Active", "Vendor Inactive"],
+        "updated_vendor_message_text": ["Vendor Activated", "Vendor Deactivated"],
     }
     Test_6 = {
         "tab_to_navigate": "Vendors",

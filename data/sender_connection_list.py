@@ -9,7 +9,7 @@ class SenderConnectionListParams:
     """
 
     Test_1 = {
-        "select_role": "Sender",
+        #"select_role": "Sender",
         "tab_to_navigate": "Connection List",
         "headers_text": [
             "Recipient",

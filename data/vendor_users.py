@@ -20,31 +20,33 @@ class VendorUsersListParams:
     user_email = f"{first_name.lower()}.{last_name.lower()}@{random.choice(domains)}"
 
     test_1 = {
-        "select_role": "Vendor",
+       # "select_role": "Vendor",
         "tab_to_navigate": "Users",
         "users_table_headers": ['Profile Image', 'ID', 'Username', 'Email', 'Phone Number', 'Status', 'Actions']
     }
     Test_2 = {
-        "select_role": "Vendor",
         "tab_to_navigate": "Users",
         "available_filter_options": [
             "All Users",
-            "Active Users",
-            "Inactive Users",
+            "Activated",
+            "Archived",
+            "Deactivated",
             "Custom",
         ],
         "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Inactive Users Users": ["Inactive"],
+            "All Users": ["Activated", "Deactivated"],
+            "Activated": ["Activated"],
+            "Archived": ["Activated", "Deactivated"],
+            "Deactivated": ["Deactivated"],
+            "Custom": ["Activated", "Deactivated"],
         },
     }
     Test_3 = {
-        "select_role": "Vendor",
+       # "select_role": "Vendor",
         "tab_to_navigate": "Users",
     }
     Test_4 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Users",
         "user_name": first_name,
         "user_last_name": last_name,

@@ -510,7 +510,7 @@ def test_verify_and_test_actions_on_email_templates(
     ontrack_login_page,
     deployment_admin_message_templates_page,
     tab_to_navigate,
-    select_role,
+    #select_role,
     template_name,
     enter_text_in_paragraph,
 ):
@@ -522,9 +522,9 @@ def test_verify_and_test_actions_on_email_templates(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to deployment admin
-    deployment_admin_message_templates_page.verify_and_change_user_role(
-        select_role=select_role
-    )
+    # deployment_admin_message_templates_page.verify_and_change_user_role(
+    #     select_role=select_role
+    # )
     # 3. Navigate to message templates tab
     deployment_admin_message_templates_page.verify_and_click_on_message_templates_tab(
         tab_to_navigate=tab_to_navigate
@@ -583,7 +583,6 @@ def test_verify_and_test_d2p_templates_create_new_template_functionality(
         enter_text_in_paragraph=enter_text_in_paragraph,
         tab_to_navigate=templates_tab_to_change,
     )
-
 
 @dictionary_parametrize(
     {

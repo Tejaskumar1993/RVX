@@ -33,14 +33,28 @@ class SystemAdminUsersParams:
         ],
     }
 
+    # Test_2 = {
+    #     "tab_to_navigate": "Users",
+    #     "available_filter_options": ["All Users","Activated","Deactivated","Custom"],
+    #     "expected_statuses": {
+    #         "All Users": ["Activated","Deactivated"],
+    #         "Activated": ["Activated"],
+    #         "Deactivated": ["Deactivated"],
+    #     },
+    #}
     Test_2 = {
-        "available_filter_options": ["All Users","Active Users","Inactive Users","Custom",],
-        "tab_to_navigate": "Users",
-        "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Inactive Users": ["Inactive"],
-        },
+        "available_filter_options": [
+            "All Users",
+            "Activated",
+            "Deactivated",
+            "Custom",
+        ],
+              "tab_to_navigate": "Users",
+              "expected_statuses": {
+                  "All Users": ["Activated", "Deactivated"],
+                  "Activated": ["Activated"],
+                  "Deactivated": ["Deactivated"],
+              },
     }
 
     Test_3 = {
@@ -61,7 +75,7 @@ class SystemAdminUsersParams:
         "first_name": firstname,
         "email": email,
         "user_type_select": "Deployment Admin",
-        "deployment_name": "Development Deployment",
+        "deployment_name": "RevoSend",
     }
 
     Test_6 = {
@@ -70,5 +84,5 @@ class SystemAdminUsersParams:
         "first_name": firstname,
         "email": email,
         "user_type_select": "Vendor",
-        "vendor_to_select": "Tango E-Gift Provider",
+        "vendor_to_select": "Kevin Mitchell",
     }

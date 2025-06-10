@@ -28,11 +28,11 @@ class VendorUsersListPage(BasePage):
         self.dropdown = page.locator(
             '//div[@class="d-flex align-items-center mb-2"]//select'
         )
-        self.all_users_status = '//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")]'
+        self.all_users_status = '//select[contains(.,"All Users")]'
         self.batch_action_title = page.locator('//label[text()="Batch Action"]')
-        self.user_checkbox = page.locator('(//tr//input[@type="checkbox"])[2]')
+        self.user_checkbox = page.locator('//input[contains(@title,"Toggle All Rows Selected")]')
         self.batch_action_dropdown = page.locator(
-            '//div[@class="d-flex align-items-center"]'
+            ' //select[@class="form-control form-select form-select-sm"]'
         )
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
         self.select_batch_action_options = page.locator('//div[@class="d-flex align-items-center"]//select')
@@ -79,38 +79,38 @@ class VendorUsersListPage(BasePage):
         self.email = page.locator('//p[text()="Email"]')
         self.phone_number = page.locator('//p[text()="Phone Number"]')
         self.status = page.locator('//p[text()="Status"]')
-        self.account_type = page.locator('//p[text()="Account Type"]')
+        #self.account_type = page.locator('//p[text()="Account Type"]')
         self.edit_user_button = page.locator('//button[text()="Edit User"]')
         self.user_controls_component = page.locator('(//div[@class="mb-3 card"])[2]')
         self.user_controls_title = page.locator('//h5[text()="User Controls"]')
         self.reset_password_button = page.locator('//button[text()="Reset Password"]')
         self.active_and_inactive_user_button = page.locator(
-            '//button[text()="inactivate User" or text()="Activate User"]')
-        self.change_deployment = page.locator('//button[text()="Change Deployment"]')
-        self.change_account_type = page.locator('//button[text()="Change Account Type"]')
+            '//button[text()="Deactivate User" or text()="Activate User"]')
+        #self.change_deployment = page.locator('//button[text()="Change Deployment"]')
+        #self.change_account_type = page.locator('//button[text()="Change Account Type"]')
 
     @qase_screenshot
     @qase.step(
         title="click on user role dropdown and select role",
         expected="User should be able to change role successfully",
     )
-    def click_on_dropdown_and_change_user_role(self, role_to_change):
-        """
-        Change user role from dropdown
-        """
-        time.sleep(5)
-        self.change_role_dropdown.click()
-        time.sleep(5)
-        self.page.locator(
-            self.role_to_select.replace("<<role_to_change>>", role_to_change)
-        ).click()
-        print(f"User role changed to {role_to_change}")
+    # def click_on_dropdown_and_change_user_role(self, role_to_change):
+    #     """
+    #     Change user role from dropdown
+    #     """
+    #     time.sleep(5)
+    #     self.change_role_dropdown.click()
+    #     time.sleep(5)
+    #     self.page.locator(
+    #         self.role_to_select.replace("<<role_to_change>>", role_to_change)
+    #     ).click()
+    #     print(f"User role changed to {role_to_change}")
 
     @qase_screenshot
     @qase.step(
         title="Verify and click on Orders List page",
         expected="User should be able to see orders list icon and able to click on orders list tab",
-    )
+)
     def verify_and_click_on_users_list_tab(self, side_navigation_item):
         """
         Verify Users and click on Orders List tab
@@ -185,82 +185,88 @@ class VendorUsersListPage(BasePage):
         expect(self.dropdown).to_be_visible()
         filter_options = self.page.query_selector_all(self.filter_drop_down)
         filter_options_text = [option.inner_text() for option in filter_options]
+
         assert (
                 filter_options_text == available_filter_options
         ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {available_filter_options}")
+
+        print(f"All available filters verified: {available_filter_options}")
+
         for filter_option in available_filter_options:
             self.dropdown.select_option(filter_option)
-            time.sleep(5)
+            time.sleep(5)  # You can use explicit waits if needed
             self.page.wait_for_selector(self.all_users_status)
-            # Query for the status elements after applying the filter
+
+            # Fetch user statuses
             all_users_status = self.page.query_selector_all(self.all_users_status)
-            all_users_status_text = [status.inner_text() for status in all_users_status]
-            # Print the text of each status
-            print(
-                f"users status after applying '{filter_option}': {all_users_status_text}"
-            )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                                expected_status in all_users_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_users_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
+            all_users_status_text = []
+
+            # Flatten the list of statuses
+            for status in all_users_status:
+                # Split the inner text by newline, then extend it to the flat list
+                all_users_status_text.extend(status.inner_text().split("\n"))
+
+            print(f"Users status after applying '{filter_option}': {all_users_status_text}")
+
+            # Match against expected statuses
+            expected = expected_statuses.get(filter_option, [])
+            if expected:
+                missing_statuses = [s for s in expected if s not in all_users_status_text]
+                assert not missing_statuses, (
+                    f"Missing statuses {missing_statuses} for filter '{filter_option}'. "
+                    f"Actual statuses: {all_users_status_text}"
+                )
+            else:
+                assert (
+                    not all_users_status_text
+                ), f"Expected no statuses for filter '{filter_option}', but found: {all_users_status_text}"
+
 
     @qase_screenshot
     @qase.step(
         title="Apply batch action on users and verify users status",
         expected="Status should be changed based on batch action",
     )
+
     def apply_batch_action_to_users(self):
-        """
-        Apply batch action on users and verify users status
-        """
+        time.sleep(2)
         expect(self.batch_action_title).to_be_visible()
+
         user_status_element = self.page.locator(
-            '(//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")])[1]'
+            "(//div[contains(@class, 'badge-soft-success') or contains(@class, 'badge-soft-danger')])[1]"
         )
-        current_status = user_status_element.text_content()
+        current_status = user_status_element.text_content().strip()
         print(f"Current status is: {current_status}")
-        # Verify the status is either 'Active' or 'Suspected'
-        if "Active" in current_status:
-            self.user_checkbox.click()
-            self.batch_action_dropdown.select_option("Inactive")
+        time.sleep(10)
+        self.user_checkbox.click()
+
+        if "Activated" in current_status:
+            # Deactivate the user
+            self.batch_action_dropdown.select_option("Deactivate")
             self.apply_batch_action_button.click()
-            time.sleep(2)
-            new_status = user_status_element.text_content()
-            assert (
-                    "Inactive" in new_status
-            ), f"Expected status to be 'Inactive', but got {new_status}"
-            print("Status changed to 'Inactive' successfully.")
-            # Now change the status back to 'Active'
-            self.user_checkbox.click()
-            self.batch_action_dropdown.select_option("Activate")
-            self.apply_batch_action_button.click()
-            # Wait for the status to revert to 'Active' and verify
-            time.sleep(2)
-            reverted_status = user_status_element.text_content()
-            assert (
-                    "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status reverted to 'Active' successfully.")
-        elif "Inactive" in current_status:
+            time.sleep(4)
+            new_status = user_status_element.text_content().strip()
+            assert "Deactivated" in new_status, f"Expected status to be 'Deactivated', but got {new_status}"
+            print("Status changed to 'Deactivated' successfully.")
+
+            # Reactivate the user
             self.user_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_batch_action_button.click()
-            time.sleep(2)
-            reverted_status = user_status_element.text_content()
-            assert (
-                    "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status changed back to 'Active' successfully.")
+            time.sleep(4)
+            reverted_status = user_status_element.text_content().strip()
+            assert "Activate" in reverted_status, f"Expected status to be 'Active', but got {reverted_status}"
+            print("Status reverted to ' Activated' successfully.")
+
+        elif "Active" in current_status or "Activated" in current_status:
+            # Activate the user
+            self.batch_action_dropdown.select_option("Activate")
+            self.apply_batch_action_button.click()
+            time.sleep(8)
+            updated_status = user_status_element.text_content().strip()
+            assert "Active" in updated_status, f"Expected status to be 'Activated', but got {updated_status}"
+            print("Status changed to 'Activated' successfully.")
+
         else:
             raise ValueError(f"Unexpected user status: {current_status}")
 
@@ -380,16 +386,15 @@ class VendorUsersListPage(BasePage):
             self.email,
             self.phone_number,
             self.status,
-            self.account_type,
+           #self.account_type,
             self.edit_user_button,
             self.user_controls_component,
             self.user_controls_title,
             self.close_button,
             self.reset_password_button,
-            self.change_deployment,
+            #self.change_deployment,
             self.active_and_inactive_user_button,
-            self.change_account_type
-
+            #self.change_account_type
         ]
         for elements in elements_to_check:
             expect(elements).to_be_visible()

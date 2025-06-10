@@ -4,7 +4,7 @@ class SenderNotificationParams:
     """
 
     test_1 = {
-        "select_role": "Sender",
+        "profile_option" :"Settings",
         "change_to_notification": "Notification Settings",
         "success_message_text": "Notification updated successfully",
     }

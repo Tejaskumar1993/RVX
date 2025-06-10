@@ -27,8 +27,8 @@ class SenderAccountBalancePage:
         self.page = page
 
         # Role locator
-        self.select_role_dropdown = page.locator('(//div[@class="dropdown"])[2]')
-        self.select_role = '//a[text()="<<select_role>>"]'
+       # self.select_role_dropdown = page.locator('(//div[@class="dropdown"])[2]')
+       # self.select_role = '//a[text()="<<select_role>>"]'
 
         # Side navigation tab
         self.account_balance_icon = page.locator('//*[@data-icon="dollar-sign"]')
@@ -69,13 +69,13 @@ class SenderAccountBalancePage:
             '//div[@class="d-flex align-items-center mb-2"]'
         )
         self.select_filter_option = page.locator(
-            '//div[@class="d-flex align-items-center mb-2"]//select'
+            '(//select[@class="generic-filter-select ms-2 form-select form-select-sm"])[1]'
         )
         self.history_table_headers = page.locator('//tr[@class="text-center"]')
         self.footer = page.locator(
             '//div[@class="table-footer-border-top card-footer"]'
         )
-        self.pagination = page.locator('//div[@class="d-flex pagination-numbers"]')
+        self.pagination = page.locator('//div[@class="d-flex pagination-numbers m-auto mb-2"]')
         self.rows_count = page.locator(
             '//div[@class="d-flex align-items-center fs--1 ps-3 d-flex flex-wrap rows-page-count"]'
         )
@@ -89,15 +89,15 @@ class SenderAccountBalancePage:
         title="Verify logged in user is able to change role to sender",
         expected="Logged in user should be able to change role",
     )
-    def verify_and_change_user_of_role(self, select_role):
-        """
-        Verify and change role of sender
-        """
-        expect(self.select_role_dropdown).to_be_visible()
-        self.select_role_dropdown.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        self.page.click(self.select_role.replace("<<select_role>>", select_role))
-        print(f"successfully changed role to {select_role}")
+    # def verify_and_change_user_of_role(self, select_role):
+    #     """
+    #     Verify and change role of sender
+    #     """
+    #     expect(self.select_role_dropdown).to_be_visible()
+    #     self.select_role_dropdown.click()
+    #     self.page.wait_for_load_state("domcontentloaded")
+    #     self.page.click(self.select_role.replace("<<select_role>>", select_role))
+    #     print(f"successfully changed role to {select_role}")
 
     @qase_screenshot
     @qase.step(
@@ -182,8 +182,8 @@ class SenderAccountBalancePage:
             print(f"Applying filter: {option}")
             time.sleep(3)  # Wait for the page to load before applying the filter
             self.page.wait_for_load_state("domcontentloaded")
-
             # Apply the filter
+            time.sleep(2)
             self.select_filter_option.select_option(option)
             time.sleep(3)
 

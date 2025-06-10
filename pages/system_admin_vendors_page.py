@@ -24,7 +24,7 @@ class SystemAdminVendorsPage:
         self.vendors_tab = '//span[text()="<<side_navigation_tabs>>"]'
 
         # Vendors list Filters locators
-        self.filter_title = page.locator('//div[text()="Filter:"]')
+        self.filter_title = page.locator('//label[normalize-space()="Filter:"]')
         self.filter_drop_down = '//select[@class="generic-filter-select ms-2 form-select form-select-sm"]//option'
         self.dropdown = page.locator(
             '(//div[@class="d-flex align-items-center"][1]//select)[1]'
@@ -48,6 +48,7 @@ class SystemAdminVendorsPage:
         )
 
         # add vendor page locators
+        self.add_vendor_image = page.locator("//span[@class='ant-upload-wrapper css-1vtf12y']//span[@role='button']")
         self.add_vendor_component = page.locator('//div[@class="modal-content"]')
         self.add_vendor_title = page.locator('//div[text()="Add Vendor"]')
         self.vendor_image_title = page.locator('//label[text()="Vendor Image"]')
@@ -62,27 +63,28 @@ class SystemAdminVendorsPage:
         self.city_header = page.locator('//label[text()="City"]')
         self.city_input = page.locator('//input[@id="city"]')
         self.state_header = page.locator('//label[text()="State"]')
-        self.select_state_drop_down = page.locator('//div[@class="col-lg-4"]//select')
+        self.select_state_drop_down = page.locator('//input[@id="stateName"]/ancestor::div[contains(@class, "ant-select-selector")]')
         self.zip_code_header = page.locator('//label[text()="Zip Code"]')
         self.zip_code_input = page.locator('//input[@id="zip"]')
-        self.phone_header = page.locator('//div[text()="Phone"]')
+        self.phone_header = page.locator('//label[@for="phoneNumber"]')
         self.phone_number_input = page.locator(
-            '//input[@class="form-control vendor-phone-input"]'
+            '//input[@id="phoneNumber"]'
         )
         self.select_company_header = page.locator('//label[text()="Select Company"]')
         self.select_company_dropdown = page.locator(
-            '//input[@class="ant-select-selection-search-input"]'
+            '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]//div[@class="ant-select-selector"]'
         )
         self.select_company_option = page.locator(
-            '(//div[@class="ant-select-item-option-content"])[2]'
+            '//div[contains(text(),"Tango Card Providor")]'
         )
         self.select_vendor_header = page.locator('//label[text()="Select Vendor"]')
+        self.upload_button = page.locator("//button[contains(text(),'Upload')]")
         self.select_vendor_option = page.locator('//div[@class="col-lg-12"]//select')
         self.add_vendor = page.locator(
             '//div[@class="mt-2 text-end"]//button[text()="Add Vendor"]'
         )
         self.success_message_vendor = page.locator(
-            '//div[@class="ant-message-notice-content"]'
+            '//span[normalize-space()="Vendor Created Successfully"]'
         )
         self.active_inactive_action = page.locator(
             '(//*[@data-icon="lock" or @data-icon="lock-open"])[1]'
@@ -112,10 +114,10 @@ class SystemAdminVendorsPage:
             '//button[@id="vendor-information-tab-tab-users"]'
         )
         self.vendor_company_name = page.locator('//div//h6[text()="Company Name"]')
-        self.vendor_phone_number = page.locator('//div//h6[text()="Phone Number"]')
+        self.vendor_phone_number = page.locator('//h6[normalize-space()="Phone Number"]')
         self.vendor_email = page.locator('//div//h6[text()="Email"]')
         self.vendor_control_header = page.locator('//div//h5[text()="Vendor Controls"]')
-        self.suspend_vendor_button = page.locator('//button[text()="Suspend Vendor"]')
+        self.suspend_vendor_button = page.locator('//button[text()="Activate Vendor"]')
         self.invite_vendor_button = page.locator('//button[text()="Invite Vendor"]')
         self.view_dashboard_button = page.locator('//button[text()="View Dashboard"]')
         self.delete_vendor_button = page.locator('//button[text()="Delete Vendor"]')
@@ -328,6 +330,7 @@ class SystemAdminVendorsPage:
         zipcode,
         phone_number,
         select_vendor,
+        image_path,
     ):
         """
         Adds a new vendor to the vendor list and verifies success message.
@@ -355,8 +358,7 @@ class SystemAdminVendorsPage:
             self.phone_header,
             self.phone_number_input,
             self.select_company_header,
-            self.select_vendor_header,
-            self.add_vendor,
+
         ]
 
         for element in required_elements:
@@ -368,15 +370,23 @@ class SystemAdminVendorsPage:
         self.address_line1_input.fill(vendor_addressline_1)
         self.address_line2_input.fill(vendor_addressline_2)
         self.city_input.fill(vendor_city)
-        self.select_state_drop_down.select_option(state_to_select)
+        time.sleep(2)
+        self.select_state_drop_down.click()
+        time.sleep(3)
+        self.page.locator(f"//div[@class='ant-select-item-option-content' and text()='{state_to_select}']").click()
+        time.sleep(2)
         self.zip_code_input.fill(zipcode)
         self.phone_number_input.fill(phone_number)
         self.select_company_dropdown.click()
         self.select_company_option.click()
-        self.select_vendor_option.select_option(select_vendor)
+        time.sleep(2)
+        self.page.locator("input[type='file']").nth(0).set_input_files(image_path)
+        time.sleep(2)
+        self.upload_button.click()
 
         # Submit and verify success
         self.add_vendor.click()
+        time.sleep(2)
         actual_success_message = self.success_message_vendor.text_content()
         assert actual_success_message == success_message_text, (
             f"Expected success message '{success_message_text}', "
@@ -460,7 +470,6 @@ class SystemAdminVendorsPage:
             self.vendor_phone_number,
             self.vendor_email,
             self.vendor_control_header,
-            self.suspend_vendor_button,
             self.invite_vendor_button,
             self.view_dashboard_button,
             self.delete_vendor_button,

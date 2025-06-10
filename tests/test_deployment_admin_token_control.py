@@ -78,7 +78,7 @@ def test_verify_token_buckets_filter_functionality(
     tab_to_navigate,
     available_filter_options,
     expected_statuses,
-    select_role,
+    #select_role,
 ):
     """
     Regression test for filter functionality of token buckets list
@@ -88,7 +88,7 @@ def test_verify_token_buckets_filter_functionality(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to deployment admin
-    deployment_admin_token_control.verify_and_change_user_role(select_role=select_role)
+    #deployment_admin_token_control.verify_and_change_user_role(select_role=select_role)
     # 3. Navigate to token control tab
     deployment_admin_token_control.verify_and_click_on_token_control_tab(
         tab_to_navigate=tab_to_navigate
@@ -124,7 +124,7 @@ def test_enable_and_disable_token_bucket(
     tab_to_navigate,
     enable_message_text,
     disable_message_text,
-    select_role,
+    #select_role,
 ):
     """
     Regression test for the token control functionality
@@ -134,17 +134,16 @@ def test_enable_and_disable_token_bucket(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to deployment admin
-    deployment_admin_token_control.verify_and_change_user_role(select_role=select_role)
+    #deployment_admin_token_control.verify_and_change_user_role(select_role=select_role)
     # 3. Navigate to token control tab
     deployment_admin_token_control.verify_and_click_on_token_control_tab(
         tab_to_navigate=tab_to_navigate
     )
     # 4. enable/disable token bucket
-    deployment_admin_token_control.apply_filter_on_token_bucket_data(
+    deployment_admin_token_control.apply_filter_on_token_bucket_data_message(
+        enable_message_text= enable_message_text,
         disable_message_text=disable_message_text,
-        enable_message_text=enable_message_text,
     )
-
 
 @dictionary_parametrize(
     {

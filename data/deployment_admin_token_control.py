@@ -26,34 +26,28 @@ class DeploymentAdminTokenControlParams:
             "Actions",
         ],
         "available_filter_options": [
-            "All Buckets",
-            "Active Buckets",
-            "Inactive Buckets",
-            "Custom",
+            'All Buckets','Activated Buckets','Deactivated Buckets','Custom'
         ],
+
         "select_role": "Deployment Admin",
     }
 
     Test_2 = {
         "tab_to_navigate": "Token Control",
-        "select_role": "Deployment Admin",
         "available_filter_options": [
-            "All Buckets",
-            "Active Buckets",
-            "Inactive Buckets",
-            "Custom",
+            'All Buckets', 'Activated Buckets', 'Deactivated Buckets', 'Custom'
         ],
         "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Inactive Items": ["Inactive"],
+            "All Buckets": ["Activated", "Deactivated"],
+            "Activated Buckets": ["Activated"],
+            "Deactivated Buckets": ["Deactivated"],
         },
     }
     Test_3 = {
         "tab_to_navigate": "Token Control",
-        "select_role": "Deployment Admin",
-        "disable_message_text": "Token Controls Disabled  Successfully",
+        #"select_role": "Deployment Admin",
         "enable_message_text": "Token Controls Enabled  Successfully",
+        "disable_message_text":"Token Controls Disabled Successfully",
     }
     Test_4 = {
         "tab_to_navigate": "Token Control",

@@ -29,7 +29,7 @@ def test_verify_sender_connection_list_tab(
     ontrack_password,
     ontrack_login_page,
     sender_connection_list_page,
-    select_role,
+    #select_role,
     tab_to_navigate,
     headers_text,
     available_filter_options,
@@ -43,7 +43,7 @@ def test_verify_sender_connection_list_tab(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to sender
-    sender_connection_list_page.verify_and_change_user_of_role(select_role=select_role)
+   # sender_connection_list_page.verify_and_change_user_of_role(select_role=select_role)
     # 3. Navigate to connection list tab
     sender_connection_list_page.verify_and_click_on_connection_list_tab(
         tab_to_navigate=tab_to_navigate

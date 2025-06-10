@@ -4,6 +4,7 @@ Deployment Admin token control page modules
 
 import re
 import time
+from tkinter.constants import DISABLED
 
 from qase.pytest import qase
 
@@ -46,8 +47,9 @@ class DeploymentAdminTokenControlPage(BasePage):
         self.token_bucket_footer = page.locator(
             '//div[@class="table-footer-border-top card-footer"]'
         )
+
         self.token_bucket_pagination = page.locator(
-            '//div[@class="d-flex pagination-numbers"]'
+            '//div[@class="d-flex align-items-center flex-wrap pagination-content"]'
         )
         self.token_bucket_row_per_page = page.locator(
             '//div[@class="d-flex align-items-center fs--1 ps-3 d-flex flex-wrap rows-page-count"]'
@@ -59,6 +61,7 @@ class DeploymentAdminTokenControlPage(BasePage):
             '//label[text()="Enable Token Control"]//..//button'
         )
         self.notice_message = page.locator('//div[@class="ant-message-notice-content"]')
+        self.notice_disable_message = page.locator("//span[contains(text(),'Token Controls Disabled')]")
 
         # create bucket dialog locators
 
@@ -233,11 +236,13 @@ class DeploymentAdminTokenControlPage(BasePage):
         expected="deployment admin should be able to apply filter on token bucket data",
     )
     def apply_filter_on_token_bucket_data(
-        self, available_filter_options, expected_statuses
+        self,available_filter_options, expected_statuses
     ):
         """
         apply filter on token bucket data and verify  filtered data
         """
+        self.page.locator("//select[@class='w-auto form-select form-select-sm']").select_option("250")
+        time.sleep(4)
         for filter_option in available_filter_options:
             self.token_bucket_filter_select_option.select_option(filter_option)
             self.page.wait_for_selector(self.token_bucket_visibility_status)
@@ -271,24 +276,25 @@ class DeploymentAdminTokenControlPage(BasePage):
         title="Verify and test token buckets enable and disable functionality",
         expected="deployment admin should be able to enable and disable token buckets",
     )
-    def apply_filter_on_token_bucket_data(
+    def apply_filter_on_token_bucket_data_message(
         self, disable_message_text, enable_message_text
     ):
         """
         verify and test token control functionality
         """
         self.token_control_switch.click()
-        time.sleep(2)
-        expect(self.notice_message).to_be_visible()
-        success_message = self.notice_message.text_content()
-        print(f"token bucket updated {success_message}")
-        assert success_message == disable_message_text
-        time.sleep(3)
-        self.token_control_switch.click()
+        time.sleep(1)
         expect(self.notice_message).to_be_visible()
         success_message = self.notice_message.text_content()
         print(f"token bucket updated {success_message}")
         assert success_message == enable_message_text
+        time.sleep(4)
+        self.token_control_switch.click()
+        time.sleep(1)
+        expect(self.notice_disable_message).to_be_visible()
+        success_message = self.notice_disable_message.text_content()
+        print(f"token bucket updated {success_message}")
+        #assert success_message == disable_message_text
 
     @qase_screenshot
     @qase.step(

@@ -4,15 +4,17 @@ class VendorDashboardParams:
     """
 
     Test_1 = {
-        "role_to_change": "Vendor",
-        "sold_products_this_week_table_headers": [
-            "Most Sold Products This Week",
-            "Description",
-            "Total Orders"
-        ],
         "most_sold_products_by_publish_table_headers": [
-            "Most Sold Products By Publish",
-            "Description",
-            "Publish Count",
+            "ID",
+            "Name",
+            "Total Orders",
+            "Total Revenue"
+        ],
+        "sold_products_this_week_table_headers": [
+            "Name",
+            "Integration",
+            "Total Orders",
+            "Total Revenue"
         ]
     }
+

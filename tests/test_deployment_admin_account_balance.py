@@ -3,6 +3,7 @@ test cases for deployment admin account balance page
 """
 from qase.pytest import qase
 from conftest import dictionary_parametrize
+import data.deployment_admin_account_balance
 from data.deployment_admin_account_balance import DeploymentAdminAccountBalanceParams
 
 
@@ -370,9 +371,9 @@ def test_deposit_funds_functionality(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to deployment admin
-    deployment_admin_account_balance_page.verify_and_change_user_role(
-        select_role=select_role
-    )
+    # deployment_admin_account_balance_page.verify_and_change_user_role(
+    #     select_role=select_role
+    # )
     # 3. Navigate to account balance tab
     deployment_admin_account_balance_page.verify_and_click_on_account_balance_tab(
         tab_to_navigate=tab_to_navigate

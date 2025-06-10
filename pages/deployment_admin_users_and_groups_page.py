@@ -53,7 +53,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         self.apply_batch_action_button = page.locator('//button[text()="Apply Action"]')
         self.invite_button = page.locator('//button[text()="Invite"]')
         self.users_footer_pagination = page.locator(
-            '(//div[@class="d-flex pagination-numbers"])[1]'
+            '//div[@id="user-&-groups-tab-tabpane-users"]//div[contains(@class,"d-flex pagination-numbers m-auto mb-2")]'
         )
         self.users_row_per_page = page.locator(
             '(//div[@class="d-flex align-items-center fs--1 ps-3"])[1]'
@@ -121,7 +121,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         )
         self.create_button = page.locator('//button[text()="Invite"]')
         self.footer_pagination = page.locator(
-            '(//div[@class="d-flex pagination-numbers"])[2]'
+            '//div[@id="user-&-groups-tab-tabpane-users"]//div[contains(@class,"d-flex pagination-numbers m-auto mb-2")]'
         )
         self.row_per_page = page.locator(
             '(//div[@class="d-flex align-items-center fs--1 ps-3"])[2]'
@@ -236,7 +236,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         print(f"all available filters verified: {available_filter_options}")
         for filter_option in available_filter_options:
             self.users_filter.select_option(filter_option)
-            time.sleep(5)
+            time.sleep(6)
             self.page.wait_for_selector(self.users_status)
             # Query for the status elements after applying the filter
             all_users_status = self.page.query_selector_all(self.users_status)
@@ -270,7 +270,7 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
         """
         expect(self.batch_action_title).to_be_visible()
         user_status_element = self.page.locator(
-            '(//div[contains(@class, "badge-soft-success") or contains(@class, "badge-soft-danger")])[1]'
+            '(//div[contains(@class,"badge badge-soft-success btn-outline rounded-pill")][normalize-space()="Activated"])[13]'
         )
         current_status = user_status_element.text_content()
         print(f"Current status is: {current_status}")
@@ -303,11 +303,9 @@ class DeploymentAdminUsersAndGroupsPage(BasePage):
             time.sleep(2)
             reverted_status = user_status_element.text_content()
             assert (
-                    "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status changed back to 'Active' successfully.")
-        else:
-            raise ValueError(f"Unexpected user status: {current_status}")
+                    "Activated" in reverted_status
+            ), f"Expected status to be 'Activated', but got {reverted_status}"
+            print("Status changed back to 'Activated' successfully.")
 
     @qase_screenshot
     @qase.step(

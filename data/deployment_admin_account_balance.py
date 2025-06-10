@@ -42,13 +42,14 @@ class DeploymentAdminAccountBalanceParams:
             "Time Stamp",
         ],
         "available_filter_options": [
-            "All Items",
+            "All Transactions",
             "Previous Month",
             "Previous Week",
             "Quarter-1 : Jan-March",
             "Quarter-2 : April-June",
             "Quarter-3 : July-September",
             "Quarter-4 : October-December",
+            "Custom"
         ],
         "select_role": "Deployment Admin",
     }
@@ -57,7 +58,7 @@ class DeploymentAdminAccountBalanceParams:
         "tab_to_navigate": "Account Balance",
         "select_role": "Deployment Admin",
         "available_filter_options": [
-            "All Items",
+            "All Transactions",
             "Previous Month",
             "Previous Week",
             "Quarter-1 : Jan-March",
@@ -110,6 +111,6 @@ class DeploymentAdminAccountBalanceParams:
     Test_7 = {
         "tab_to_navigate": "Account Balance",
         "select_role": "Deployment Admin",
-        "select_card": "VISA - 7777",
+        "select_card": "DINERS - 0004",
         "amount_to_add": "5",
     }

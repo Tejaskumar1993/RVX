@@ -30,7 +30,7 @@ def test_verify_vendor_company_information_page_elements(
     ontrack_login_page,
     vendor_company_information_page,
     tab_to_navigate,
-    select_role,
+    #select_role,
 ):
     """
     Regression test for vendor company information page elements verification
@@ -39,10 +39,10 @@ def test_verify_vendor_company_information_page_elements(
     ontrack_login_page.open_and_verify_ontrack_login_page(
         environment_to_run, ontrack_username, ontrack_password
     )
-    # 2. Change user role to vendor
-    vendor_company_information_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
+    # # 2. Change user role to vendor
+    # vendor_company_information_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
     # 3. Navigate to company information tab
     vendor_company_information_page.verify_and_click_on_company_information_tab(
         side_navigation_item=tab_to_navigate
@@ -74,7 +74,7 @@ def test_verify_and_edit_vendor_company_information(
     vendor_company_information_page,
     tab_to_navigate,
     success_message_text,
-    select_role,
+    #select_role,
     updated_email,
 ):
     """
@@ -85,10 +85,10 @@ def test_verify_and_edit_vendor_company_information(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role to vendor
-    vendor_company_information_page.click_on_dropdown_and_change_user_role(
-        role_to_change=select_role
-    )
-    # 3. Navigate to company information tab
+    # vendor_company_information_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=select_role
+    # )
+    # # 3. Navigate to company information tab
     vendor_company_information_page.verify_and_click_on_company_information_tab(
         side_navigation_item=tab_to_navigate
     )

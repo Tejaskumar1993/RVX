@@ -53,7 +53,6 @@ def test_verify_items_list_page_elements(
         headers_text=headers_text
     )
 
-
 @dictionary_parametrize(
     {
         "Test_2": DeploymentAdminItemsListParams.Test_2,
@@ -74,7 +73,7 @@ def test_apply_filter_on_items_list_data(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        role_to_change,
+        #role_to_change,
         deployment_admin_items_list_page,
         tab_to_navigate,
         available_filter_options,
@@ -88,9 +87,9 @@ def test_apply_filter_on_items_list_data(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role
-    deployment_admin_items_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=role_to_change
-    )
+    # deployment_admin_items_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=role_to_change
+    # )
     # 3. Click and Verify users tab
     deployment_admin_items_list_page.verify_and_click_on_items_list_tab(
         side_navigation_item=tab_to_navigate
@@ -238,7 +237,6 @@ def test_item_information_component_and_tabs(
         tab_to_change=tab_to_change, headers_text=headers_text
     )
 
-
 @dictionary_parametrize(
     {
         "Test_6": DeploymentAdminItemsListParams.Test_6,
@@ -259,7 +257,7 @@ def test_filter_functionality_inside_add_item_feature(
         ontrack_username,
         ontrack_password,
         ontrack_login_page,
-        role_to_change,
+        #role_to_change,
         available_filter_options,
         deployment_admin_items_list_page,
         tab_to_navigate,
@@ -273,9 +271,9 @@ def test_filter_functionality_inside_add_item_feature(
         environment_to_run, ontrack_username, ontrack_password
     )
     # 2. Change user role
-    deployment_admin_items_list_page.click_on_dropdown_and_change_user_role(
-        role_to_change=role_to_change
-    )
+    # deployment_admin_items_list_page.click_on_dropdown_and_change_user_role(
+    #     role_to_change=role_to_change
+    # )
     # 3. Click and Verify users tab
     deployment_admin_items_list_page.verify_and_click_on_items_list_tab(
         side_navigation_item=tab_to_navigate

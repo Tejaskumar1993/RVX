@@ -21,6 +21,9 @@ class SenderNotificationPage(BasePage):
         self.page = page
 
         # Notification navigate page locators
+
+        self.profile_image_icon = page.locator("//img[@class='mx-auto profile-pic rounded-circle']")
+        self.setting = "//a[.='Settings']"
         self.change_role_dropdown = page.locator('(//button[@id="dropdown-flags"])[2]')
         self.role_to_select = '//a[text()="<<role_to_change>>"]'
         self.profile_image = page.locator("//a[@href='/dashboard/admin#!']")
@@ -33,7 +36,7 @@ class SenderNotificationPage(BasePage):
         self.email_header = page.locator('//th[text()="Email"]')
         self.sms_header = page.locator('//th[text()="SMS"]')
         self.select_all = page.locator('//td[text()="Select All"]')
-        self.password_reset = page.locator('//td[text()="Password reset"]')
+        self.password_reset = page.locator('//td[contains(text(),"Password reset")]')
         self.account_balance_reminders = page.locator(
             '//td[text()="Account balance reminders"]'
         )
@@ -58,34 +61,26 @@ class SenderNotificationPage(BasePage):
         title="click on user role dropdown and select role",
         expected="User should be able to change role successfully",
     )
-    def click_on_dropdown_and_change_user_role(self, role_to_change):
-        """
-        Change user role from dropdown
-        """
-        time.sleep(5)
-        self.change_role_dropdown.click()
-        time.sleep(5)
-        self.page.locator(
-            self.role_to_select.replace("<<role_to_change>>", role_to_change)
-        ).click()
-        print(f"User role changed to {role_to_change}")
 
     @qase_screenshot
     @qase.step(
         title="click on user profile dropdown and select notification setting option",
         expected="User should be able to select notification setting successfully",
     )
-    def click_on_profile_and_click_on_notification(self, change_to_notification):
+    def click_on_profile_and_click_on_notification(self, change_to_notification, profile_option):
         """
         navigate to notification page
         """
-        self.page.wait_for_selector("//a[@href='/dashboard/admin#!']")
-        self.profile_image.click()
+        time.sleep(6)
+        self.profile_image_icon.click()
+        self.page.click(
+            self.setting.replace("Settings",profile_option)
+        )
         self.page.locator(
             self.notification_setting_dropdown.replace(
                 "<<Notification Settings>>", change_to_notification
             )
-        ).click()
+        )
         print(f"User role changed to {change_to_notification}")
 
     @qase_screenshot
@@ -97,7 +92,7 @@ class SenderNotificationPage(BasePage):
         """
         Verify and check availability of sender notification setting page elements
         """
-        time.sleep(5)
+        time.sleep(6)
         elements_to_check = [
             self.notification_header,
             self.alert_header,

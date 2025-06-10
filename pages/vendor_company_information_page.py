@@ -21,7 +21,7 @@ class VendorCompanyInformationPage(BasePage):
         self.page = page
 
         # Company information page locators
-        self.change_role_dropdown = page.locator('(//button[@id="dropdown-flags"])[2]')
+        #self.change_role_dropdown = page.locator('(//button[@id="dropdown-flags"])[2]')
         self.role_to_select = '//a[text()="<<role_to_change>>"]'
         self.select_tab_from_side_navigation = '//span[text()="<<tab_to_navigate>>"]'
         self.company_information_icon = page.locator(
@@ -41,7 +41,7 @@ class VendorCompanyInformationPage(BasePage):
             '//div[@class="company-setting-page mt-1 card"]'
         )
         self.upload_image_area = page.locator(
-            '(//div[@class="ant-upload ant-upload-select"]//span[@class="ant-upload"])[1]'
+            '(//div[contains(@class,"ant-upload-list-item ant-upload-list-item-undefined")])[1]'
         )
         self.companyname_label = page.locator('//label[text()="Company Name"]')
         self.companyname_input = page.locator('//input[@name="companyName"]')
@@ -91,17 +91,17 @@ class VendorCompanyInformationPage(BasePage):
         title="click on user role dropdown and select role",
         expected="User should be able to change role successfully",
     )
-    def click_on_dropdown_and_change_user_role(self, role_to_change):
-        """
-        Change user role from dropdown
-        """
-        time.sleep(5)
-        self.change_role_dropdown.click()
-        time.sleep(5)
-        self.page.locator(
-            self.role_to_select.replace("<<role_to_change>>", role_to_change)
-        ).click()
-        print(f"User role changed to {role_to_change}")
+    # def click_on_dropdown_and_change_user_role(self, role_to_change):
+    #     """
+    #     Change user role from dropdown
+    #     """
+    #     time.sleep(5)
+    #     self.change_role_dropdown.click()
+    #     time.sleep(5)
+    #     self.page.locator(
+    #         self.role_to_select.replace("<<role_to_change>>", role_to_change)
+    #     ).click()
+    #     print(f"User role changed to {role_to_change}")
 
     @qase_screenshot
     @qase.step(

@@ -33,19 +33,23 @@ class VendorProductListParams:
         for _ in range(random.randint(10, 20))
     ) + "."
 
+    Test_0 ={
+        "tab_to_navigate": "Product List"
+        }
+
     # Select a random subject
     subject = random.choice(subjects)
     test_1 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Product List",
-        "headers_text": [
+        "headers_text": [[
+            "Thumbnail",
             "Name",
             "Status",
-            "Actions"
-        ]
+            "Actions"]]
     }
     Test_2 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Product List",
         "available_filter_options": [
             "All Products",
@@ -54,30 +58,69 @@ class VendorProductListParams:
             "Declined Products",
         ],
         "expected_statuses": {
-            "All Products": ["Declined", "Approved", "Pending"],
+            "All Products": ["Approved","On Hold By Admin"],
             "Pending Products": ["Pending"],
-            "Approved Products": ["Approved"],
+            "Approved Products": ["Approved","On Hold By Admin"],
             "Declined Products": ["Declined"],
         },
     }
     Test_3 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Product List",
         "product_name": product_name,
+        "category":"Customer appreciation",
         "product_price": str(product_price),
+        "product_type":"eGift",
         "product_shipping_rate": str(product_shipping_rate),
         "description": product_description,
         "image_path": 'resources/download.jpg',
         "success_message_text": "Product Request is sent"
     }
     Test_4 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Product List",
         "request_description": description,
         "request_subject": subject,
         "success_message_text": "Your request for support from the system administrators has been sent successfully"
     }
     Test_5 = {
-        "select_role": "Vendor",
+        #"select_role": "Vendor",
         "tab_to_navigate": "Product List",
     }
+
+    Test_6 = {
+        #"tab_to_navigate": "Product List",
+        "available_filter_options": [
+            "Approved Products",
+        ],
+        "expected_statuses": {
+            "Approved Products": ["Approved", "On Hold By Admin"],},
+        "product_name": product_name,
+        "category": "Customer appreciation",
+        "product_price": str(product_price),
+        "product_shipping_rate": str(product_shipping_rate),
+        "description": product_description,
+        "image_path": 'resources/download.jpg',
+        "success_message_text": "Product Request is sent"
+    }
+
+    Test_7 = {
+        "tab_to_navigate": "Product List",
+        "available_filter_options": [
+            "Approved Products",
+        ],
+        "expected_statuses": {
+            "Approved Products": ["Approved", "On Hold By Admin"], },
+    }
+
+    Test_8 = {"tab_to_navigate": "Product List",
+        "available_filter_options": [
+            "Pending Products",
+            "Declined Products"],
+              "expected_statuses": {
+                  "Pending Products": ["Pending"],
+                  "Declined Products": ["Declined"],
+              },
+              "success_message_text": "Product Deleted Successfully"
+            }
+

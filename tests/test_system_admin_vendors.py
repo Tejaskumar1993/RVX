@@ -166,6 +166,7 @@ def test_add_vendor_functionality_on_vendors_list(
     zipcode,
     phone_number,
     select_vendor,
+    image_path,
 ):
     """
     Regression test for vendors lists add vendor feature
@@ -190,6 +191,7 @@ def test_add_vendor_functionality_on_vendors_list(
         zipcode=zipcode,
         phone_number=phone_number,
         select_vendor=select_vendor,
+        image_path=image_path
     )
 
 

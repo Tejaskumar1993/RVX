@@ -23,8 +23,8 @@ class VendorNotificationPage(BasePage):
         # Notification page locators
         self.change_role_dropdown = page.locator('(//button[@id="dropdown-flags"])[2]')
         self.role_to_select = '//a[text()="<<role_to_change>>"]'
-        self.profile_image = page.locator("//a[@href='/dashboard/admin#!']")
-        self.notification_setting_dropdown = '//a[text()="<<Notification Settings>>"]'
+        self.profile_image = page.locator("//img[contains(@class,'mx-auto profile-pic rounded-circle')]")
+        self.notification_setting_dropdown = '//a[contains(text(),"Settings")]'
         self.notification_header = page.locator('//h3[text()="Notification Settings"]')
         self.alert = page.locator('//th[text()="Alert"]')
         self.alert_type = page.locator('//th[text()="Alert Type"]')
@@ -55,17 +55,17 @@ class VendorNotificationPage(BasePage):
         title="click on user role dropdown and select role",
         expected="User should be able to change role successfully",
     )
-    def click_on_dropdown_and_change_user_role(self, role_to_change):
-        """
-        Change user role from dropdown
-        """
-        time.sleep(5)
-        self.change_role_dropdown.click()
-        time.sleep(5)
-        self.page.locator(
-            self.role_to_select.replace("<<role_to_change>>", role_to_change)
-        ).click()
-        print(f"User role changed to {role_to_change}")
+    # def click_on_dropdown_and_change_user_role(self, role_to_change):
+    #     """
+    #     Change user role from dropdown
+    #     """
+    #     time.sleep(5)
+    #     self.change_role_dropdown.click()
+    #     time.sleep(5)
+    #     self.page.locator(
+    #         self.role_to_select.replace("<<role_to_change>>", role_to_change)
+    #     ).click()
+    #     print(f"User role changed to {role_to_change}")
 
     @qase_screenshot
     @qase.step(
@@ -76,11 +76,11 @@ class VendorNotificationPage(BasePage):
         """
         navigate to notification page
         """
-        self.page.wait_for_selector("//a[@href='/dashboard/admin#!']")
+        self.page.wait_for_selector("//img[contains(@class,'mx-auto profile-pic rounded-circle')]")
         self.profile_image.click()
         self.page.locator(
             self.notification_setting_dropdown.replace(
-                "<<Notification Settings>>", change_to_notification
+            "<<Settings>>", change_to_notification
             )
         ).click()
         print(f"User role changed to {change_to_notification}")

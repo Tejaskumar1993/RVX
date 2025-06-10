@@ -4,15 +4,19 @@ Root conftest that will be used for all projects
 
 import os
 import sys
+
 import pytest
 from dotenv import load_dotenv
 from playwright.sync_api import Page
+
+from pages.revosend_forgot_password_page import SystemAdminForgotPasswordPage
 
 """
 Import page file and their param
 """
 # others Import
 from pages.ontrack_login_page import OntrackLoginPage
+from pages.revosend_admin_signup_page import SystemAdminSignupPage
 
 # Deployment Admin Import
 from pages.deployment_admin_account_balance_page import (
@@ -51,6 +55,7 @@ from pages.system_admin_send_order_list_page import SystemAdminSendOrderList
 from pages.system_admin_users_page import SystemAdminUsersPage
 from pages.system_admin_vendors_page import SystemAdminVendorsPage
 
+
 # Vendor Import
 from pages.vendor_company_information_page import VendorCompanyInformationPage
 from pages.vendor_dashboard_page import VendorDashboardPage
@@ -76,6 +81,25 @@ def ontrack_login_page(page: Page) -> OntrackLoginPage:
     :return:
     """
     return OntrackLoginPage(page)
+
+
+@pytest.fixture
+def revosend_signup(page : Page) -> SystemAdminSignupPage:
+    """
+        Initialize login page objects and methods
+        :param page:
+        :return:
+        """
+    return  SystemAdminSignupPage(page)
+
+@pytest.fixture
+def revosend_forgot_password(page : Page) -> SystemAdminForgotPasswordPage:
+    """"
+      Initialize login page objects and methods
+        :param page:
+        :return:
+        """
+    return  SystemAdminForgotPasswordPage(page)
 
 
 @pytest.fixture

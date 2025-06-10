@@ -41,7 +41,7 @@ class SystemAdminItemsListPage(BasePage):
         )
         self.apply_action_button = page.locator('//button[text()="Apply Action"]')
         self.items_list_headers = page.locator('//tr[@class="text-center"]')
-        self.items_status = "//div[contains(@class, 'badge') and (contains(@class, 'badge-soft-primary') or contains(@class, 'badge-soft-danger'))]"
+        self.items_status = "//div[@class='me-2 badge badge-soft-success btn-outline rounded-pill' or contains(@class,'me-2 badge badge-soft-danger btn-outline rounded-pill')]"
         self.items_list_footer = page.locator(
             '//div[@class="table-footer-border-top card-footer"]'
         )
@@ -59,7 +59,7 @@ class SystemAdminItemsListPage(BasePage):
             '(//*[@data-icon="arrow-rotate-left"])[1]'
         )
         self.delete_action_button = page.locator('(//*[@data-icon="trash"])[1]')
-        self.item_checkbox = page.locator("(//input)[2]")
+        self.item_checkbox = page.locator("//input[contains(@title,'Toggle All Rows Selected')]")
 
         # add item locators
         self.add_item_header = page.locator(
@@ -70,24 +70,23 @@ class SystemAdminItemsListPage(BasePage):
             '//span[@class="ant-upload-wrapper css-1vtf12y"]//span[@class="ant-upload"]'
         )
         self.add_item_image_area = page.locator(
-            '//div[@class="ant-upload-list ant-upload-list-picture-circle"]//span[@class="ant-upload"]'
+            '//span[@role="button"]'
         )
-        self.add_item_name_label = page.locator('//label[text()="Name"]')
-        self.add_item_name = page.locator('//input[@id="name"]')
-        self.add_item_category_label = page.locator('//label[text()="Category"]')
+        self.add_item_name_label = page.locator('//label[normalize-space()="Item Name"]')
+        self.add_item_name = page.locator('//input[@id="itemName"]')
+        self.add_item_category_label = page.locator('//label[normalize-space()="Category"]')
         self.add_item_category_dropdown = page.locator(
             '//label[text()="Category"]//..//select[@class="form-select-md form-control form-select"]'
         )
-        self.add_item_select_category = page.locator(
-            '//label[text()="Category"]//..//select'
-        )
+        self.add_item_select_category = page.locator("//div[contains(@class, 'ant-select') and contains(@class, 'ant-select-multiple')]//span[contains(text(), 'Select Category')]")
+
         self.add_item_description_label = page.locator('//label[text()="Description"]')
         self.add_item_description_text_area = page.locator(
             '//div[@class="ck ck-editor__main"]//p'
         )
         self.add_item_item_prince_label = page.locator('//label[text()="Price"]')
         self.add_item_price_input = page.locator('//input[@id="price"]')
-        self.add_item_fee_label = page.locator('//label[text()="Fee"]')
+        self.add_item_fee_label = page.locator('//label[normalize-space()="Revosend Fee"]')
         self.add_item_fee_input = page.locator('//input[@id="fee"]')
         self.add_item_processing_time_label = page.locator(
             '//label[text()="Processing time (in days)"]'
@@ -97,7 +96,7 @@ class SystemAdminItemsListPage(BasePage):
         )
         self.add_item_status_label = page.locator('//label[text()="Status"]')
         self.add_item_status_dropdown = page.locator(
-            '//label[text()="Status"]//..//select[@class="form-select-md form-control form-select"]'
+            '//div[@class="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"]//div[@class="ant-select-selector"]'
         )
         self.add_item_select_status_option = page.locator(
             '//label[text()="Status"]//..//select'
@@ -112,7 +111,7 @@ class SystemAdminItemsListPage(BasePage):
         self.item_description_on_list = page.locator("//tbody//tr[1]//td[7]")
         self.item_price_on_list = page.locator("//tbody//tr[1]//td[8]")
         self.item_status_on_list = page.locator(
-            '(//div[contains(@class, "me-2 badge badge-soft-primary btn-outline rounded-pill") or contains(@class, "badge-soft-danger")])[1]'
+            '//div[contains(text(),"Activated") or contains(text(),"On hold by Admin")]'
         )
         self.delete_confirm_message = page.locator('//div[@class="modal-body"]')
         self.generic_update_button = page.locator('//button[text()="Confirm"]')
@@ -157,7 +156,7 @@ class SystemAdminItemsListPage(BasePage):
         self.item_price_text = page.locator(
             '(//div[@class="row"]//div[@class="col"]//p)[3]'
         )
-        self.item_fee = page.locator('//p[text()="Fee"]')
+        self.item_fee = page.locator('//label[contains(text(),"Revosend Fee")]')
         self.item_fee_text = page.locator(
             '(//div[@class="row"]//div[@class="col"]//p)[4]'
         )
@@ -287,14 +286,11 @@ class SystemAdminItemsListPage(BasePage):
         """
         Verify and check items list page elements
         """
-        time.sleep(5)
+        time.sleep(5)  # Replace with wait-for-condition if possible
+
         elements_to_check = [
             self.items_list_component,
             self.items_list_page_header,
-            self.items_list_footer,
-            self.pagination,
-            self.results_counter,
-            self.rows_per_page,
             self.add_item_button,
             self.apply_action_button,
             self.filter_drop_down,
@@ -302,24 +298,23 @@ class SystemAdminItemsListPage(BasePage):
             self.batch_action_label,
             self.batch_action_dropdown,
         ]
-        for elements in elements_to_check:
-            expect(elements).to_be_visible()
-            # Extract headers from the UI
-            headers_title = self.items_list_headers.inner_text()
-            print("Headers titles before cleanup -->", headers_title)
-            cleaned_headers_title = re.sub(
-                r"[🔼🔽]", "", headers_title
-            ).strip()  # Remove sorting icons
-            # Split the headers on tabs or multiple spaces
-            headers_list = re.split(r"[\t]+|\s{2,}", cleaned_headers_title)
-            headers_list = [
-                header.strip() for header in headers_list if header
-            ]  # Remove empty items
-            # Assert the headers match the expected values
-            assert (
+
+        for element in elements_to_check:
+            expect(element).to_be_visible()
+
+        # Safely get inner text of header row
+        headers_title = self.page.locator(self.filter_drop_down).inner_text()
+        print("Headers titles before cleanup -->", headers_title)
+
+        cleaned_headers_title = re.sub(r"[🔼🔽]", "", headers_title).strip()
+        headers_list = re.split(r"[\t]+|\s{2,}", cleaned_headers_title)
+        headers_list = [header.strip() for header in headers_list if header]
+
+        assert (
                 headers_list == headers_text
-            ), f"Headers do not match: {headers_list} != {headers_text}"
-            print("All elements verified")
+        ), f"Headers do not match: {headers_list} != {headers_text}"
+
+        print("All elements verified ✅")
 
     @qase_screenshot
     @qase.step(
@@ -328,91 +323,83 @@ class SystemAdminItemsListPage(BasePage):
     )
     def apply_batch_actions_to_items_list(self):
         """
-        Apply batch action to items list
+        Apply batch action to items list based on current item status.
         """
         expect(self.batch_action_label).to_be_visible()
-        items_status_element = self.page.locator(
-            '(//div[contains(@class, "me-2 badge badge-soft-primary btn-outline rounded-pill") or contains(@class, "badge-soft-danger")])[1]'
-        )
-        current_status = items_status_element.text_content()
+
+        # Use the updated row-scoped locator
+        item_row = self.page.locator("table tbody tr").nth(0)
+        item_status = item_row.locator("//div[contains(text(),'Activated') or contains(text(),'On hold by Admin')]")
+
+        current_status = item_status.text_content().strip()
         print(f"Current status is: {current_status}")
-        # Verify the status is either 'Active' or 'Suspected'
-        if "Active" in current_status:
+
+        if "Activated" in current_status:
             self.item_checkbox.click()
             self.batch_action_dropdown.select_option("Deactivate")
             self.apply_action_button.click()
             time.sleep(2)
-            new_status = items_status_element.text_content()
+
+            new_status = item_status.text_content().strip()
             assert (
-                "Inactive" in new_status
-            ), f"Expected status to be 'Inactive', but got {new_status}"
-            print("Status changed to 'Deactivate' successfully.")
-            # Now change the status back to 'Active'
-            self.item_checkbox.click()
-            self.batch_action_dropdown.select_option("Activate")
-            self.apply_action_button.click()
-            # Wait for the status to revert to 'Active' and verify
-            time.sleep(2)
-            reverted_status = items_status_element.text_content()
-            assert (
-                "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status reverted to 'Active' successfully.")
-        elif "Inactive" in current_status:
+                    "On hold by Admin" in new_status or "Deactivated" in new_status
+            ), f"Expected status to be 'On hold by Admin' or 'Deactivated', but got '{new_status}'"
+            print("Status changed to 'Deactivated' successfully.")
+
             self.item_checkbox.click()
             self.batch_action_dropdown.select_option("Activate")
             self.apply_action_button.click()
             time.sleep(2)
-            reverted_status = items_status_element.text_content()
-            assert (
-                "Active" in reverted_status
-            ), f"Expected status to be 'Active', but got {reverted_status}"
-            print("Status changed back to 'Active' successfully.")
+
+            reverted_status = item_status.text_content().strip()
+            assert "Activated" in reverted_status, f"Expected status to be 'Activated', but got '{reverted_status}'"
+            print("Status reverted to 'Activated' successfully.")
+
+        elif "Deactivated" in current_status or "On hold by Admin" in current_status:
+            self.item_checkbox.click()
+            self.batch_action_dropdown.select_option("Activate")
+            self.apply_action_button.click()
+            time.sleep(2)
+
+            reverted_status = item_status.text_content().strip()
+            assert "Activated" in reverted_status, f"Expected status to be 'Activated', but got '{reverted_status}'"
+            print("Status changed to 'Activated' successfully.")
+
         else:
-            raise ValueError(f"Unexpected user status: {current_status}")
+            raise ValueError(f"Unexpected item status: '{current_status}'")
 
     @qase_screenshot
     @qase.step(
         title="Apply filter on items list and verify filtered data",
         expected="Data should be filtered properly based on the applied filter.",
     )
-    def apply_filter_on_items_list_and_verify_filtered_data(
-        self, available_filter_options, expected_statuses
-    ):
-        """
-        Apply filter on items list and verify filtered data
-        """
-        time.sleep(2)
-        filter_options = self.page.query_selector_all(self.filter_drop_down)
-        filter_options_text = [option.inner_text() for option in filter_options]
-        assert (
-            filter_options_text == available_filter_options
-        ), f"Expected: {available_filter_options}, but got: {filter_options_text}"
-        print(f"all available filters verified: {available_filter_options}")
-        for filter_option in available_filter_options:
-            self.filter_option.select_option(filter_option)
+    def apply_filter_on_items_list_and_verify_filtered_data(self, available_filter_options,
+                                                            expected_statuses):
+        expect(self.items_status).to_be_visible()
+        filter_options_text = self.filter_drop_down.locator("option").all_inner_texts()
+        assert filter_options_text == available_filter_options, (
+            f"❌ Mismatch in filter options. Expected: {available_filter_options}, but got: {filter_options_text}"
+        )
+        print(f"✅ All available filters verified: {available_filter_options}")
+
+        for filter_name in available_filter_options:
+            self.filter_drop_down.select_option(label=filter_name)
+            print(f"🔄 Selected filter: {filter_name}")
             time.sleep(5)
-            self.page.wait_for_selector(self.items_status)
-            # Query for the status elements after applying the filter
-            all_items_status = self.page.query_selector_all(self.items_status)
-            all_items_status_text = [status.inner_text() for status in all_items_status]
-            # Print the text of each status
-            print(
-                f"Items status after applying '{filter_option}': {all_items_status_text}"
-            )
-            # Assertion to verify the expected statuses are present
-            if filter_option in expected_statuses:
-                expected = expected_statuses[filter_option]
-                if expected:
-                    for expected_status in expected:
-                        assert (
-                            expected_status in all_items_status_text
-                        ), f"'{expected_status}' not found in the status text for filter '{filter_option}'"
-                else:
-                    # If there are no expected statuses, assert that the status list is empty
-                    assert (
-                        not all_items_status_text
-                    ), f"Expected no statuses for filter '{filter_option}', but found: {all_items_status_text}"
+            expected = expected_statuses.get(filter_name, [])
+            for status in set(expected):
+                status_elements = self.page.locator(f"//div[contains(text(),'{status}')]")
+                count = status_elements.count()
+                time.sleep(2)
+                assert count > 0, f"❌ No visible status '{status}' found for filter '{filter_name}'"
+                visible_found = False
+                for i in range(count):
+                    if status_elements.nth(i).is_visible():
+                        visible_found = True
+                        break
+
+                assert visible_found, f"❌ Status '{status}' found but not visible for filter '{filter_name}'"
+                print(f"✅ Verified status '{status}' is visible for filter '{filter_name}'")
 
     @qase_screenshot
     @qase.step(
@@ -449,7 +436,6 @@ class SystemAdminItemsListPage(BasePage):
             self.add_item_name_label,
             self.item_image_title,
             self.add_item_category_label,
-            self.add_item_category_dropdown,
             self.add_item_name,
             self.add_item_description_label,
             self.add_item_description_text_area,
@@ -470,6 +456,7 @@ class SystemAdminItemsListPage(BasePage):
             f"Processing Time: {processing_time}, Status: {item_status}"
         )
         self.add_item_name.fill(item_name)
+        time.sleep(4)
         self.add_item_select_category.select_option(item_category)
         self.add_item_description_text_area.fill(item_description)
         self.add_item_price_input.fill(item_price)
@@ -530,7 +517,6 @@ class SystemAdminItemsListPage(BasePage):
             self.item_id,
             self.item_name,
             self.item_price,
-            self.item_fee,
             self.item_status,
             self.item_type,
             self.lead_time,

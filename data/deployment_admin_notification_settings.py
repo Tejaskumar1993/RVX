@@ -4,7 +4,7 @@ class DeploymentAdminNotificationSettingsParams:
     """
 
     test_1 = {
-        "change_to_notification": "Notification Settings",
+        "change_to_notification": "Settings",
         "success_message_text": "Notification updated successfully",
         "deployment_admin_notification": [
             "Select All",

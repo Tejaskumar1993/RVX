@@ -10,7 +10,7 @@ class SystemAdminDeploymentsParams:
 
     Test_1 = {
         "tab_to_navigate": "Deployments",
-        "headers_text": ["ID", "Name", "Server Name", "Database Name", "Actions"],
+        "headers_text": ["ID", "Name", "Server Name", "Database Name", "EIN","Status","Actions"],
     }
     Test_2 = {
         "tab_to_navigate": "Deployments",
@@ -23,14 +23,13 @@ class SystemAdminDeploymentsParams:
         "tab_to_navigate": "Deployments",
         "available_filter_options": [
             "All Users",
-            "Active Users",
-            "Inactive Users",
+            "Activated",
+            "Deactivated",
             "Custom",
         ],
         "expected_statuses": {
-            "All Users": ["Active Users", "Inactive Users"],
-            "Active Users": ["Active"],
-            "Inactive Users": ["Inactive"],
+            "All Users": ["Activated"],
+            "Activated": ["Activated"],
         },
     }
     Test_5 = {
@@ -75,11 +74,11 @@ class SystemAdminDeploymentsParams:
             "Inactive Groups",
             "Custom",
         ],
-        "error_message": "User Suspended",
+        "error_message": "User Deactivated",
         "success_message": "User Activated",
         "expected_statuses": {
-            "All Users": ["Active", "Inactive"],
-            "Active Users": ["Active"],
-            "Suspended Users": ["Inactive"],
+            "All Users": ["Activated", "Deactivated"],
+            "Activated": ["Active"],
+            "Deactivated": ["Inactive"],
         },
     }

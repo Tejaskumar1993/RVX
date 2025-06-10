@@ -21,7 +21,7 @@ class SystemAdminNotificationSettingsPage(BasePage):
         self.page = page
 
         self.profile_image = page.locator("//a[@href='/dashboard/admin#!']")
-        self.notification_setting_dropdown = '//a[text()="<<Notification Settings>>"]'
+        self.notification_setting_dropdown = '//a[normalize-space()="Settings"]'
         self.notification_header = page.locator('//h3[text()="Notification Settings"]')
         self.deployment_admin_notification_model = page.locator(
             '(//div[@class="mb-3 overflow-auto notification-settings-card"])[1]'

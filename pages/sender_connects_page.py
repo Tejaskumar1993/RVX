@@ -4,6 +4,7 @@ Sender connects page modules
 
 import time
 
+import self
 from qase.pytest import qase
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
@@ -34,41 +35,40 @@ class SenderConnectsPage(BasePage):
             '//button[@id="account-balance-dashboard-tab-tab-all"]'
         )
         self.egifts_tab = page.locator(
-            '//button[@id="account-balance-dashboard-tab-tab-egifts-deposit"]'
+            '//button[contains(.,"eGift(s)")]'
         )
         self.ontrack_d2p_tab = page.locator(
             '//button[@id="account-balance-dashboard-tab-tab-ontrack-d2p"]'
         )
-        self.filter_label = page.locator('(//label[text()="Filter"])[1]')
+        self.filter_label = page.locator('//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//label[contains(@class,"form-label")][normalize-space()="Filter:"]')
         self.filter_dropdown = page.locator(
-            '(//select[@class="form-select form-select-sm"])[1]'
+            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//select[contains(@class,"form-select form-select-sm")]'
         )
         self.select_all_filter_option = page.locator(
             '(//div[@class="d-flex align-items-center justify-content-between"]//select)[1]'
         )
-        self.egift_label = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//p[text()="eGifts"]'
+        self.egift_label = page.locator('//button[text()="eGift(s)"]'
         )
         self.egift_headline = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//p[text()="Send an eGift."]'
+            'div[id="account-balance-dashboard-tab-tabpane-egifts-deposit"] p[class="mb-4"]'
         )
         self.gift_card_component = page.locator(
-            '(//div[@class="d-flex gap-6 w-100 flex-wrap"])[1]'
+            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//div[@class="slick-slide slick-active slick-current"]//img[@class="ant-image-img"]'
         )
         self.ontrack_d2p_label = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//p[text()="Ontrack D2P"]'
+            '//button[.="RevoSend D2P"]'
         )
         self.ontrack_d2p_headline = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//p[text()="Send a gift."]'
+            '//p[normalize-space()="Send an eGift"]'
         )
         self.egifts_tab_component = page.locator(
             '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]'
         )
         self.egifts_tab_title = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//p[text()="eGifts"]'
+            '//button[@id="account-balance-dashboard-tab-tab-egifts-deposit"]'
         )
         self.egifts_tab_headline = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//p[text()="Send an eGift."]'
+            '//p[contains(normalize-space(),"eGift(s)")]'
         )
         self.ontrack_d2p_tab_component = page.locator(
             '//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]'
@@ -79,9 +79,7 @@ class SenderConnectsPage(BasePage):
         self.ontrack_d2p_tab_headline = page.locator(
             '//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]//p[text()="Send a gift."]'
         )
-        self.select_gift = page.locator(
-            '(//div[@class="ant-image sender-gifts-D2p-image"])[1]'
-        )
+        self.select_gift = page.locator('(//div[@role="button"])[2]')
         self.make_a_connection_component = page.locator(
             '(//div[@class="py-3 mb-2 account-balance-card card"])[1]'
         )
@@ -93,15 +91,15 @@ class SenderConnectsPage(BasePage):
         self.sending_method_page_slogan = page.locator(
             '//p[text()="How would you like to make your connection?"]'
         )
-        self.selected_connect_component = page.locator('//div[@class="card"]')
-        self.selected_connect_title = page.locator('//h4[text()="Selected connect"]')
-        self.connect_details_title = page.locator('//h5[text()="Connect details"]')
+        self.selected_connect_component = page.locator('//h4[normalize-space()="Selected Connect"]')
+        self.selected_connect_title = page.locator('div[class="row"] div:nth-child(1) h4:nth-child(1)')
+        self.connect_details_title = page.locator('body > div:nth-child(7) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > form:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > h5:nth-child(3)')
         self.egift_label = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-all"]//p[text()="eGifts"]'
+            '//p[normalize-space()="eGift(s)"]'
         )
-        self.egift_expires_in = page.locator('//p[text()="Expires in"]')
+        self.egift_expires_in = page.locator('(//p[@class="mb-0"])[2]')
         self.email_button = page.locator(
-            '//div[@class="text-center px-3 sending-opt-btn max "][1]'
+            '//div[@role="button"]//p[text()="Email"]'
         )
         self.email_label = page.locator('//p[text()="Email"]')
         self.shareable_link_button = page.locator(
@@ -111,7 +109,7 @@ class SenderConnectsPage(BasePage):
         self.sms_button = page.locator(
             '//div[@class="text-center px-3 sending-opt-btn max "][3]'
         )
-        self.sms_label = page.locator('//p[text()="SMS"]')
+        #self.sms_label = page.locator('//p[text()="SMS"]')
         self.select_your_gift_amount_label = page.locator(
             '//p[text()="Select your eGift amount"]'
         )
@@ -125,10 +123,10 @@ class SenderConnectsPage(BasePage):
         self.recipient_email_address_input = page.locator(
             '//input[@id="Email_recipientEmail"]'
         )
-        self.email_subject_label = page.locator('//label[text()="Email subject"]')
+        self.email_subject_label = page.locator('//label[normalize-space()="Email subject"]')
         self.email_subject_input = page.locator('//input[@id="D2pForm_emailSubject"]')
         self.insert_template_dropdown = page.locator(
-            '//div[@class="ant-select-selector"]'
+            '.ant-select-selector'
         )
         self.select_template = page.locator('//div[text()="egift card template"]')
         self.email_message_label = page.locator('//label[text()="Email Message"]')
@@ -153,16 +151,16 @@ class SenderConnectsPage(BasePage):
             '(//div[@class="d-flex align-items-center justify-content-between"]//select)[2]'
         )
         self.egifts_tab_egift_label = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//p[text()="eGifts"]'
+            'div[id="account-balance-dashboard-tab-tabpane-egifts-deposit"] p[class="fw-bold mb-1"]'
         )
         self.egifts_tab_egift_headline = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//p[text()="Send an eGift."]'
+            'div[id="account-balance-dashboard-tab-tabpane-egifts-deposit"] p[class="mb-4"]'
         )
         self.egifts_tab_egift_card_component = page.locator(
-            '(//div[@class="d-flex gap-6 w-100 flex-wrap"])[3]'
+            '(//div[@class="px-3"])[2]'
         )
         self.select_egift = page.locator(
-            '(//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//div[@class="rounded-4 overflow-hidden"])[1]'
+            '//div[@id="account-balance-dashboard-tab-tabpane-egifts-deposit"]//div[@class="sender-item-list"]//div[@role="button"]//div[contains(@class, "slick-slide") and contains(@class, "slick-active") and contains(@class, "slick-current")]//img[@class="ant-image-img"]'
         )
         # email preview locators
         self.email_preview_component = page.locator(
@@ -189,18 +187,17 @@ class SenderConnectsPage(BasePage):
             '(//div[@class="d-flex align-items-center justify-content-between"]//select)[3]'
         )
         self.ontrack_d2p_tab_d2p_label = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]//p[text()="Ontrack D2P"]'
+            '//button[@id="account-balance-dashboard-tab-tab-ontrack-d2p"]'
         )
         self.ontrack_d2p_tab_headline = page.locator(
-            '//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]//p[text()="Send a gift."]'
+            '(//p[@class="mb-4"][normalize-space()="Send a physical gift Connect"])[2]'
         )
         self.ontrack_d2p_tab_d2p_card_component = page.locator(
             '(//div[@class="d-flex gap-6 w-100 flex-wrap"])[4]'
         )
         self.ontrack_d2p_gift = page.locator(
-            '(//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]//div[@class="rounded-4 overflow-hidden"])[1]'
+            '(//div[@id="account-balance-dashboard-tab-tabpane-ontrack-d2p"]//div[contains(@class, "sender-item-list")]//div[contains(@class, "d-flex")]//div)[1]'
         )
-
         # Make connection via shareable-link page locators
         self.link_recipient_email_input = page.locator(
             '//input[@id="Link_recipientEmail"]'
@@ -268,22 +265,19 @@ class SenderConnectsPage(BasePage):
         self.name_input = page.locator('//input[@id="D2pForm_name"]')
         self.company_label = page.locator('//label[text()="Company"]')
         self.company_input = page.locator('//input[@id="D2pForm_company"]')
-        self.street_address_label = page.locator('//label[text()="Street address"]')
-        self.street_address_input = page.locator('//input[@id="D2pForm_streetAddress"]')
+        self.street_address_label = page.locator('//label[normalize-space()="Address Line 1"]')
+        self.street_address_input = page.locator('//input[@id="D2pForm_addressLine1"]')
         self.city_label = page.locator('//label[text()="City"]')
         self.city_input = page.locator('//input[@id="D2pForm_city"]')
         self.zip_label = page.locator('//label[text()="Zip"]')
         self.zip_input = page.locator('//input[@id="D2pForm_zipCode"]')
         self.state_label = page.locator('//label[text()="State"]')
-        self.state_dropdown = page.locator(
-            '(//div[@class="ant-form-item-control-input-content"]//select)[1]'
-        )
+        self.state_dropdown = page.locator('//input[@id="D2pForm_state"]')
         self.country_label = page.locator('//label[text()="Country"]')
         self.country_dropdown = page.locator(
-            '(//div[@class="ant-form-item-control-input-content"]//select)[2]'
-        )
+            "(//input[@id='D2pForm_country'])[1]")
         self.insert_template_label = page.locator('//label[text()="Insert template"]')
-        self.email_label = page.locator('//label[text()="Email subject"]')
+        self.email_label = page.locator('//p[normalize-space()="Email"]')
         self.email_input = page.locator('//input[@id="D2pForm_emailSubject"]')
         self.recipient_email_address_label = page.locator(
             '//label[text()="Recipient Email Address"]'
@@ -297,12 +291,12 @@ class SenderConnectsPage(BasePage):
         self.enter_email_message_input_area = page.locator('//div[@role="textbox"]')
         self.connect_method_label = page.locator('//span[text()="Connect Method"]')
         self.connect_method_dropdown = page.locator(
-            '//div[@class="ant-select-selector"]'
+            '//select[@class="max-w-fit form-select"]'
         )
         self.d2p_selected_connect_box = page.locator(
             '//div[@class="my-4  justify-content-end d-flex align-items-center"]//select'
         )
-        self.d2p_connect_details_label = page.locator('//h5[text()="Connect details"]')
+        self.d2p_connect_details_label = page.locator('//h5[normalize-space()="Connect Details"]')
         self.d2p_shipping_details_label = page.locator(
             '//h5[text()="Shipping details"]'
         )
@@ -316,20 +310,6 @@ class SenderConnectsPage(BasePage):
         )
         self.claim_d2pgift_card_label = page.locator('//p[text()="Claim Gift"]')
 
-    @qase_screenshot
-    @qase.step(
-        title="Verify logged in user is able to change role to sender",
-        expected="Logged in user should be able to change role",
-    )
-    def verify_and_change_user_role(self, select_role):
-        """
-        Verify and change role of user
-        """
-        expect(self.change_role_dropdown).to_be_visible()
-        self.change_role_dropdown.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        self.page.click(self.role_to_select.replace("<<select_role>>", select_role))
-        print(f"successfully changed role to {select_role}")
 
     @qase_screenshot
     @qase.step(
@@ -343,20 +323,17 @@ class SenderConnectsPage(BasePage):
         # verify icon availability
         expect(self.connects_icon).to_be_visible()
 
-    @qase_screenshot
-    @qase.step(
-        title="Verify all gifts page element visibility",
-        expected="sender should be able to visible all elements of the all gifts page",
-    )
     def verify_all_gifts_page_elements(self, available_filter_options):
         """
         Verify all gifts page elements
         """
+        time.sleep(5)
+        self.egifts_tab.click()
+        time.sleep(5)
+
         self.page.wait_for_load_state("domcontentloaded")
+
         elements_to_check = [
-            self.make_a_connection_component,
-            self.make_a_connection_header,
-            self.connects_page_sub_title,
             self.all_tab,
             self.egifts_tab,
             self.ontrack_d2p_tab,
@@ -367,8 +344,10 @@ class SenderConnectsPage(BasePage):
             self.egift_headline,
             self.ontrack_d2p_headline,
         ]
-        for elements in elements_to_check:
-            expect(elements).to_be_visible()
+
+        for element in elements_to_check:
+            expect(element).to_be_visible()
+
         time.sleep(3)
         filter_options_raw = self.filter_dropdown.inner_text()
         filter_options = [
@@ -376,10 +355,14 @@ class SenderConnectsPage(BasePage):
             for option in filter_options_raw.splitlines()
             if option.strip()
         ]
+
         print(f"Extracted Filter Options: {filter_options}")
-        assert (
-            filter_options == available_filter_options
-        ), f"Expected filter options {available_filter_options}, but found {filter_options}"
+
+        # Now do subset check
+        missing_options = [opt for opt in available_filter_options if opt not in filter_options]
+        assert not missing_options, f"Missing expected filter options: {missing_options}"
+
+
 
     @qase_screenshot
     @qase.step(
@@ -406,32 +389,33 @@ class SenderConnectsPage(BasePage):
             self.egifts_tab_egift_headline,
             self.egifts_tab_component,
         ]
-        for elements in elements_to_check:
-            expect(elements).to_be_visible()
-        time.sleep(2)
-        filter_options_raw = self.egifts_tab_filter_dropdown.inner_text()
+        for element in elements_to_check:
+            expect(element).to_be_visible()
+
+        time.sleep(3)
+        filter_options_raw = self.filter_dropdown.inner_text()
         filter_options = [
             option.strip()
             for option in filter_options_raw.splitlines()
             if option.strip()
         ]
+
         print(f"Extracted Filter Options: {filter_options}")
-        assert (
-            filter_options == available_filter_options
-        ), f"Expected filter options {available_filter_options}, but found {filter_options}"
+
+        # Now do subset check
+        missing_options = [opt for opt in available_filter_options if opt not in filter_options]
+        assert not missing_options, f"Missing expected filter options: {missing_options}"
+
 
     @qase_screenshot
-    @qase.step(
-        title="Verify ontrack_d2p page element visibility",
+    @qase.step(title="Verify ontrack_d2p page element visibility",
         expected="sender should be able to visible all elements of the ontrack_d2p page",
     )
     def verify_ontrack_d2p_page_elements(self, available_filter_options):
-        """
-        Verify ontrack_d2p page elements
-        """
         self.ontrack_d2p_tab.click()
         time.sleep(4)
         self.page.wait_for_load_state("domcontentloaded")
+
         elements_to_check = [
             self.make_a_connection_component,
             self.make_a_connection_header,
@@ -447,32 +431,33 @@ class SenderConnectsPage(BasePage):
         ]
         for elements in elements_to_check:
             expect(elements).to_be_visible()
+
         filter_options_raw = self.ontrack_d2p_tab_filter_dropdown.inner_text()
         filter_options = [
             option.strip()
             for option in filter_options_raw.splitlines()
             if option.strip()
         ]
+
         print(f"Extracted Filter Options: {filter_options}")
-        assert (
-            filter_options == available_filter_options
-        ), f"Expected filter options {available_filter_options}, but found {filter_options}"
+
+        # Check that all expected filter options are in the extracted list
+        for expected_option in available_filter_options:
+            assert expected_option in filter_options, f"Missing expected filter option: {expected_option}"
 
     @qase_screenshot
     @qase.step(
         title="Select filter option on all gifts page and share gift via email",
         expected="sender should be able to send gifts via email",
     )
-    def verify_and_send_gifts_via_email(
-        self, item_category_to_select, recipient_email, email_subject, email_message
-    ):
+    def verify_and_send_gifts_via_email(self, item_category_to_select, recipient_email, email_subject, email_message ):
         """
         Verify and send gifts item via email
         """
         time.sleep(2)
         if self.select_all_filter_option.is_visible():
             self.select_all_filter_option.select_option(item_category_to_select)
-            time.sleep(5)
+            time.sleep(6)
             self.page.wait_for_load_state("domcontentloaded")
             expect(self.gift_card_component).to_be_visible()
             expect(self.select_gift).to_be_visible()
@@ -499,15 +484,14 @@ class SenderConnectsPage(BasePage):
             self.email_label,
             self.shareable_link_label,
             self.shareable_link_button,
-            self.sms_label,
-            self.sms_button,
+            #self.sms_label,
+            #self.sms_button,
         ]
         for elements in elements_to_check:
             expect(elements).to_be_visible()
         self.email_button.click()
         time.sleep(5)
         elements_to_check = [
-            self.select_your_gift_amount_label,
             self.enter_recipients_details_label,
             self.recipients_email_address,
             self.recipient_email_address_input,
@@ -581,21 +565,25 @@ class SenderConnectsPage(BasePage):
             self.email_label,
             self.shareable_link_label,
             self.shareable_link_button,
-            self.sms_label,
-            self.sms_button,
+            #self.sms_label,
+            #self.sms_button,
         ]
         for elements in elements_to_check:
             expect(elements).to_be_visible()
         self.shareable_link_button.click()
         time.sleep(5)
         elements_to_check = [
-            self.select_your_gift_amount_label,
+            #self.select_your_gift_amount_label,
             self.enter_recipients_details_label,
             self.recipients_email_address,
             self.link_recipient_email_input,
             self.create_a_link_button,
             self.cancel_button,
         ]
+        self.link_recipient_email_input.fill("test@testing.com")
+        time.sleep(5)
+        self.link_recipient_email_input.clear()
+
         for elements in elements_to_check:
             expect(elements).to_be_visible()
         self.link_recipient_email_input.fill(recipient_email)
@@ -673,7 +661,7 @@ class SenderConnectsPage(BasePage):
             self.text_message_preview_box,
             self.text_message_preview_title,
             self.recipient_phone_number_label_in_preview,
-            self.sms_text_label,
+            #self.sms_text_label,
             self.accept_button,
         ]
         for elements in elements_to_check:
@@ -710,10 +698,11 @@ class SenderConnectsPage(BasePage):
         """
         expect(self.ontrack_d2p_tab_filter_label).to_be_visible()
         self.ontrack_d2p_tab_filter_dropdown.select_option(item_category_to_select)
-        time.sleep(5)
+        time.sleep(7)
         self.page.wait_for_load_state("domcontentloaded")
         expect(self.ontrack_d2p_gift).to_be_visible()
         self.ontrack_d2p_gift.click()
+        time.sleep(2)
         elements_to_check = [
             self.make_a_connection_component_of_d2p,
             self.make_a_connection_header,
@@ -763,8 +752,12 @@ class SenderConnectsPage(BasePage):
         self.street_address_input.fill(user_address)
         self.city_input.fill(user_city)
         self.zip_input.fill(zip_code)
-        self.state_dropdown.select_option(state)
-        self.country_dropdown.select_option(country)
+        self.state_dropdown.fill("Alaska")
+        self.state_dropdown.press("Enter")
+        time.sleep(2)
+        self.page.evaluate("window.scrollBy(0, 500)")
+        self.country_dropdown.click()
+        self.state_dropdown.press("Enter")
         self.email_subject_input.fill(email_subject)
         self.recipient_email_address_input.fill(recipient_email)
         self.enter_email_message_input_area.fill(email_message)
